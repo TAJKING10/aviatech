@@ -2,353 +2,165 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { CheckCircle, Clock, Users, BookOpen, Shield, Plane, Globe, BarChart3, Zap, ChevronRight, Info } from "lucide-react";
 
-export interface TrainingModule {
-  id: string;
-  title: string;
-  description: string;
-  duration: string;
-  participants: string;
-  price: number;
-  icon: React.ElementType;
-  level: "Foundation" | "Advanced" | "Expert";
-  popular?: boolean;
-  tags: string[];
-}
-
-const modules: TrainingModule[] = [
-  {
-    id: "sms",
-    title: "Safety Management Systems (SMS)",
-    description: "Comprehensive SMS design and implementation aligned with ICAO Annex 19. Covers hazard identification, risk assessment, safety assurance, and safety promotion.",
-    duration: "3 days",
-    participants: "Up to 20",
-    price: 4800,
-    icon: Shield,
-    level: "Advanced",
-    popular: true,
-    tags: ["ICAO", "Safety", "Risk Management"],
-  },
-  {
-    id: "flight-ops",
-    title: "Flight Operations Management",
-    description: "Advanced flight operations strategy covering scheduling optimization, FOQA programs, crew resource management, and OTP improvement methodology.",
-    duration: "2 days",
-    participants: "Up to 15",
-    price: 3600,
-    icon: Plane,
-    level: "Expert",
-    popular: true,
-    tags: ["Operations", "CRM", "FOQA"],
-  },
-  {
-    id: "atc",
-    title: "Air Traffic Control Fundamentals",
-    description: "Foundational and advanced ATC procedures, phraseology, and airspace management concepts for flight operations personnel and aviation managers.",
-    duration: "2 days",
-    participants: "Up to 25",
-    price: 2900,
-    icon: Globe,
-    level: "Foundation",
-    tags: ["ATC", "Airspace", "Procedures"],
-  },
-  {
-    id: "crm",
-    title: "Crew Resource Management (CRM)",
-    description: "Industry-leading CRM program based on the latest human factors research. Includes threat and error management (TEM) and decision-making frameworks.",
-    duration: "1.5 days",
-    participants: "Up to 30",
-    price: 2400,
-    icon: Users,
-    level: "Advanced",
-    popular: true,
-    tags: ["CRM", "Human Factors", "TEM"],
-  },
-  {
-    id: "regulatory",
-    title: "Aviation Regulatory Compliance",
-    description: "Navigate FAA, EASA, and international regulations with confidence. Covers certification processes, audit preparation, and corrective action management.",
-    duration: "2.5 days",
-    participants: "Up to 20",
-    price: 4200,
-    icon: BookOpen,
-    level: "Advanced",
-    tags: ["FAA", "EASA", "Compliance", "Audit"],
-  },
-  {
-    id: "fleet",
-    title: "Fleet Planning & Management",
-    description: "Strategic fleet planning methodology including network analysis, aircraft type selection, lease vs. buy decisions, and maintenance program optimization.",
-    duration: "2 days",
-    participants: "Up to 12",
-    price: 3800,
-    icon: BarChart3,
-    level: "Expert",
-    tags: ["Fleet", "Strategy", "Finance"],
-  },
-  {
-    id: "emergency",
-    title: "Emergency Response Planning",
-    description: "Develop and test your Emergency Response Plan (ERP) including family assistance, media relations, regulatory notification, and go-team protocols.",
-    duration: "1 day",
-    participants: "Up to 20",
-    price: 1800,
-    icon: Zap,
-    level: "Foundation",
-    tags: ["Emergency", "ERP", "Crisis Management"],
-  },
-  {
-    id: "frms",
-    title: "Fatigue Risk Management (FRMS)",
-    description: "Implement an evidence-based FRMS that goes beyond regulatory FTL requirements to proactively manage fatigue risk across your operation.",
-    duration: "1.5 days",
-    participants: "Up to 25",
-    price: 2600,
-    icon: Clock,
-    level: "Advanced",
-    tags: ["FRMS", "Fatigue", "Safety"],
-  },
+const modules = [
+  { id: "M1", name: "M1 Mathematics", sub: "Core Competency Module", checked: true },
+  { id: "M2", name: "M2 Physics", sub: "Core Competency Module", checked: false },
+  { id: "M3", name: "M3 Electrical Fundamentals", sub: "Core Competency Module", checked: false },
+  { id: "M4", name: "M4 Electronic Fundamentals", sub: "Core Competency Module", checked: false },
+  { id: "M5", name: "M5 Digital Techniques / Electronic Instrument Systems", sub: "Systems Module", checked: false },
+  { id: "M6", name: "M6 Materials & Hardware", sub: "Systems Module", checked: false },
+  { id: "M7", name: "M7 Maintenance Practices", sub: "Maintenance Module", checked: false },
+  { id: "M8", name: "M8 Basic Aerodynamics", sub: "Aeronautical Module", checked: false },
+  { id: "M9", name: "M9 Human Factors", sub: "Human Factors Module", checked: true },
+  { id: "M10", name: "M10 Aviation Legislation", sub: "Regulatory Module", checked: false },
+  { id: "M11A", name: "M11A Turbine Aeroplane Aerodynamics, Structures & Systems", sub: "B1.1 Specific", checked: true },
+  { id: "M15", name: "M15 Gas Turbine Engine", sub: "Propulsion Module", checked: false },
+  { id: "M17", name: "M17 Propeller", sub: "Propulsion Module", checked: false },
 ];
 
-const levelColors = {
-  Foundation: "bg-emerald-100 text-emerald-700",
-  Advanced: "bg-blue-100 text-blue-700",
-  Expert: "bg-purple-100 text-purple-700",
-};
+export default function BookingPage() {
+  const [selected, setSelected] = useState<Record<string, boolean>>(
+    Object.fromEntries(modules.map((m) => [m.id, m.checked]))
+  );
 
-function StepIndicator({ current }: { current: number }) {
-  const steps = ["Select Modules", "Your Details", "Review & Confirm"];
+  const selectedCount = Object.values(selected).filter(Boolean).length;
+
   return (
-    <div className="bg-white border-b border-gray-100">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-        <div className="flex items-center">
-          {steps.map((label, idx) => {
-            const step = idx + 1;
-            const isActive = step === current;
-            const isComplete = step < current;
-            return (
-              <div key={label} className="flex items-center flex-1">
-                <div className="flex items-center gap-3">
+    <div className="bg-[#f6f9ff] font-['Inter'] text-[#161c22] antialiased min-h-screen pt-32 pb-24 px-6 md:px-12">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-xl shadow-[0px_40px_80px_rgba(22,28,34,0.08)] overflow-hidden">
+          {/* Progress Stepper */}
+          <div className="bg-[#eef4fc] px-8 py-10 border-b border-[#c1c6d7]/15">
+            <div className="flex items-center justify-between relative max-w-2xl mx-auto">
+              <div className="absolute top-5 left-0 w-full h-[2px] bg-[#c1c6d7]/30" />
+              <div className="absolute top-5 left-0 w-1/3 h-[2px] bg-[#0059bb]" />
+              {[
+                { num: "1", label: "Select Modules", active: true },
+                { num: "2", label: "Your Details", active: false },
+                { num: "3", label: "Review & Confirm", active: false },
+                { num: "4", label: "Success", active: false },
+              ].map((step) => (
+                <div key={step.num} className="relative z-10 flex flex-col items-center gap-3">
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 transition-all ${
-                      isComplete
-                        ? "bg-[#1E3A8A] text-white"
-                        : isActive
-                        ? "bg-[#F59E0B] text-[#0A1628]"
-                        : "bg-gray-100 text-gray-400"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
+                      step.active
+                        ? "bg-[#0059bb] text-white shadow-lg shadow-[#0059bb]/30"
+                        : "bg-[#dde3eb] text-[#414754]"
                     }`}
                   >
-                    {isComplete ? <CheckCircle className="w-5 h-5" /> : step}
+                    {step.num}
                   </div>
                   <span
-                    className={`text-sm font-semibold hidden sm:block ${
-                      isActive ? "text-[#0A1628]" : isComplete ? "text-[#1E3A8A]" : "text-gray-400"
+                    className={`text-[10px] font-bold uppercase tracking-widest font-headline ${
+                      step.active ? "text-[#0059bb]" : "text-[#414754]/60"
                     }`}
                   >
-                    {label}
+                    {step.label}
                   </span>
                 </div>
-                {idx < steps.length - 1 && (
-                  <div className="flex-1 h-0.5 mx-4 bg-gray-200 relative">
-                    <div
-                      className="absolute top-0 left-0 h-full bg-[#1E3A8A] transition-all"
-                      style={{ width: isComplete ? "100%" : "0%" }}
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function BookingPage() {
-  const router = useRouter();
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const toggleModule = (id: string) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
-    );
-  };
-
-  const selectedModules = modules.filter((m) => selected.includes(m.id));
-  const total = selectedModules.reduce((sum, m) => sum + m.price, 0);
-
-  const handleContinue = () => {
-    if (selected.length === 0) return;
-    // Store in sessionStorage for next steps
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("booking_modules", JSON.stringify(selected));
-    }
-    router.push("/booking/details");
-  };
-
-  return (
-    <div className="min-h-screen bg-[#F8FAFC]">
-      <StepIndicator current={1} />
-
-      {/* Header */}
-      <div className="bg-[#0A1628] py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl sm:text-4xl font-black text-white mb-3">
-            Select Your Training Modules
-          </h1>
-          <p className="text-gray-300">
-            Choose one or more modules for your team. All programs can be delivered on-site or remotely.
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
-          {/* Module Grid */}
-          <div className="xl:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {modules.map((module) => {
-                const Icon = module.icon;
-                const isSelected = selected.includes(module.id);
-                return (
-                  <button
-                    key={module.id}
-                    onClick={() => toggleModule(module.id)}
-                    className={`relative text-left rounded-2xl p-6 border-2 transition-all duration-200 group ${
-                      isSelected
-                        ? "border-[#F59E0B] bg-white shadow-xl shadow-[#F59E0B]/10"
-                        : "border-gray-100 bg-white hover:border-[#1E3A8A]/30 hover:shadow-lg"
-                    }`}
-                  >
-                    {module.popular && (
-                      <div className="absolute top-4 right-4 bg-[#F59E0B] text-[#0A1628] text-xs font-bold px-2 py-0.5 rounded-full">
-                        Popular
-                      </div>
-                    )}
-
-                    <div className="flex items-start gap-4 mb-4">
-                      <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
-                          isSelected ? "bg-[#F59E0B]" : "bg-[#F8FAFC] group-hover:bg-[#1E3A8A]/10"
-                        }`}
-                      >
-                        <Icon className={`w-6 h-6 ${isSelected ? "text-[#0A1628]" : "text-[#1E3A8A]"}`} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <h3 className="font-bold text-[#0A1628] text-sm leading-tight">{module.title}</h3>
-                        </div>
-                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${levelColors[module.level]}`}>
-                          {module.level}
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-500 text-sm leading-relaxed mb-5">{module.description}</p>
-
-                    <div className="flex items-center gap-4 text-xs text-gray-400 mb-4">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5" /> {module.duration}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users className="w-3.5 h-3.5" /> {module.participants}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {module.tags.map((tag) => (
-                        <span key={tag} className="bg-[#F8FAFC] border border-gray-200 text-gray-500 text-xs px-2 py-0.5 rounded-full">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-2xl font-black text-[#0A1628]">
-                          ${module.price.toLocaleString()}
-                        </span>
-                        <span className="text-gray-400 text-xs ml-1">per group</span>
-                      </div>
-                      <div
-                        className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all ${
-                          isSelected
-                            ? "bg-[#F59E0B] border-[#F59E0B]"
-                            : "border-gray-300 group-hover:border-[#1E3A8A]"
-                        }`}
-                      >
-                        {isSelected && <CheckCircle className="w-5 h-5 text-[#0A1628]" />}
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
+              ))}
             </div>
           </div>
 
-          {/* Summary Sidebar */}
-          <div className="xl:col-span-1">
-            <div className="sticky top-24 space-y-4">
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                <h3 className="font-bold text-[#0A1628] mb-4">Booking Summary</h3>
+          {/* Main Form */}
+          <div className="p-8 md:p-12">
+            <div className="mb-10">
+              <h1 className="text-3xl md:text-4xl font-extrabold text-[#001a41] font-headline tracking-tight mb-2">
+                Select Your Modules
+              </h1>
+              <p className="text-[#414754]/70 text-sm max-w-lg leading-relaxed">
+                Customize your aerospace training path by selecting the specific modules required for your certification or consultancy goals.
+              </p>
+            </div>
 
-                {selected.length === 0 ? (
-                  <div className="text-center py-6">
-                    <BookOpen className="w-10 h-10 text-gray-200 mx-auto mb-3" />
-                    <p className="text-gray-400 text-sm">No modules selected yet. Choose from the grid.</p>
-                  </div>
-                ) : (
-                  <div className="space-y-3 mb-4">
-                    {selectedModules.map((m) => (
-                      <div key={m.id} className="flex items-start justify-between gap-2">
-                        <div className="flex-1 min-w-0">
-                          <p className="text-gray-700 text-xs font-medium leading-tight">{m.title}</p>
-                          <p className="text-gray-400 text-xs">{m.duration}</p>
+            {/* Selects */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+              <div className="flex flex-col gap-2">
+                <label className="text-[11px] font-bold uppercase tracking-widest text-[#414754]/80 font-headline">Category</label>
+                <div className="relative">
+                  <select className="w-full bg-[#e8eef6] px-4 py-4 rounded-lg border-none focus:ring-1 focus:ring-[#0059bb] text-[#161c22] font-medium text-sm appearance-none cursor-pointer outline-none">
+                    <option>B1.1 Aeroplanes Turbine</option>
+                    <option>B1.2 Aeroplanes Piston</option>
+                    <option>B2 Avionics</option>
+                    <option>Human Factors</option>
+                    <option>Consulting Services</option>
+                  </select>
+                  <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#414754]/50">expand_more</span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-[11px] font-bold uppercase tracking-widest text-[#414754]/80 font-headline">Training Path</label>
+                <div className="relative">
+                  <select className="w-full bg-[#e8eef6] px-4 py-4 rounded-lg border-none focus:ring-1 focus:ring-[#0059bb] text-[#161c22] font-medium text-sm appearance-none cursor-pointer outline-none">
+                    <option>Training + Examination</option>
+                    <option>Training Only</option>
+                    <option>Examination Only</option>
+                    <option>Advisory Session</option>
+                  </select>
+                  <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#414754]/50">expand_more</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Module List */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xs font-bold uppercase tracking-[0.15rem] text-[#0059bb] font-headline">Available Modules</h2>
+                <button
+                  onClick={() => setSelected(Object.fromEntries(modules.map((m) => [m.id, true])))}
+                  className="text-[10px] font-bold uppercase tracking-widest text-[#0059bb] border-b border-[#0059bb]/20 hover:border-[#0059bb] transition-all"
+                >
+                  Select All
+                </button>
+              </div>
+              <div className="border border-[#c1c6d7]/30 rounded-xl overflow-hidden bg-[#eef4fc]/30">
+                <div className="h-[400px] overflow-y-auto p-1" style={{ scrollbarWidth: "thin" }}>
+                  <div className="space-y-1">
+                    {modules.map((mod) => (
+                      <label
+                        key={mod.id}
+                        className={`flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all ${
+                          selected[mod.id]
+                            ? "bg-white shadow-sm border border-[#0059bb]/10"
+                            : "hover:bg-white/60"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selected[mod.id] || false}
+                          onChange={(e) => setSelected((prev) => ({ ...prev, [mod.id]: e.target.checked }))}
+                          className="w-5 h-5 rounded border-[#c1c6d7] text-[#0059bb] focus:ring-[#0059bb] cursor-pointer"
+                        />
+                        <div className="flex-1">
+                          <p className="text-sm font-bold text-[#161c22] tracking-tight">{mod.name}</p>
+                          <p className="text-[10px] font-semibold text-[#414754]/50 uppercase tracking-tighter">{mod.sub}</p>
                         </div>
-                        <span className="text-[#0A1628] font-bold text-sm flex-shrink-0">
-                          ${m.price.toLocaleString()}
-                        </span>
-                      </div>
+                        {selected[mod.id] && (
+                          <span className="material-symbols-outlined text-[#0059bb] text-sm">check_circle</span>
+                        )}
+                      </label>
                     ))}
                   </div>
-                )}
-
-                <div className="border-t border-gray-100 pt-4">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-gray-500 text-sm">Subtotal</span>
-                    <span className="text-[#0A1628] font-bold">${total.toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-gray-400 text-xs">* Pricing per group session</span>
-                  </div>
-
-                  <button
-                    onClick={handleContinue}
-                    disabled={selected.length === 0}
-                    className="w-full flex items-center justify-center gap-2 bg-[#F59E0B] hover:bg-[#D97706] disabled:opacity-40 disabled:cursor-not-allowed text-[#0A1628] font-bold px-4 py-3.5 rounded-xl transition-all duration-200 text-sm"
-                  >
-                    Continue <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <div className="mt-4 flex items-start gap-2 text-xs text-gray-400">
-                  <Info className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
-                  All sessions can be delivered on-site or via live virtual classroom. Custom scheduling available.
                 </div>
               </div>
+            </div>
 
-              <div className="bg-[#0A1628] rounded-2xl p-5 text-center">
-                <p className="text-gray-300 text-xs mb-3">Need a custom program?</p>
-                <Link
-                  href="/contact"
-                  className="text-[#F59E0B] font-semibold text-sm hover:underline"
-                >
-                  Contact us for a bespoke quote
-                </Link>
+            {/* Summary + CTA */}
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-[#e8eef6]">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#414754]/60 font-headline">
+                  Modules Selected
+                </p>
+                <p className="text-3xl font-extrabold text-[#0059bb] font-headline">{selectedCount}</p>
               </div>
+              <Link
+                href="/booking/details"
+                className="bg-gradient-to-br from-[#0059bb] to-[#0070ea] text-white font-headline font-bold px-10 py-4 rounded-lg shadow-lg hover:opacity-90 transition-all inline-flex items-center gap-2"
+              >
+                Continue to Details
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </Link>
             </div>
           </div>
         </div>

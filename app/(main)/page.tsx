@@ -1,535 +1,406 @@
 import Link from "next/link";
-import {
-  Plane,
-  Shield,
-  BookOpen,
-  TrendingUp,
-  Users,
-  Globe,
-  Star,
-  ArrowRight,
-  CheckCircle,
-  Award,
-  Zap,
-  BarChart3,
-  ChevronRight,
-  Clock,
-  Target,
-  Lock,
-} from "lucide-react";
-
-const services = [
-  {
-    icon: Plane,
-    title: "Flight Operations",
-    description:
-      "Optimize your flight operations with data-driven strategies that enhance efficiency, reduce costs, and improve on-time performance.",
-    color: "from-blue-500 to-blue-700",
-    link: "/services#flight-ops",
-  },
-  {
-    icon: Shield,
-    title: "Safety Management",
-    description:
-      "Implement robust Safety Management Systems (SMS) aligned with ICAO standards to protect your people and assets.",
-    color: "from-emerald-500 to-emerald-700",
-    link: "/services#safety",
-  },
-  {
-    icon: Lock,
-    title: "Regulatory Compliance",
-    description:
-      "Navigate complex aviation regulations with confidence through expert guidance on FAA, EASA, and international standards.",
-    color: "from-purple-500 to-purple-700",
-    link: "/services#compliance",
-  },
-  {
-    icon: BookOpen,
-    title: "Training Programs",
-    description:
-      "Customized training curricula for flight crews, ground staff, and management teams aligned with industry best practices.",
-    color: "from-[#F59E0B] to-orange-600",
-    link: "/services#training",
-  },
-  {
-    icon: BarChart3,
-    title: "Fleet Management",
-    description:
-      "Strategic fleet planning, aircraft acquisition advisory, and maintenance program optimization for maximum ROI.",
-    color: "from-rose-500 to-rose-700",
-    link: "/services#fleet",
-  },
-  {
-    icon: Globe,
-    title: "Air Traffic Management",
-    description:
-      "ATM system design, airspace optimization, and NextGen/SESAR implementation support for modern operations.",
-    color: "from-[#38BDF8] to-blue-600",
-    link: "/services#atm",
-  },
-];
-
-const stats = [
-  { value: "500+", label: "Global Clients", icon: Users },
-  { value: "15+", label: "Years Experience", icon: Award },
-  { value: "98%", label: "Client Satisfaction", icon: Star },
-  { value: "50+", label: "Countries Served", icon: Globe },
-];
-
-const features = [
-  {
-    icon: Target,
-    title: "Strategic Precision",
-    description:
-      "We develop tailored strategies that align with your organizational goals and operational realities, not generic one-size-fits-all solutions.",
-  },
-  {
-    icon: Award,
-    title: "Industry-Leading Expertise",
-    description:
-      "Our team of former airline executives, safety officers, and regulatory specialists brings decades of real-world aviation experience.",
-  },
-  {
-    icon: Zap,
-    title: "Measurable Results",
-    description:
-      "Every engagement is built around quantifiable outcomes — cost reductions, efficiency gains, and compliance metrics that matter.",
-  },
-];
-
-const testimonials = [
-  {
-    name: "James Harrington",
-    role: "VP Flight Operations, Atlas Airways",
-    text: "Aviatech transformed our safety culture. Their SMS implementation reduced incidents by 43% in the first year. I can't recommend them highly enough.",
-    rating: 5,
-    initials: "JH",
-    color: "from-blue-500 to-blue-700",
-  },
-  {
-    name: "Sarah Chen",
-    role: "Director of Compliance, Pacific Cargo Airlines",
-    text: "When we faced complex EASA certification requirements, Aviatech's regulatory team guided us through flawlessly. On time and under budget.",
-    rating: 5,
-    initials: "SC",
-    color: "from-emerald-500 to-teal-600",
-  },
-  {
-    name: "Mohamed Al-Rashidi",
-    role: "CEO, Gulf Regional Aviation",
-    text: "Their fleet optimization strategy saved us $4.2M in the first year alone. Aviatech doesn't just consult — they deliver real transformation.",
-    rating: 5,
-    initials: "MR",
-    color: "from-[#F59E0B] to-orange-600",
-  },
-];
-
-const insights = [
-  {
-    category: "Safety",
-    title: "The Future of Aviation Safety: AI-Powered Predictive Analytics",
-    date: "March 15, 2026",
-    readTime: "6 min read",
-  },
-  {
-    category: "Regulation",
-    title: "Navigating EASA's New Sustainability Requirements for 2026",
-    date: "March 8, 2026",
-    readTime: "8 min read",
-  },
-  {
-    category: "Operations",
-    title: "How Top Airlines Are Achieving 94%+ OTP in a Volatile Market",
-    date: "February 28, 2026",
-    readTime: "5 min read",
-  },
-];
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
+    <div className="bg-[#f6f9ff] text-[#161c22] font-['Inter'] antialiased">
       {/* Hero Section */}
-      <section className="relative min-h-[92vh] bg-[#0A1628] flex items-center overflow-hidden">
-        {/* Background geometric shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Grid pattern */}
-          <div
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-          {/* Gradient orbs */}
-          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-bl from-[#1E3A8A]/40 to-transparent rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#F59E0B]/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-[#1E3A8A]/20 to-transparent rounded-full" />
-
-          {/* Animated rings */}
-          <div className="absolute top-10 right-10 w-96 h-96 border border-[#F59E0B]/10 rounded-full animate-[float_6s_ease-in-out_infinite]" />
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] border border-[#38BDF8]/5 rounded-full animate-[float_9s_ease-in-out_infinite_reverse]" />
-          <div className="absolute top-24 right-32 w-48 h-48 border border-[#F59E0B]/15 rounded-full animate-[float_4s_ease-in-out_infinite]" />
-
-          {/* Diagonal lines */}
-          <div className="absolute inset-0 opacity-5">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="diag" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <line x1="0" y1="40" x2="40" y2="0" stroke="#38BDF8" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#diag)" />
-            </svg>
-          </div>
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="max-w-3xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#F59E0B]/10 border border-[#F59E0B]/20 rounded-full px-4 py-1.5 mb-8">
-              <div className="w-2 h-2 bg-[#F59E0B] rounded-full animate-pulse" />
-              <span className="text-[#F59E0B] text-sm font-medium">
-                Trusted by 500+ Aviation Leaders Worldwide
+      <section className="relative min-h-[921px] flex items-center overflow-hidden bg-[#f6f9ff] pt-20">
+        <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-12 items-center z-10">
+          <div className="space-y-8">
+            <div className="inline-block px-4 py-1.5 bg-[#e3e9f1] rounded-full">
+              <span className="text-[#0059bb] font-['Inter'] text-xs font-bold uppercase tracking-widest">
+                Global Aerospace Advisory
               </span>
             </div>
-
-            {/* Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-6">
-              Elevating
+            <h1 className="text-6xl lg:text-8xl font-headline font-extrabold leading-[1.05] tracking-tight text-[#161c22]">
+              Engineering <span className="text-[#0059bb]">Clarity.</span>
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] to-[#38BDF8]">
-                Aviation
-              </span>
+              Technology <span className="text-[#0059bb]">Confidence.</span>
               <br />
-              Excellence
+              Aviation Focus.
             </h1>
-
-            <p className="text-gray-300 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
-              Strategic consulting that transforms aviation organizations. From safety management
-              to fleet optimization, we deliver measurable results that keep you ahead of the curve.
+            <p className="text-lg text-[#414754] max-w-lg leading-relaxed">
+              A trusted consulting partner helping aviation businesses improve systems, operations, and digital capability through engineering-led precision.
             </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/booking"
-                className="group flex items-center justify-center gap-3 bg-[#F59E0B] hover:bg-[#D97706] text-[#0A1628] font-bold px-8 py-4 rounded-xl text-base transition-all duration-200 shadow-xl shadow-[#F59E0B]/20 hover:shadow-[#F59E0B]/30 hover:-translate-y-1"
-              >
-                <Plane className="w-5 h-5 transform -rotate-45 group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
-                Book a Consultation
-              </Link>
+            <div className="flex flex-wrap gap-4 pt-4">
               <Link
                 href="/services"
-                className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 hover:-translate-y-1"
+                className="bg-gradient-to-br from-[#0059bb] to-[#0070ea] text-white px-8 py-4 rounded-md font-['Inter'] text-sm uppercase tracking-widest font-bold flex items-center gap-2 group hover:opacity-90 transition-all"
               >
                 Explore Services
-                <ArrowRight className="w-5 h-5" />
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">
+                  arrow_forward
+                </span>
+              </Link>
+              <Link
+                href="/contact"
+                className="border border-[#c1c6d7] text-[#161c22] px-8 py-4 rounded-md font-['Inter'] text-sm uppercase tracking-widest font-bold hover:bg-[#e3e9f1] transition-colors"
+              >
+                Contact Us
               </Link>
             </div>
-
-            {/* Trust indicators */}
-            <div className="flex flex-wrap items-center gap-6 mt-12">
-              {["ICAO Certified", "IATA Approved", "FAA Compliant", "ISO 9001:2015"].map((badge) => (
-                <div key={badge} className="flex items-center gap-2 text-gray-400 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#38BDF8]" />
-                  {badge}
-                </div>
-              ))}
-            </div>
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 text-xs">
-          <span>Scroll to explore</span>
-          <div className="w-5 h-8 border-2 border-gray-600 rounded-full flex justify-center pt-1.5">
-            <div className="w-1 h-2 bg-gray-500 rounded-full animate-bounce" />
+          <div className="relative hidden lg:block">
+            <div className="aspect-square rounded-full bg-[#dde3eb] absolute -top-12 -right-12 w-96 h-96 mix-blend-multiply filter blur-3xl opacity-30" />
+            <div className="rounded-xl shadow-2xl relative z-10 bg-[#e8eef6] aspect-[4/3] flex items-center justify-center">
+              <span className="material-symbols-outlined text-[#0059bb] text-[80px]">flight</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="bg-[#1E3A8A] border-y border-[#2d52a8]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div key={stat.label} className="flex flex-col items-center text-center group">
-                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-3 group-hover:bg-[#F59E0B]/20 transition-colors">
-                    <Icon className="w-5 h-5 text-[#F59E0B]" />
-                  </div>
-                  <div className="text-3xl sm:text-4xl font-black text-white mb-1">{stat.value}</div>
-                  <div className="text-blue-200 text-sm font-medium">{stat.label}</div>
-                </div>
-              );
-            })}
+      {/* Trust/Credibility Section */}
+      <section className="py-24 bg-[#eef4fc]">
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+            {[
+              {
+                icon: "flight_takeoff",
+                title: "Industry-focused expertise",
+                desc: "Deep-rooted understanding of aviation regulatory environments and operational complexities.",
+              },
+              {
+                icon: "strategy",
+                title: "Strategic advisory",
+                desc: "Beyond implementation: we architect long-term digital roadmaps for sustainable flight operations.",
+              },
+              {
+                icon: "public",
+                title: "International business mindset",
+                desc: "Supporting cross-border aerospace projects with a global standard of technical excellence.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="flex flex-col gap-4">
+                <span className="material-symbols-outlined text-[#0059bb] text-4xl">{item.icon}</span>
+                <h3 className="font-headline text-xl font-bold">{item.title}</h3>
+                <p className="text-[#414754] leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="py-24 bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 text-[#F59E0B] font-semibold text-sm mb-4 uppercase tracking-wider">
-              <div className="w-8 h-0.5 bg-[#F59E0B]" />
-              Our Services
-              <div className="w-8 h-0.5 bg-[#F59E0B]" />
+      <section className="py-32 bg-[#f6f9ff]" id="services">
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+                Precision Engineering for Digital Skies
+              </h2>
+              <p className="text-[#414754] text-lg">
+                We bridge the gap between legacy aviation systems and the future of digital aerospace through specialized technical consulting.
+              </p>
             </div>
-            <h2 className="text-4xl sm:text-5xl font-black text-[#0A1628] mb-5">
-              Comprehensive Aviation Consulting
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              From flight operations to regulatory compliance, we provide end-to-end consulting
-              solutions tailored to your organization&apos;s unique needs.
-            </p>
+            <div className="hidden md:block pb-2">
+              <div className="h-1 w-24 bg-[#0059bb]" />
+            </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service) => {
-              const Icon = service.icon;
-              return (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: "settings_applications",
+                title: "Aviation Technology Consulting",
+                desc: "Specialized technical architecture design for mission-critical flight management and ground systems.",
+              },
+              {
+                icon: "transform",
+                title: "Digital Transformation Advisory",
+                desc: "Modernizing legacy infrastructure to support AI-driven analytics and real-time operational data flow.",
+              },
+              {
+                icon: "analytics",
+                title: "Systems & Process Optimization",
+                desc: "Lean methodologies applied to aviation workflows, reducing latency and increasing system reliability.",
+              },
+            ].map((svc) => (
+              <div
+                key={svc.title}
+                className="p-8 bg-white rounded-xl hover:bg-[#e8eef6] transition-colors group"
+              >
+                <div className="w-12 h-12 rounded-lg bg-[#e3e9f1] flex items-center justify-center mb-8 group-hover:bg-[#0059bb] transition-colors">
+                  <span className="material-symbols-outlined text-[#0059bb] group-hover:text-white">
+                    {svc.icon}
+                  </span>
+                </div>
+                <h4 className="font-headline text-xl font-bold mb-4">{svc.title}</h4>
+                <p className="text-[#414754] mb-8 leading-relaxed">{svc.desc}</p>
                 <Link
-                  key={service.title}
-                  href={service.link}
-                  className="group bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl hover:border-transparent hover:-translate-y-2 transition-all duration-300"
+                  href="/services"
+                  className="inline-flex items-center gap-2 text-[#0059bb] font-bold text-sm uppercase tracking-widest group-hover:underline"
                 >
-                  <div
-                    className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
-                  >
-                    <Icon className="w-6 h-6 text-white" strokeWidth={1.75} />
-                  </div>
-                  <h3 className="text-xl font-bold text-[#0A1628] mb-3 group-hover:text-[#1E3A8A] transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-500 leading-relaxed text-sm mb-5">{service.description}</p>
-                  <div className="flex items-center gap-2 text-[#1E3A8A] font-semibold text-sm group-hover:gap-3 transition-all">
-                    Learn more <ArrowRight className="w-4 h-4" />
-                  </div>
+                  Learn More
+                  <span className="material-symbols-outlined text-sm">chevron_right</span>
                 </Link>
-              );
-            })}
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-12">
-            <Link
-              href="/services"
-              className="inline-flex items-center gap-2 bg-[#0A1628] hover:bg-[#1E3A8A] text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
-            >
-              View All Services <ArrowRight className="w-5 h-5" />
-            </Link>
+      {/* Industries Section */}
+      <section className="py-32 bg-[#eef4fc]" id="industries">
+        <div className="max-w-7xl mx-auto px-8">
+          <h2 className="font-headline text-3xl font-extrabold mb-16 uppercase tracking-widest text-center">
+            Core Industries
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {[
+              { label: "Airlines", icon: "flight_takeoff" },
+              { label: "Airports", icon: "corporate_fare" },
+              { label: "Logistics", icon: "inventory_2" },
+              { label: "Aerospace Support", icon: "build_circle" },
+            ].map((ind) => (
+              <div
+                key={ind.label}
+                className="group relative overflow-hidden rounded-xl h-96 bg-[#161c22] flex items-end p-8"
+              >
+                <span className="material-symbols-outlined text-white/10 absolute top-8 right-8 text-[80px] group-hover:text-white/20 transition-colors">
+                  {ind.icon}
+                </span>
+                <h5 className="text-white font-headline text-2xl font-bold relative z-10">{ind.label}</h5>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-24 bg-[#0A1628] relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#1E3A8A]/30 to-transparent rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#F59E0B]/10 to-transparent rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 text-[#F59E0B] font-semibold text-sm mb-4 uppercase tracking-wider">
-              <div className="w-8 h-0.5 bg-[#F59E0B]" />
-              Why Aviatech
-              <div className="w-8 h-0.5 bg-[#F59E0B]" />
-            </div>
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-5">
-              The Aviatech Difference
+      <section className="py-32 bg-[#f6f9ff]">
+        <div className="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row gap-20">
+          <div className="lg:w-1/2">
+            <h2 className="font-headline text-4xl md:text-5xl font-extrabold tracking-tight mb-8">
+              Why the Industry Chooses Aviatech
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              We combine deep industry expertise with data-driven methodologies to deliver
-              transformative results for aviation organizations.
+            <p className="text-[#414754] text-lg mb-12">
+              We don't just understand technology; we understand how technology breathes in the high-pressure world of aviation. Our approach is defined by uncompromising precision.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {features.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <div
-                  key={feature.title}
-                  className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/8 hover:border-[#F59E0B]/20 transition-all duration-300 group"
-                >
-                  <div className="w-14 h-14 bg-gradient-to-br from-[#F59E0B] to-[#D97706] rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-[#F59E0B]/20 group-hover:scale-110 transition-transform">
-                    <Icon className="w-6 h-6 text-[#0A1628]" strokeWidth={2} />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                  <p className="text-gray-400 leading-relaxed text-sm">{feature.description}</p>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Certification logos row */}
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {["ICAO Partner", "IATA Accredited", "FAA Approved", "EASA Certified", "ISO 9001:2015"].map(
-              (cert) => (
-                <div
-                  key={cert}
-                  className="px-5 py-2.5 bg-white/5 border border-white/15 rounded-lg text-gray-300 text-sm font-medium"
-                >
-                  {cert}
-                </div>
-              )
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-24 bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 text-[#F59E0B] font-semibold text-sm mb-4 uppercase tracking-wider">
-              <div className="w-8 h-0.5 bg-[#F59E0B]" />
-              Testimonials
-              <div className="w-8 h-0.5 bg-[#F59E0B]" />
-            </div>
-            <h2 className="text-4xl sm:text-5xl font-black text-[#0A1628] mb-5">
-              Trusted by Aviation Leaders
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Don&apos;t just take our word for it — hear from the executives who&apos;ve transformed
-              their operations with Aviatech.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.name}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group"
-              >
-                {/* Stars */}
-                <div className="flex gap-1 mb-5">
-                  {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#F59E0B] text-[#F59E0B]" />
-                  ))}
-                </div>
-
-                {/* Quote */}
-                <p className="text-gray-600 leading-relaxed mb-6 text-sm relative">
-                  <span className="text-4xl text-[#F59E0B] leading-none font-serif absolute -top-2 -left-1">&ldquo;</span>
-                  <span className="pl-5">{testimonial.text}</span>
-                </p>
-
-                {/* Author */}
-                <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                  <div
-                    className={`w-11 h-11 rounded-full bg-gradient-to-br ${testimonial.color} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}
-                  >
-                    {testimonial.initials}
+            <div className="space-y-10">
+              {[
+                {
+                  icon: "verified",
+                  title: "Aviation-focused Understanding",
+                  desc: "Every consultant at Aviatech comes with deep domain experience, ensuring we speak the language of flight operations.",
+                },
+                {
+                  icon: "terminal",
+                  title: "Practical Consulting",
+                  desc: "We deliver actionable roadmaps, not just theoretical whitepapers. Implementation is part of our DNA.",
+                },
+              ].map((item) => (
+                <div key={item.title} className="flex gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-[#d8e2ff]/40 text-[#0059bb]">
+                    <span className="material-symbols-outlined">{item.icon}</span>
                   </div>
                   <div>
-                    <div className="font-bold text-[#0A1628] text-sm">{testimonial.name}</div>
-                    <div className="text-gray-500 text-xs">{testimonial.role}</div>
+                    <h6 className="font-headline text-lg font-bold mb-2">{item.title}</h6>
+                    <p className="text-[#414754]">{item.desc}</p>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+          <div className="lg:w-1/2 bg-[#e8eef6] rounded-3xl p-12 relative">
+            <div className="absolute -top-6 -left-6 bg-[#0059bb] p-6 rounded-2xl text-white font-bold text-4xl font-headline">
+              15+
+            </div>
+            <h3 className="font-headline text-2xl font-bold mb-6 pt-6 text-[#0059bb]">
+              Key Advantage Metrics
+            </h3>
+            <ul className="space-y-4 font-['Inter'] uppercase text-sm tracking-widest text-[#414754]">
+              {[
+                { label: "Regulatory Compliance Rate", value: "100%" },
+                { label: "Avg. System Efficiency Gain", value: "32%" },
+                { label: "Active Global Hubs", value: "08" },
+                { label: "Strategic Partners", value: "45" },
+              ].map((m) => (
+                <li
+                  key={m.label}
+                  className="flex justify-between border-b border-[#c1c6d7] pb-4"
+                >
+                  <span>{m.label}</span>
+                  <span className="text-[#161c22] font-bold">{m.value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-32 bg-[#161c22] text-white" id="about">
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="grid lg:grid-cols-12 gap-16 items-center">
+            <div className="lg:col-span-5">
+              <h2 className="font-headline text-4xl font-extrabold mb-8">
+                Guided by Precision, Driven by Trust.
+              </h2>
+              <p className="text-slate-400 text-lg leading-relaxed mb-8">
+                Aviatech Consulting was founded on a simple premise: Aviation technology requires a higher standard of care. We are a collective of aerospace veterans and software architects dedicated to navigating the digital frontier.
+              </p>
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <h6 className="text-[#0059bb] font-bold uppercase tracking-widest text-xs mb-2">Precision</h6>
+                  <p className="text-slate-500 text-sm">Eliminating ambiguity in technical execution.</p>
+                </div>
+                <div>
+                  <h6 className="text-[#0059bb] font-bold uppercase tracking-widest text-xs mb-2">Clarity</h6>
+                  <p className="text-slate-500 text-sm">Simplifying complex systems for operational ease.</p>
+                </div>
+              </div>
+            </div>
+            <div className="lg:col-span-7">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-xl bg-[#414754] aspect-square opacity-60" />
+                <div className="rounded-xl bg-[#414754] aspect-square mt-12 opacity-60" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="py-32 bg-[#f6f9ff]">
+        <div className="max-w-7xl mx-auto px-8">
+          <h2 className="font-headline text-3xl font-extrabold mb-24 text-center">Our Methodology</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+            <div className="hidden md:block absolute top-12 left-0 w-full h-px bg-[#dde3eb] z-0" />
+            {[
+              { num: "01", title: "Discover", desc: "Deep dive into current infrastructure and operational constraints." },
+              { num: "02", title: "Assess", desc: "Gap analysis and risk evaluation of proposed technological shifts." },
+              { num: "03", title: "Design", desc: "Architecting customized solutions with scalability at the core." },
+              { num: "04", title: "Implement", desc: "Managed deployment and long-term technical lifecycle support." },
+            ].map((step) => (
+              <div key={step.num} className="relative z-10 flex flex-col items-center text-center px-4">
+                <div className="w-24 h-24 rounded-full bg-white border-4 border-[#f6f9ff] shadow-xl flex items-center justify-center mb-8 font-headline text-2xl font-bold text-[#0059bb]">
+                  {step.num}
+                </div>
+                <h5 className="font-headline font-bold text-xl mb-4">{step.title}</h5>
+                <p className="text-[#414754] text-sm">{step.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Latest Insights */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 text-[#F59E0B] font-semibold text-sm mb-3 uppercase tracking-wider">
-                <div className="w-8 h-0.5 bg-[#F59E0B]" />
-                Latest Insights
-              </div>
-              <h2 className="text-4xl font-black text-[#0A1628]">Aviation Intelligence</h2>
-            </div>
+      {/* Insights Section */}
+      <section className="py-32 bg-[#eef4fc]" id="insights">
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="flex justify-between items-center mb-16">
+            <h2 className="font-headline text-3xl font-extrabold uppercase tracking-widest">
+              Aviation Insights
+            </h2>
             <Link
               href="/insights"
-              className="flex items-center gap-2 text-[#1E3A8A] font-semibold hover:gap-3 transition-all text-sm"
+              className="text-[#0059bb] font-bold uppercase tracking-widest text-sm border-b-2 border-[#0059bb] pb-1"
             >
-              View all articles <ArrowRight className="w-4 h-4" />
+              Read All Articles
             </Link>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {insights.map((item, idx) => (
-              <Link
-                key={idx}
-                href="/insights"
-                className="group bg-[#F8FAFC] rounded-2xl p-6 border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-bold text-[#F59E0B] uppercase tracking-wider bg-[#F59E0B]/10 px-3 py-1 rounded-full">
-                    {item.category}
-                  </span>
-                  <span className="flex items-center gap-1 text-gray-400 text-xs">
-                    <Clock className="w-3 h-3" /> {item.readTime}
-                  </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {[
+              {
+                category: "Industry Trends",
+                title: "Digital trends in aviation: Beyond the cockpit",
+                desc: "Exploring how AI and machine learning are revolutionizing ground-to-air communications and predictive maintenance...",
+              },
+              {
+                category: "Case Study",
+                title: "Scaling Airport Systems for the Next Decade",
+                desc: "A look into how centralized cloud architectures are helping regional hubs handle triple the volume with 20% less latency...",
+              },
+            ].map((article) => (
+              <div key={article.title} className="group cursor-pointer">
+                <div className="overflow-hidden rounded-xl mb-8 bg-[#e8eef6] h-80 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[#0059bb] text-[60px]">article</span>
                 </div>
-                <h3 className="text-[#0A1628] font-bold text-base leading-snug mb-4 group-hover:text-[#1E3A8A] transition-colors">
-                  {item.title}
-                </h3>
-                <div className="flex items-center gap-2 text-[#1E3A8A] font-medium text-sm group-hover:gap-3 transition-all">
-                  Read article <ChevronRight className="w-4 h-4" />
-                </div>
-              </Link>
+                <span className="text-[#0059bb] font-['Inter'] text-xs font-bold uppercase tracking-widest">
+                  {article.category}
+                </span>
+                <h4 className="font-headline text-2xl font-bold mt-4 mb-4 group-hover:text-[#0059bb] transition-colors">
+                  {article.title}
+                </h4>
+                <p className="text-[#414754] leading-relaxed">{article.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-[#0A1628] via-[#1E3A8A] to-[#0A1628] relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 opacity-10">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="cta-grid" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
-                  <circle cx="25" cy="25" r="1" fill="#F59E0B" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#cta-grid)" />
-            </svg>
+      {/* Contact Section */}
+      <section className="py-32 bg-[#f6f9ff]" id="contact">
+        <div className="max-w-7xl mx-auto px-8">
+          <div className="bg-white rounded-[2rem] p-12 lg:p-24 shadow-[0_40px_80px_rgba(22,28,34,0.03)] flex flex-col lg:flex-row gap-20">
+            <div className="lg:w-1/3">
+              <h2 className="font-headline text-4xl font-extrabold mb-8">
+                Let's discuss your next project
+              </h2>
+              <div className="space-y-8">
+                {[
+                  { label: "Email us", value: "hello@aviatech.com" },
+                  { label: "Visit us", value: "Techno Plaza I, Suite 402\nZurich Airport Business Park, CH" },
+                  { label: "Call us", value: "+41 44 123 4567" },
+                ].map((item) => (
+                  <div key={item.label}>
+                    <h6 className="font-['Inter'] uppercase tracking-widest text-xs text-[#0059bb] mb-2 font-bold">
+                      {item.label}
+                    </h6>
+                    <p className="text-lg font-bold whitespace-pre-line">{item.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="lg:w-2/3">
+              <form className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="font-['Inter'] text-xs uppercase tracking-widest font-bold text-[#414754]">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="John Doe"
+                    className="w-full bg-[#e8eef6] border-none p-4 rounded-md focus:ring-2 focus:ring-[#0059bb] focus:bg-white transition-all outline-none"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="font-['Inter'] text-xs uppercase tracking-widest font-bold text-[#414754]">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="john@company.com"
+                    className="w-full bg-[#e8eef6] border-none p-4 rounded-md focus:ring-2 focus:ring-[#0059bb] focus:bg-white transition-all outline-none"
+                  />
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <label className="font-['Inter'] text-xs uppercase tracking-widest font-bold text-[#414754]">
+                    Organization
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Airlines, Airport, OEM..."
+                    className="w-full bg-[#e8eef6] border-none p-4 rounded-md focus:ring-2 focus:ring-[#0059bb] focus:bg-white transition-all outline-none"
+                  />
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <label className="font-['Inter'] text-xs uppercase tracking-widest font-bold text-[#414754]">
+                    Message
+                  </label>
+                  <textarea
+                    placeholder="Tell us about your project requirements..."
+                    rows={4}
+                    className="w-full bg-[#e8eef6] border-none p-4 rounded-md focus:ring-2 focus:ring-[#0059bb] focus:bg-white transition-all outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="bg-gradient-to-br from-[#0059bb] to-[#0070ea] text-white px-10 py-5 rounded-md font-['Inter'] text-sm uppercase tracking-widest font-bold md:w-fit hover:opacity-90 transition-all shadow-lg"
+                >
+                  Send Message
+                </button>
+              </form>
+            </div>
           </div>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#F59E0B]/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="w-20 h-20 bg-[#F59E0B]/10 border border-[#F59E0B]/20 rounded-2xl flex items-center justify-center mx-auto mb-8">
-            <Plane className="w-9 h-9 text-[#F59E0B] transform -rotate-45" strokeWidth={1.75} />
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 leading-tight">
-            Ready to transform your
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] to-[#38BDF8]">
-              aviation operations?
-            </span>
-          </h2>
-          <p className="text-gray-300 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Schedule a complimentary strategy session with our senior consultants and discover
-            how Aviatech can unlock new levels of performance for your organization.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/booking"
-              className="group flex items-center justify-center gap-3 bg-[#F59E0B] hover:bg-[#D97706] text-[#0A1628] font-bold px-10 py-4 rounded-xl text-base transition-all duration-200 shadow-xl shadow-[#F59E0B]/25 hover:-translate-y-1"
-            >
-              <Plane className="w-5 h-5 transform -rotate-45 group-hover:translate-x-1 transition-transform" strokeWidth={2.5} />
-              Book a Free Consultation
-            </Link>
-            <Link
-              href="/contact"
-              className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold px-10 py-4 rounded-xl text-base transition-all duration-200 hover:-translate-y-1"
-            >
-              Contact Our Team
-            </Link>
-          </div>
-          <p className="text-gray-500 text-sm mt-6">
-            No commitment required. Response within 24 hours.
-          </p>
         </div>
       </section>
     </div>

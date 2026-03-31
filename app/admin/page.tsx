@@ -1,281 +1,329 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  CalendarCheck, DollarSign, Users, AlertCircle, TrendingUp, TrendingDown,
-  ArrowRight, CheckCircle, Clock, Eye, Plus, FileText, MessageSquare, BarChart3,
-} from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Admin Dashboard | Aviatech",
-};
-
-const stats = [
+const kpiCards = [
   {
-    label: "Total Bookings",
-    value: "248",
-    change: "+12%",
-    trend: "up",
-    icon: CalendarCheck,
-    color: "bg-blue-500",
-    lightBg: "bg-blue-50",
-    textColor: "text-blue-600",
+    label: "Total Applications",
+    value: "1,284",
+    icon: "description",
+    trend: "+12.4%",
+    trendUp: true,
+    borderColor: "border-[#0059bb]",
+    iconBg: "bg-[#d8e2ff]",
+    iconColor: "text-[#0059bb]",
   },
   {
-    label: "Revenue (YTD)",
-    value: "$1.24M",
-    change: "+18.3%",
-    trend: "up",
-    icon: DollarSign,
-    color: "bg-emerald-500",
-    lightBg: "bg-emerald-50",
-    textColor: "text-emerald-600",
+    label: "Active Modules",
+    value: "42",
+    icon: "school",
+    trend: "+3 this week",
+    trendUp: true,
+    borderColor: "border-emerald-400",
+    iconBg: "bg-emerald-50",
+    iconColor: "text-emerald-600",
   },
   {
-    label: "Active Clients",
-    value: "89",
-    change: "+5",
-    trend: "up",
-    icon: Users,
-    color: "bg-[#F59E0B]",
-    lightBg: "bg-amber-50",
-    textColor: "text-amber-600",
+    label: "Monthly Revenue",
+    value: "$84.2k",
+    icon: "payments",
+    trend: "+8.1%",
+    trendUp: true,
+    borderColor: "border-[#cda800]",
+    iconBg: "bg-[#ffe07f]/30",
+    iconColor: "text-[#cda800]",
   },
   {
     label: "Pending Reviews",
-    value: "12",
-    change: "-3",
-    trend: "down",
-    icon: AlertCircle,
-    color: "bg-rose-500",
-    lightBg: "bg-rose-50",
-    textColor: "text-rose-600",
+    value: "18",
+    icon: "assignment_late",
+    trend: "-4 today",
+    trendUp: false,
+    borderColor: "border-[#ba1a1a]",
+    iconBg: "bg-[#ffdad6]",
+    iconColor: "text-[#ba1a1a]",
   },
 ];
 
-const recentBookings = [
-  { id: "AVI-001842", client: "James Harrington", company: "Atlas Airways", module: "Safety Management Systems", amount: "$4,800", date: "Mar 28, 2026", status: "Confirmed" },
-  { id: "AVI-001841", client: "Sarah Chen", company: "Pacific Cargo Airlines", module: "Regulatory Compliance", amount: "$4,200", date: "Mar 27, 2026", status: "Pending" },
-  { id: "AVI-001840", client: "Mohamed Al-Rashidi", company: "Gulf Regional Aviation", module: "Fleet Planning", amount: "$3,800", date: "Mar 26, 2026", status: "Confirmed" },
-  { id: "AVI-001839", client: "Anna Kowalski", company: "EuroConnect Airlines", module: "CRM + SMS Bundle", amount: "$7,200", date: "Mar 25, 2026", status: "In Progress" },
-  { id: "AVI-001838", client: "David Okonkwo", company: "AfriAir Ltd", module: "Flight Operations", amount: "$3,600", date: "Mar 24, 2026", status: "Confirmed" },
+const recentApplications = [
+  { initials: "JV", name: "Jonathan Vance", role: "Sr. Avionics Engineer", company: "Lufthansa Technik", date: "Oct 28, 2024", status: "Approved", color: "bg-blue-500" },
+  { initials: "ER", name: "Elena Rodriguez", role: "Fleet Ops Manager", company: "Qatar Airways", date: "Oct 26, 2024", status: "Pending", color: "bg-purple-500" },
+  { initials: "MT", name: "Marcus Thorne", role: "Independent Consultant", company: "AeroConsult", date: "Oct 24, 2024", status: "Rejected", color: "bg-emerald-500" },
+  { initials: "SZ", name: "Samuel Zhang", role: "Data Analyst", company: "Singapore Airlines", date: "Oct 22, 2024", status: "Pending", color: "bg-amber-500" },
+];
+
+const modulePerformance = [
+  { name: "Avionics", pct: 85 },
+  { name: "Safety", pct: 62 },
+  { name: "Engines", pct: 94 },
+  { name: "Logistics", pct: 45 },
 ];
 
 const statusColors: Record<string, string> = {
-  Confirmed: "bg-emerald-100 text-emerald-700",
-  Pending: "bg-amber-100 text-amber-700",
-  "In Progress": "bg-blue-100 text-blue-700",
-  Cancelled: "bg-red-100 text-red-700",
+  Approved: "bg-emerald-50 text-emerald-600 border border-emerald-200",
+  Pending: "bg-amber-50 text-amber-600 border border-amber-200",
+  Rejected: "bg-[#ffdad6] text-[#ba1a1a] border border-red-200",
 };
-
-const activityFeed = [
-  { action: "New booking received", detail: "Atlas Airways — SMS Training", time: "2 minutes ago", color: "bg-emerald-500" },
-  { action: "Contact message", detail: "Inquiry from Lufthansa Technik", time: "18 minutes ago", color: "bg-blue-500" },
-  { action: "Application submitted", detail: "Partnership — AeroPlan Inc.", time: "1 hour ago", color: "bg-purple-500" },
-  { action: "Booking cancelled", detail: "Nordic Air — FRMS Module", time: "3 hours ago", color: "bg-red-500" },
-  { action: "Payment received", detail: "$7,200 — EuroConnect Airlines", time: "5 hours ago", color: "bg-[#F59E0B]" },
-  { action: "Training completed", detail: "Gulf Regional Aviation — Fleet", time: "Yesterday", color: "bg-gray-400" },
-];
-
-const monthlyData = [
-  { month: "Oct", bookings: 18, revenue: 72 },
-  { month: "Nov", bookings: 22, revenue: 88 },
-  { month: "Dec", bookings: 15, revenue: 60 },
-  { month: "Jan", bookings: 28, revenue: 112 },
-  { month: "Feb", bookings: 31, revenue: 124 },
-  { month: "Mar", bookings: 26, revenue: 104 },
-];
-
-const maxRevenue = Math.max(...monthlyData.map((d) => d.revenue));
 
 export default function AdminDashboardPage() {
   return (
-    <div className="space-y-6">
+    <div className="p-8 space-y-8">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-black text-[#0A1628]">Dashboard</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Welcome back, Robert. Here&apos;s what&apos;s happening.</p>
+          <div className="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-slate-400 mb-2">
+            Admin Overview
+          </div>
+          <h1 className="font-headline font-extrabold text-5xl text-[#161c22] leading-none">
+            Operational Efficiency{" "}
+            <span className="text-[#0059bb]">02.</span>
+          </h1>
+          <p className="text-[#414754] text-sm mt-3 max-w-lg">
+            Real-time analytics and operational data for the Aviatech Precision Admin platform. Monitor applications, training modules, and revenue metrics.
+          </p>
         </div>
-        <div className="flex gap-2">
-          <Link
-            href="/admin/bookings"
-            className="flex items-center gap-2 bg-white border border-gray-200 hover:border-gray-300 text-gray-700 font-medium px-4 py-2 rounded-lg text-sm transition-colors"
-          >
-            <Eye className="w-4 h-4" /> All Bookings
-          </Link>
-          <Link
-            href="/booking"
-            className="flex items-center gap-2 bg-[#F59E0B] hover:bg-[#D97706] text-[#0A1628] font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
-          >
-            <Plus className="w-4 h-4" /> New Booking
-          </Link>
-        </div>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <div key={stat.label} className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between mb-4">
-                <div className={`w-11 h-11 ${stat.lightBg} rounded-xl flex items-center justify-center`}>
-                  <Icon className={`w-5 h-5 ${stat.textColor}`} />
-                </div>
-                <div className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full ${stat.trend === "up" ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"}`}>
-                  {stat.trend === "up" ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                  {stat.change}
-                </div>
-              </div>
-              <div className="text-3xl font-black text-[#0A1628] mb-0.5">{stat.value}</div>
-              <div className="text-gray-500 text-sm">{stat.label}</div>
+        {/* Progress bars decoration */}
+        <div className="hidden xl:flex flex-col gap-2 mt-2 w-48">
+          {[78, 54, 91, 36].map((w, i) => (
+            <div key={i} className="h-1.5 bg-[#e8eef6] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-[#0059bb] to-[#0070ea] rounded-full"
+                style={{ width: `${w}%` }}
+              />
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
 
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+        {kpiCards.map((card) => (
+          <div
+            key={card.label}
+            className={`bg-white p-8 rounded-xl shadow-sm border-t-2 ${card.borderColor}`}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className={`w-10 h-10 ${card.iconBg} rounded-lg flex items-center justify-center`}>
+                <span className={`material-symbols-outlined text-[20px] ${card.iconColor}`}>
+                  {card.icon}
+                </span>
+              </div>
+              <span
+                className={`text-[10px] font-bold px-2 py-1 rounded-full font-['Manrope'] ${
+                  card.trendUp
+                    ? "bg-emerald-50 text-emerald-600"
+                    : "bg-[#ffdad6] text-[#ba1a1a]"
+                }`}
+              >
+                {card.trend}
+              </span>
+            </div>
+            <div className="font-['Manrope'] uppercase tracking-[0.2em] text-[10px] font-black text-slate-400 mb-4">
+              {card.label}
+            </div>
+            <div className="font-headline text-4xl font-extrabold text-[#161c22]">{card.value}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Main Grid */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Chart */}
-        <div className="xl:col-span-2 bg-white rounded-2xl border border-gray-100 p-6">
-          <div className="flex items-center justify-between mb-6">
+        {/* Recent Applications Table (2/3) */}
+        <div className="xl:col-span-2 bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="px-6 py-5 border-b border-[#e8eef6] flex items-center justify-between">
             <div>
-              <h2 className="font-black text-[#0A1628] text-lg">Revenue Overview</h2>
-              <p className="text-gray-400 text-sm">Last 6 months (USD thousands)</p>
+              <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-1">
+                Candidate Pipeline
+              </div>
+              <h2 className="font-headline font-bold text-lg text-[#161c22]">Recent Applications</h2>
             </div>
-            <select className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 text-gray-600 focus:outline-none focus:border-[#1E3A8A]">
-              <option>Last 6 months</option>
-              <option>Last year</option>
-            </select>
-          </div>
-
-          {/* CSS Bar Chart */}
-          <div className="flex items-end justify-between gap-3 h-48">
-            {monthlyData.map((d) => (
-              <div key={d.month} className="flex-1 flex flex-col items-center gap-2">
-                <span className="text-xs text-gray-400">${d.revenue}k</span>
-                <div
-                  className="w-full bg-gradient-to-t from-[#1E3A8A] to-[#38BDF8] rounded-t-lg transition-all duration-700"
-                  style={{ height: `${(d.revenue / maxRevenue) * 100}%`, minHeight: "8px" }}
-                  title={`${d.month}: $${d.revenue}k`}
-                />
-                <span className="text-xs text-gray-500 font-medium">{d.month}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Mini stats row */}
-          <div className="grid grid-cols-3 gap-4 mt-6 pt-5 border-t border-gray-100">
-            {[
-              { label: "Avg per Booking", value: "$5,000" },
-              { label: "Total This Month", value: "$104k" },
-              { label: "YoY Growth", value: "+18.3%" },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="font-black text-[#0A1628] text-lg">{s.value}</div>
-                <div className="text-gray-400 text-xs">{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Activity Feed */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
-          <h2 className="font-black text-[#0A1628] text-lg mb-5">Recent Activity</h2>
-          <div className="space-y-4">
-            {activityFeed.map((item, idx) => (
-              <div key={idx} className="flex items-start gap-3">
-                <div className={`w-2 h-2 ${item.color} rounded-full mt-1.5 flex-shrink-0`} />
-                <div className="flex-1 min-w-0">
-                  <p className="text-gray-800 text-sm font-medium">{item.action}</p>
-                  <p className="text-gray-400 text-xs truncate">{item.detail}</p>
-                </div>
-                <span className="text-gray-400 text-xs flex-shrink-0">{item.time}</span>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/admin/bookings"
-            className="mt-5 flex items-center justify-center gap-2 text-[#1E3A8A] text-sm font-semibold hover:gap-3 transition-all"
-          >
-            View all activity <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Recent Bookings Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h2 className="font-black text-[#0A1628] text-lg">Recent Bookings</h2>
-          <Link
-            href="/admin/bookings"
-            className="flex items-center gap-1.5 text-[#1E3A8A] text-sm font-semibold hover:gap-2.5 transition-all"
-          >
-            View all <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-100 bg-[#F8FAFC]">
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Booking ID</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Client</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Module</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Amount</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">Date</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {recentBookings.map((booking) => (
-                <tr key={booking.id} className="hover:bg-[#F8FAFC] transition-colors">
-                  <td className="px-6 py-4">
-                    <span className="text-[#1E3A8A] font-bold text-sm">{booking.id}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="font-semibold text-[#0A1628] text-sm">{booking.client}</div>
-                    <div className="text-gray-400 text-xs">{booking.company}</div>
-                  </td>
-                  <td className="px-6 py-4 hidden md:table-cell">
-                    <span className="text-gray-600 text-sm">{booking.module}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="font-bold text-[#0A1628] text-sm">{booking.amount}</span>
-                  </td>
-                  <td className="px-6 py-4 hidden sm:table-cell">
-                    <span className="text-gray-500 text-sm">{booking.date}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusColors[booking.status]}`}>
-                      {booking.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {[
-          { label: "Add Booking", icon: Plus, href: "/booking", color: "bg-[#F59E0B] text-[#0A1628]" },
-          { label: "Review Applications", icon: FileText, href: "/admin/applications", color: "bg-purple-100 text-purple-700" },
-          { label: "Check Messages", icon: MessageSquare, href: "/admin/messages", color: "bg-blue-100 text-blue-700" },
-          { label: "View Analytics", icon: BarChart3, href: "/admin", color: "bg-emerald-100 text-emerald-700" },
-        ].map((action) => {
-          const Icon = action.icon;
-          return (
             <Link
-              key={action.label}
-              href={action.href}
-              className={`${action.color} rounded-2xl p-5 font-semibold text-sm flex flex-col items-center gap-3 hover:shadow-md transition-all hover:-translate-y-0.5 text-center`}
+              href="/admin/applications"
+              className="text-[#0059bb] font-['Manrope'] text-[11px] uppercase tracking-widest font-bold hover:underline"
             >
-              <Icon className="w-6 h-6" />
-              {action.label}
+              View All
             </Link>
-          );
-        })}
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-[#f6f9ff] border-b border-[#e8eef6]">
+                  <th className="text-left px-6 py-3 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
+                    Candidate
+                  </th>
+                  <th className="text-left px-6 py-3 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
+                    Role
+                  </th>
+                  <th className="text-left px-6 py-3 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 hidden md:table-cell">
+                    Date
+                  </th>
+                  <th className="text-left px-6 py-3 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#f6f9ff]">
+                {recentApplications.map((app) => (
+                  <tr key={app.name} className="hover:bg-[#f6f9ff] transition-colors group">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-9 h-9 ${app.color} rounded-full flex items-center justify-center text-white text-xs font-bold font-['Manrope'] flex-shrink-0`}
+                        >
+                          {app.initials}
+                        </div>
+                        <span className="font-semibold text-[#161c22] text-sm">{app.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-[#414754]">{app.role}</div>
+                      <div className="text-xs text-slate-400">{app.company}</div>
+                    </td>
+                    <td className="px-6 py-4 hidden md:table-cell">
+                      <span className="text-sm text-slate-400">{app.date}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold font-['Manrope'] ${statusColors[app.status]}`}
+                      >
+                        {app.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Module Performance Chart (1/3) */}
+        <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="mb-5">
+            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-1">
+              Module Analytics
+            </div>
+            <h2 className="font-headline font-bold text-lg text-[#161c22]">Module Performance</h2>
+          </div>
+
+          <div className="space-y-4">
+            {modulePerformance.map((m) => (
+              <div key={m.name}>
+                <div className="flex justify-between items-center mb-1.5">
+                  <span className="font-['Manrope'] text-[11px] font-bold uppercase tracking-widest text-[#414754]">
+                    {m.name}
+                  </span>
+                  <span className="font-['Manrope'] text-[11px] font-bold text-[#0059bb]">{m.pct}%</span>
+                </div>
+                <div className="h-2 bg-[#e8eef6] rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-[#0059bb] to-[#0070ea] rounded-full"
+                    style={{ width: `${m.pct}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 pt-5 border-t border-[#e8eef6] grid grid-cols-2 gap-4">
+            <div>
+              <div className="font-headline text-2xl font-extrabold text-[#161c22]">78.4%</div>
+              <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mt-0.5">
+                Total Progress
+              </div>
+            </div>
+            <div>
+              <div className="font-headline text-2xl font-extrabold text-[#161c22]">1.2k</div>
+              <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mt-0.5">
+                Active Users
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Section */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        {/* Nexus Insights Engine */}
+        <div className="xl:col-span-2 bg-[#0059bb] rounded-xl p-8 text-white flex flex-col justify-between min-h-[160px]">
+          <div>
+            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-blue-200 mb-2">
+              AI-Powered Intelligence
+            </div>
+            <h2 className="font-headline font-extrabold text-2xl mb-2">Nexus Insights Engine</h2>
+            <p className="text-blue-100 text-sm max-w-md">
+              Deep audit capabilities powered by machine learning. Analyze patterns across all operational data streams in real-time.
+            </p>
+          </div>
+          <div className="mt-6">
+            <button className="bg-white text-[#0059bb] font-['Manrope'] uppercase tracking-widest text-[11px] font-bold px-6 py-2.5 rounded-xl hover:bg-blue-50 transition-colors inline-flex items-center gap-2">
+              <span className="material-symbols-outlined text-[16px]">rocket_launch</span>
+              Launch Deep Audit
+            </button>
+          </div>
+        </div>
+
+        {/* FAA/EASA Compliance */}
+        <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="mb-5">
+            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-1">
+              Regulatory
+            </div>
+            <h2 className="font-headline font-bold text-lg text-[#161c22]">FAA/EASA Synchronization</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <div className="flex justify-between items-center mb-1.5">
+                <span className="font-['Manrope'] text-[11px] font-bold uppercase tracking-widest text-[#414754]">
+                  FAA Compliance
+                </span>
+                <span className="font-['Manrope'] text-[11px] font-bold text-emerald-600">98%</span>
+              </div>
+              <div className="h-2 bg-[#e8eef6] rounded-full overflow-hidden">
+                <div className="h-full bg-emerald-400 rounded-full" style={{ width: "98%" }} />
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between items-center mb-1.5">
+                <span className="font-['Manrope'] text-[11px] font-bold uppercase tracking-widest text-[#414754]">
+                  EASA Compliance
+                </span>
+                <span className="font-['Manrope'] text-[11px] font-bold text-[#0059bb]">82%</span>
+              </div>
+              <div className="h-2 bg-[#e8eef6] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-[#0059bb] to-[#0070ea] rounded-full"
+                  style={{ width: "82%" }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-[#e8eef6]">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 bg-emerald-400 rounded-full" />
+              <span className="font-['Manrope'] text-[10px] uppercase tracking-widest font-bold text-slate-400">
+                Last Sync: 14 minutes ago
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="pt-4 border-t border-[#e8eef6] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <span className="text-slate-400 text-xs font-['Manrope']">
+          © 2024 Precision Aerospace Editorial System
+        </span>
+        <div className="flex items-center gap-6">
+          {["Privacy Protocol", "Audit Logs", "System v2.4.1"].map((link) => (
+            <a
+              key={link}
+              href="#"
+              className="text-slate-400 text-[11px] font-['Manrope'] uppercase tracking-widest font-bold hover:text-[#0059bb] transition-colors"
+            >
+              {link}
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );

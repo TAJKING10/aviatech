@@ -18,7 +18,8 @@
       "Bash(node -e \"const lr = require\\(''lucide-react''\\); console.log\\(''FileUser:'', typeof lr.FileUser\\); console.log\\(''lucide version:'', require\\(''./node_modules/lucide-react/package.json''\\).version\\)\")",
       "Bash(node -e \"const lr = require\\(''lucide-react''\\); const keys = Object.keys\\(lr\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''file''\\) || k.toLowerCase\\(\\).includes\\(''user''\\)\\); console.log\\(keys.join\\(''\\\\n''\\)\\)\")",
       "Bash(npx -y @_davideast/stitch-mcp proxy --help)",
-      "WebFetch(domain:stitch.withgoogle.com)"
+      "WebFetch(domain:stitch.withgoogle.com)",
+      "Bash(node -e \"const ts = require\\(''./tailwind.config.ts''\\); console.log\\(''tailwind ok''\\)\")"
     ]
   }
 }

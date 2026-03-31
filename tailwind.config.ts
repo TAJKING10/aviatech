@@ -9,6 +9,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Material Design 3 tokens
+        primary: "#0059bb",
+        "primary-container": "#0070ea",
+        "primary-fixed": "#d8e2ff",
+        "on-primary-fixed": "#001a41",
+        secondary: "#476083",
+        "secondary-container": "#bdd6ff",
+        "secondary-fixed": "#d4e3ff",
+        "tertiary-fixed": "#ffe07f",
+        "tertiary-container": "#cda800",
+        background: "#f6f9ff",
+        surface: "#f6f9ff",
+        "surface-container": "#e8eef6",
+        "surface-container-low": "#eef4fc",
+        "surface-container-high": "#e3e9f1",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-highest": "#dde3eb",
+        "on-surface": "#161c22",
+        "on-surface-variant": "#414754",
+        outline: "#717786",
+        "outline-variant": "#c1c6d7",
+        error: "#ba1a1a",
+        "error-container": "#ffdad6",
+        // Legacy colors
         navy: {
           DEFAULT: "#0A1628",
           50: "#E8EDF5",
@@ -41,6 +65,18 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
+        headline: ["Manrope", "system-ui", "sans-serif"],
+        body: ["Inter", "system-ui", "sans-serif"],
+        label: ["Inter", "system-ui", "sans-serif"],
+      },
+      borderRadius: {
+        DEFAULT: "0.125rem",
+        lg: "0.25rem",
+        xl: "0.5rem",
+        full: "0.75rem",
+        // Keep standard values accessible via arbitrary values
+        "2xl": "1rem",
+        "3xl": "1.5rem",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

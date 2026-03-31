@@ -1,388 +1,322 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Globe, Bell, Shield, Palette, Mail, Save, Eye, EyeOff,
-  Upload, Toggle, CheckCircle, AlertCircle
-} from "lucide-react";
 
-const tabs = [
-  { id: "general", label: "General", icon: Globe },
-  { id: "notifications", label: "Notifications", icon: Bell },
-  { id: "branding", label: "Branding", icon: Palette },
-  { id: "security", label: "Security", icon: Shield },
-  { id: "email", label: "Email", icon: Mail },
+const footerColumns = [
+  {
+    title: "Solutions",
+    links: ["Flight Operations", "Safety Management", "Regulatory Compliance", "Fleet Planning"],
+  },
+  {
+    title: "Corporate",
+    links: ["About Aviatech", "Leadership Team", "Careers", "Press & Media"],
+  },
+  {
+    title: "Legal",
+    links: ["Privacy Policy", "Terms of Service", "Cookie Policy", "Accessibility"],
+  },
 ];
 
 export default function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState("general");
-  const [saved, setSaved] = useState(false);
-  const [showApiKey, setShowApiKey] = useState(false);
-
-  const [generalSettings, setGeneralSettings] = useState({
-    siteName: "Aviatech Consulting",
-    tagline: "Elevating Aviation Excellence",
-    siteUrl: "https://aviatech.aero",
-    timezone: "America/New_York",
-    dateFormat: "MMM DD, YYYY",
-    currency: "USD",
-    language: "en",
-    maintenanceMode: false,
-  });
-
-  const [notifications, setNotifications] = useState({
-    newBookingEmail: true,
-    newMessageEmail: true,
-    newApplicationEmail: true,
-    weeklyReportEmail: true,
-    paymentReceivedEmail: true,
-    bookingCancelledEmail: true,
-    browserNotifications: false,
-    smsNotifications: false,
-  });
-
-  const [branding, setBranding] = useState({
-    primaryColor: "#0A1628",
-    secondaryColor: "#1E3A8A",
-    accentColor: "#F59E0B",
-    logoText: "AVIATECH",
-    taglineText: "Consulting",
-    footerText: "© 2026 Aviatech Consulting. All rights reserved.",
-  });
-
-  const handleSave = async () => {
-    await new Promise((r) => setTimeout(r, 800));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
+  const [brandName, setBrandName] = useState("Aviatech Consulting");
+  const [brandTagline, setBrandTagline] = useState("Precision in Every Flight Path");
+  const [supportEmail, setSupportEmail] = useState("support@aviatech.aero");
+  const [hotline, setHotline] = useState("+1 (800) AVI-TECH");
+  const [heroHeadline, setHeroHeadline] = useState(
+    "Precision Aviation Consulting for the Modern Era"
+  );
+  const [heroSubHeadline, setHeroSubHeadline] = useState(
+    "Strategic excellence in flight operations, safety management, and regulatory compliance."
+  );
+  const [primaryCta, setPrimaryCta] = useState("Book a Consultation");
+  const [secondaryCta, setSecondaryCta] = useState("Explore Services");
 
   return (
-    <div className="space-y-6">
+    <div className="p-8 space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
         <div>
-          <h1 className="text-2xl font-black text-[#0A1628]">Settings</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Manage site configuration, branding, and notifications</p>
+          <div className="inline-flex items-center gap-2 bg-[#d8e2ff] text-[#0059bb] font-['Manrope'] uppercase tracking-widest text-[10px] font-bold px-3 py-1.5 rounded-full mb-3">
+            <span className="material-symbols-outlined text-[14px]">architecture</span>
+            System Architecture
+          </div>
+          <h1 className="font-headline font-extrabold text-5xl text-[#161c22] leading-none">
+            Site Content Configuration
+          </h1>
+          <p className="text-[#414754] text-sm mt-3">
+            Manage all public-facing content, brand identity, and system settings from this central panel.
+          </p>
         </div>
-        <button
-          onClick={handleSave}
-          className={`flex items-center gap-2 font-semibold px-5 py-2.5 rounded-xl text-sm transition-all duration-200 ${
-            saved
-              ? "bg-emerald-100 text-emerald-700"
-              : "bg-[#F59E0B] hover:bg-[#D97706] text-[#0A1628] shadow-lg shadow-[#F59E0B]/20"
-          }`}
-        >
-          {saved ? (
-            <><CheckCircle className="w-4 h-4" /> Saved!</>
-          ) : (
-            <><Save className="w-4 h-4" /> Save Changes</>
-          )}
-        </button>
+        <div className="flex-shrink-0 flex items-center gap-3">
+          <button className="border border-[#e8eef6] bg-white text-[#414754] font-['Manrope'] uppercase tracking-widest text-[11px] font-bold px-5 py-2.5 rounded-xl hover:border-slate-300 transition-colors">
+            Discard
+          </button>
+          <button className="bg-gradient-to-r from-[#0059bb] to-[#0070ea] text-white font-['Manrope'] uppercase tracking-widest text-[11px] font-bold px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
+            <span className="material-symbols-outlined text-[18px]">save</span>
+            Save Changes
+          </button>
+        </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* Tab Sidebar */}
-        <div className="lg:w-56 flex-shrink-0">
-          <div className="bg-white rounded-2xl border border-gray-100 p-2">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-                    activeTab === tab.id
-                      ? "bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
-                  }`}
-                >
-                  <Icon className="w-4 h-4 flex-shrink-0" />
-                  {tab.label}
-                </button>
-              );
-            })}
+      {/* Bento Grid */}
+      <div className="grid grid-cols-12 gap-5">
+        {/* Brand Identity */}
+        <div className="col-span-12 lg:col-span-7 bg-white rounded-xl shadow-sm p-8">
+          <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+            Branding
+          </div>
+          <h2 className="font-headline font-bold text-lg text-[#161c22] mb-6">Brand Identity</h2>
+
+          {/* Logo Upload */}
+          <div className="border-2 border-dashed border-[#c1c6d7] rounded-xl p-8 flex flex-col items-center justify-center text-center mb-6 hover:border-[#0059bb] transition-colors cursor-pointer group">
+            <span className="material-symbols-outlined text-[32px] text-slate-300 group-hover:text-[#0059bb] transition-colors mb-2">
+              upload
+            </span>
+            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
+              Upload Logo
+            </div>
+            <div className="text-xs text-slate-300 mt-1">SVG, PNG, or JPG · Max 2MB</div>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <label className="block font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+                Legal Brand Name
+              </label>
+              <input
+                type="text"
+                value={brandName}
+                onChange={(e) => setBrandName(e.target.value)}
+                className="w-full px-4 py-3 bg-[#f6f9ff] border border-[#e8eef6] rounded-xl text-sm text-[#161c22] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20 focus:border-[#0059bb]"
+              />
+            </div>
+            <div>
+              <label className="block font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+                Brand Tagline
+              </label>
+              <input
+                type="text"
+                value={brandTagline}
+                onChange={(e) => setBrandTagline(e.target.value)}
+                className="w-full px-4 py-3 bg-[#f6f9ff] border border-[#e8eef6] rounded-xl text-sm text-[#161c22] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20 focus:border-[#0059bb]"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Tab Content */}
-        <div className="flex-1 space-y-4">
+        {/* Direct Communications */}
+        <div className="col-span-12 lg:col-span-5 bg-white rounded-xl shadow-sm p-8">
+          <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+            Contact
+          </div>
+          <h2 className="font-headline font-bold text-lg text-[#161c22] mb-6">Direct Communications</h2>
 
-          {/* General Settings */}
-          {activeTab === "general" && (
-            <div className="space-y-4">
-              <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="font-black text-[#0A1628] text-lg mb-5">Site Information</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {[
-                    { label: "Site Name", key: "siteName", placeholder: "Aviatech Consulting" },
-                    { label: "Tagline", key: "tagline", placeholder: "Elevating Aviation Excellence" },
-                    { label: "Site URL", key: "siteUrl", placeholder: "https://aviatech.aero" },
-                  ].map(({ label, key, placeholder }) => (
-                    <div key={key} className={key === "siteUrl" ? "sm:col-span-2" : ""}>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">{label}</label>
-                      <input
-                        type="text"
-                        value={(generalSettings as any)[key]}
-                        onChange={(e) => setGeneralSettings((prev) => ({ ...prev, [key]: e.target.value }))}
-                        placeholder={placeholder}
-                        className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:border-[#1E3A8A] transition-colors"
-                      />
-                    </div>
-                  ))}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Timezone</label>
-                    <select
-                      value={generalSettings.timezone}
-                      onChange={(e) => setGeneralSettings((p) => ({ ...p, timezone: e.target.value }))}
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:border-[#1E3A8A] bg-white transition-colors"
-                    >
-                      <option value="America/New_York">Eastern Time (UTC-5)</option>
-                      <option value="America/Chicago">Central Time (UTC-6)</option>
-                      <option value="America/Los_Angeles">Pacific Time (UTC-8)</option>
-                      <option value="Europe/London">London (UTC+0)</option>
-                      <option value="Europe/Paris">Paris (UTC+1)</option>
-                      <option value="Asia/Dubai">Dubai (UTC+4)</option>
-                      <option value="Asia/Singapore">Singapore (UTC+8)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Currency</label>
-                    <select
-                      value={generalSettings.currency}
-                      onChange={(e) => setGeneralSettings((p) => ({ ...p, currency: e.target.value }))}
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:border-[#1E3A8A] bg-white transition-colors"
-                    >
-                      <option value="USD">USD — US Dollar</option>
-                      <option value="EUR">EUR — Euro</option>
-                      <option value="GBP">GBP — British Pound</option>
-                      <option value="AED">AED — UAE Dirham</option>
-                      <option value="SGD">SGD — Singapore Dollar</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="font-black text-[#0A1628] text-lg mb-5">Site Status</h2>
-                <div className="flex items-center justify-between p-4 bg-[#F8FAFC] rounded-xl">
-                  <div>
-                    <p className="font-semibold text-[#0A1628] text-sm">Maintenance Mode</p>
-                    <p className="text-gray-500 text-xs mt-0.5">When enabled, visitors will see a maintenance page</p>
-                  </div>
-                  <button
-                    onClick={() => setGeneralSettings((p) => ({ ...p, maintenanceMode: !p.maintenanceMode }))}
-                    className={`relative w-12 h-6 rounded-full transition-colors ${
-                      generalSettings.maintenanceMode ? "bg-[#F59E0B]" : "bg-gray-200"
-                    }`}
-                  >
-                    <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${
-                      generalSettings.maintenanceMode ? "translate-x-6" : "translate-x-0"
-                    }`} />
-                  </button>
-                </div>
-                {generalSettings.maintenanceMode && (
-                  <div className="mt-3 flex items-center gap-2 text-amber-600 bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                    Maintenance mode is active. Your site is not publicly accessible.
-                  </div>
-                )}
+          <div className="space-y-4">
+            <div>
+              <label className="block font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+                Global Support Email
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-slate-400">
+                  mail
+                </span>
+                <input
+                  type="email"
+                  value={supportEmail}
+                  onChange={(e) => setSupportEmail(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-[#f6f9ff] border border-[#e8eef6] rounded-xl text-sm text-[#161c22] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20 focus:border-[#0059bb]"
+                />
               </div>
             </div>
-          )}
-
-          {/* Notifications */}
-          {activeTab === "notifications" && (
-            <div className="bg-white rounded-2xl border border-gray-100 p-6">
-              <h2 className="font-black text-[#0A1628] text-lg mb-5">Email Notifications</h2>
-              <div className="space-y-3">
-                {[
-                  { key: "newBookingEmail", label: "New Booking", desc: "Receive an email when a new booking is made" },
-                  { key: "newMessageEmail", label: "New Contact Message", desc: "Receive an email when a contact form is submitted" },
-                  { key: "newApplicationEmail", label: "New Application", desc: "Receive an email when a new application is submitted" },
-                  { key: "weeklyReportEmail", label: "Weekly Summary Report", desc: "Receive a weekly report every Monday" },
-                  { key: "paymentReceivedEmail", label: "Payment Received", desc: "Receive an email when a payment is processed" },
-                  { key: "bookingCancelledEmail", label: "Booking Cancelled", desc: "Receive an email when a booking is cancelled" },
-                  { key: "browserNotifications", label: "Browser Notifications", desc: "Receive push notifications in the browser" },
-                  { key: "smsNotifications", label: "SMS Notifications", desc: "Receive SMS alerts for critical events" },
-                ].map(({ key, label, desc }) => (
-                  <div key={key} className="flex items-center justify-between p-4 bg-[#F8FAFC] rounded-xl">
-                    <div>
-                      <p className="font-semibold text-[#0A1628] text-sm">{label}</p>
-                      <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
-                    </div>
-                    <button
-                      onClick={() => setNotifications((p) => ({ ...p, [key]: !(p as any)[key] }))}
-                      className={`relative w-12 h-6 rounded-full transition-colors ${
-                        (notifications as any)[key] ? "bg-[#F59E0B]" : "bg-gray-200"
-                      }`}
-                    >
-                      <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform ${
-                        (notifications as any)[key] ? "translate-x-6" : "translate-x-0"
-                      }`} />
-                    </button>
-                  </div>
-                ))}
+            <div>
+              <label className="block font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+                Operations Hotline
+              </label>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-slate-400">
+                  phone
+                </span>
+                <input
+                  type="text"
+                  value={hotline}
+                  onChange={(e) => setHotline(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-[#f6f9ff] border border-[#e8eef6] rounded-xl text-sm text-[#161c22] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20 focus:border-[#0059bb]"
+                />
               </div>
             </div>
-          )}
+          </div>
 
-          {/* Branding */}
-          {activeTab === "branding" && (
-            <div className="space-y-4">
-              <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="font-black text-[#0A1628] text-lg mb-5">Brand Colors</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                  {[
-                    { label: "Primary Color", key: "primaryColor" },
-                    { label: "Secondary Color", key: "secondaryColor" },
-                    { label: "Accent Color", key: "accentColor" },
-                  ].map(({ label, key }) => (
-                    <div key={key}>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
-                      <div className="flex items-center gap-3">
-                        <div className="relative">
-                          <div
-                            className="w-10 h-10 rounded-lg border border-gray-200 cursor-pointer"
-                            style={{ background: (branding as any)[key] }}
-                          />
-                          <input
-                            type="color"
-                            value={(branding as any)[key]}
-                            onChange={(e) => setBranding((p) => ({ ...p, [key]: e.target.value }))}
-                            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                          />
-                        </div>
-                        <input
-                          type="text"
-                          value={(branding as any)[key]}
-                          onChange={(e) => setBranding((p) => ({ ...p, [key]: e.target.value }))}
-                          className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:border-[#1E3A8A]"
-                        />
-                      </div>
-                    </div>
-                  ))}
+          <div className="mt-6 pt-5 border-t border-[#e8eef6]">
+            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-3">
+              Notification Preferences
+            </div>
+            {["New Booking Alert", "Application Submitted", "Message Received"].map((pref) => (
+              <div key={pref} className="flex items-center justify-between py-2">
+                <span className="text-sm text-[#414754] font-['Manrope']">{pref}</span>
+                <div className="w-10 h-5 bg-[#0059bb] rounded-full relative cursor-pointer">
+                  <div className="w-3.5 h-3.5 bg-white rounded-full absolute right-0.5 top-0.5" />
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
 
-              <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="font-black text-[#0A1628] text-lg mb-5">Logo & Text</h2>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Logo Text</label>
-                    <input
-                      type="text"
-                      value={branding.logoText}
-                      onChange={(e) => setBranding((p) => ({ ...p, logoText: e.target.value }))}
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#1E3A8A] transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Logo Upload</label>
-                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-[#1E3A8A]/40 transition-colors cursor-pointer">
-                      <Upload className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-                      <p className="text-gray-500 text-sm">Drop your logo here, or <span className="text-[#1E3A8A] font-medium">browse</span></p>
-                      <p className="text-gray-400 text-xs mt-1">SVG, PNG recommended · Max 2MB</p>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Footer Text</label>
-                    <input
-                      type="text"
-                      value={branding.footerText}
-                      onChange={(e) => setBranding((p) => ({ ...p, footerText: e.target.value }))}
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#1E3A8A] transition-colors"
-                    />
-                  </div>
+        {/* Public Landing Hero */}
+        <div className="col-span-12 bg-white rounded-xl shadow-sm p-8">
+          <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+            Homepage
+          </div>
+          <h2 className="font-headline font-bold text-lg text-[#161c22] mb-6">Public Landing Hero</h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Hero Preview */}
+            <div className="bg-[#161c22] rounded-xl overflow-hidden relative min-h-[220px] flex items-center justify-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0059bb]/30 to-transparent" />
+              <div className="relative z-10 text-center p-8">
+                <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-blue-300 mb-2">
+                  Hero Preview
+                </div>
+                <div className="font-headline font-extrabold text-2xl text-white leading-tight mb-2">
+                  {heroHeadline}
+                </div>
+                <div className="text-blue-200 text-sm">{heroSubHeadline}</div>
+                <div className="flex gap-3 mt-4 justify-center">
+                  <span className="bg-white text-[#0059bb] font-['Manrope'] text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-xl">
+                    {primaryCta}
+                  </span>
+                  <span className="border border-white/40 text-white font-['Manrope'] text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-xl">
+                    {secondaryCta}
+                  </span>
                 </div>
               </div>
             </div>
-          )}
 
-          {/* Security */}
-          {activeTab === "security" && (
+            {/* Hero Inputs */}
             <div className="space-y-4">
-              <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="font-black text-[#0A1628] text-lg mb-5">Admin Access</h2>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Current Password</label>
-                    <input type="password" placeholder="••••••••" className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#1E3A8A] transition-colors" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">New Password</label>
-                    <input type="password" placeholder="••••••••" className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#1E3A8A] transition-colors" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Confirm New Password</label>
-                    <input type="password" placeholder="••••••••" className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#1E3A8A] transition-colors" />
-                  </div>
-                  <button className="bg-[#0A1628] hover:bg-[#1E3A8A] text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors">
-                    Update Password
-                  </button>
-                </div>
+              <div>
+                <label className="block font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+                  Headline
+                </label>
+                <textarea
+                  value={heroHeadline}
+                  onChange={(e) => setHeroHeadline(e.target.value)}
+                  rows={2}
+                  className="w-full px-4 py-3 bg-[#f6f9ff] border border-[#e8eef6] rounded-xl text-sm text-[#161c22] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20 focus:border-[#0059bb] resize-none"
+                />
               </div>
-
-              <div className="bg-white rounded-2xl border border-gray-100 p-6">
-                <h2 className="font-black text-[#0A1628] text-lg mb-5">API Key</h2>
-                <div className="flex items-center gap-3 mb-4">
+              <div>
+                <label className="block font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+                  Sub-Headline
+                </label>
+                <textarea
+                  value={heroSubHeadline}
+                  onChange={(e) => setHeroSubHeadline(e.target.value)}
+                  rows={2}
+                  className="w-full px-4 py-3 bg-[#f6f9ff] border border-[#e8eef6] rounded-xl text-sm text-[#161c22] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20 focus:border-[#0059bb] resize-none"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+                    Primary CTA
+                  </label>
                   <input
-                    type={showApiKey ? "text" : "password"}
-                    value="sk_live_avt_3f8a9b2c1d4e5f6g7h8i9j0k"
-                    readOnly
-                    className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm font-mono bg-[#F8FAFC] text-gray-500"
+                    type="text"
+                    value={primaryCta}
+                    onChange={(e) => setPrimaryCta(e.target.value)}
+                    className="w-full px-4 py-3 bg-[#f6f9ff] border border-[#e8eef6] rounded-xl text-sm text-[#161c22] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20 focus:border-[#0059bb]"
                   />
-                  <button
-                    onClick={() => setShowApiKey(!showApiKey)}
-                    className="p-2.5 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors"
-                  >
-                    {showApiKey ? <EyeOff className="w-4 h-4 text-gray-500" /> : <Eye className="w-4 h-4 text-gray-500" />}
-                  </button>
                 </div>
-                <button className="text-red-600 hover:text-red-700 font-semibold text-sm transition-colors">
-                  Regenerate API Key
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Email */}
-          {activeTab === "email" && (
-            <div className="bg-white rounded-2xl border border-gray-100 p-6">
-              <h2 className="font-black text-[#0A1628] text-lg mb-5">Email Configuration</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {[
-                  { label: "From Name", value: "Aviatech Consulting" },
-                  { label: "From Email", value: "noreply@aviatech.aero" },
-                  { label: "Reply-To Email", value: "info@aviatech.aero" },
-                  { label: "SMTP Host", value: "smtp.sendgrid.net" },
-                  { label: "SMTP Port", value: "587" },
-                  { label: "SMTP Username", value: "apikey" },
-                ].map(({ label, value }) => (
-                  <div key={label}>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">{label}</label>
-                    <input
-                      type="text"
-                      defaultValue={value}
-                      className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#1E3A8A] transition-colors"
-                    />
-                  </div>
-                ))}
-                <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">SMTP Password</label>
+                <div>
+                  <label className="block font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+                    Secondary CTA
+                  </label>
                   <input
-                    type="password"
-                    defaultValue="SG.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                    className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#1E3A8A] transition-colors"
+                    type="text"
+                    value={secondaryCta}
+                    onChange={(e) => setSecondaryCta(e.target.value)}
+                    className="w-full px-4 py-3 bg-[#f6f9ff] border border-[#e8eef6] rounded-xl text-sm text-[#161c22] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20 focus:border-[#0059bb]"
                   />
                 </div>
               </div>
-              <div className="mt-5">
-                <button className="flex items-center gap-2 bg-[#0A1628] hover:bg-[#1E3A8A] text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors">
-                  <Mail className="w-4 h-4" /> Send Test Email
-                </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Architecture */}
+        <div className="col-span-12 lg:col-span-8 bg-white rounded-xl shadow-sm p-8">
+          <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+            Navigation
+          </div>
+          <h2 className="font-headline font-bold text-lg text-[#161c22] mb-6">Footer Architecture</h2>
+
+          <div className="grid grid-cols-3 gap-6">
+            {footerColumns.map((col) => (
+              <div key={col.title}>
+                <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-[#0059bb] mb-3">
+                  {col.title}
+                </div>
+                <div className="space-y-2">
+                  {col.links.map((link) => (
+                    <div
+                      key={link}
+                      className="flex items-center gap-2 p-2.5 bg-[#f6f9ff] rounded-xl group cursor-pointer hover:bg-[#e8eef6] transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-[16px] text-slate-300 group-hover:text-[#414754] transition-colors">
+                        drag_indicator
+                      </span>
+                      <span className="text-sm text-[#414754] font-['Manrope'] flex-1">{link}</span>
+                      <span className="material-symbols-outlined text-[16px] text-slate-300 group-hover:text-[#414754] transition-colors">
+                        edit
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Instance Status */}
+        <div className="col-span-12 lg:col-span-4 bg-[#0059bb] rounded-xl shadow-sm p-8 flex flex-col justify-between">
+          <div>
+            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-blue-200 mb-2">
+              Deployment
+            </div>
+            <h2 className="font-headline font-bold text-xl text-white mb-4">Instance Status</h2>
+
+            <div className="flex items-center gap-2 mb-6">
+              <span className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse" />
+              <span className="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-emerald-300">
+                Live & Production
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-['Manrope'] text-[11px] uppercase tracking-widest font-bold text-blue-200">
+                  Last Deployment
+                </span>
+                <span className="font-['Manrope'] text-[11px] font-bold text-white">14m ago</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-['Manrope'] text-[11px] uppercase tracking-widest font-bold text-blue-200">
+                  Config Version
+                </span>
+                <span className="font-['Manrope'] text-[11px] font-bold text-white">v8.42.0</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-['Manrope'] text-[11px] uppercase tracking-widest font-bold text-blue-200">
+                  Server Region
+                </span>
+                <span className="font-['Manrope'] text-[11px] font-bold text-white">EU-West-1</span>
               </div>
             </div>
-          )}
+          </div>
+
+          <button className="mt-6 w-full border border-white/30 text-white font-['Manrope'] uppercase tracking-widest text-[10px] font-bold py-2.5 rounded-xl hover:bg-white/10 transition-colors">
+            View Deployment History
+          </button>
         </div>
       </div>
     </div>

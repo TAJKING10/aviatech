@@ -1,183 +1,237 @@
-import type { Metadata } from "next";
-import { Search, Filter, Download, Eye, Edit, Trash2, ChevronLeft, ChevronRight, Plus } from "lucide-react";
-import Link from "next/link";
-
-export const metadata: Metadata = { title: "Bookings | Admin" };
-
-interface Booking {
-  id: string;
-  client: string;
-  company: string;
-  email: string;
-  module: string;
-  amount: number;
-  date: string;
-  status: "Confirmed" | "Pending" | "In Progress" | "Cancelled" | "Completed";
-  country: string;
-  participants: number;
-}
-
-const bookings: Booking[] = [
-  { id: "AVI-001842", client: "James Harrington", company: "Atlas Airways", email: "j.harrington@atlas.com", module: "Safety Management Systems", amount: 4800, date: "Mar 28, 2026", status: "Confirmed", country: "USA", participants: 18 },
-  { id: "AVI-001841", client: "Sarah Chen", company: "Pacific Cargo Airlines", email: "s.chen@pacific-cargo.com", module: "Regulatory Compliance", amount: 4200, date: "Mar 27, 2026", status: "Pending", country: "Singapore", participants: 12 },
-  { id: "AVI-001840", client: "Mohamed Al-Rashidi", company: "Gulf Regional Aviation", email: "m.rashidi@gra.ae", module: "Fleet Planning & Management", amount: 3800, date: "Mar 26, 2026", status: "Confirmed", country: "UAE", participants: 8 },
-  { id: "AVI-001839", client: "Anna Kowalski", company: "EuroConnect Airlines", email: "a.kowalski@euroconnect.eu", module: "CRM + SMS Bundle", amount: 7200, date: "Mar 25, 2026", status: "In Progress", country: "Poland", participants: 24 },
-  { id: "AVI-001838", client: "David Okonkwo", company: "AfriAir Ltd", email: "d.okonkwo@afriair.ng", module: "Flight Operations", amount: 3600, date: "Mar 24, 2026", status: "Confirmed", country: "Nigeria", participants: 15 },
-  { id: "AVI-001837", client: "Keiko Tanaka", company: "JAL Technical", email: "k.tanaka@jal-tech.jp", module: "Emergency Response Planning", amount: 1800, date: "Mar 22, 2026", status: "Completed", country: "Japan", participants: 20 },
-  { id: "AVI-001836", client: "Henrik Larsson", company: "Nordic Air", email: "h.larsson@nordicair.se", module: "FRMS Training", amount: 2600, date: "Mar 20, 2026", status: "Cancelled", country: "Sweden", participants: 16 },
-  { id: "AVI-001835", client: "Priya Patel", company: "IndiaSky Express", email: "p.patel@indiasky.in", module: "ATC Fundamentals", amount: 2900, date: "Mar 18, 2026", status: "Completed", country: "India", participants: 22 },
-  { id: "AVI-001834", client: "Carlos Mendes", company: "LATAM Consulting", email: "c.mendes@latam.com", module: "Safety Management Systems", amount: 4800, date: "Mar 15, 2026", status: "Completed", country: "Brazil", participants: 19 },
-  { id: "AVI-001833", client: "Fatima Al-Zahrawi", company: "Qatar Airways Group", email: "f.alzahrawi@qag.qa", module: "Fleet Planning", amount: 3800, date: "Mar 12, 2026", status: "Completed", country: "Qatar", participants: 10 },
-  { id: "AVI-001832", client: "Tom Bradley", company: "UK CAA Services", email: "t.bradley@caa.co.uk", module: "Regulatory Compliance", amount: 4200, date: "Mar 10, 2026", status: "Completed", country: "UK", participants: 14 },
-  { id: "AVI-001831", client: "Yuki Sato", company: "ANA Holdings", email: "y.sato@ana.jp", module: "CRM Training", amount: 2400, date: "Mar 8, 2026", status: "Completed", country: "Japan", participants: 28 },
+const bookings = [
+  {
+    id: "BK-0042",
+    candidate: "Jonathan Vance",
+    initials: "JV",
+    color: "bg-blue-500",
+    category: "Avionics",
+    trainingPath: "Advanced Radar Systems",
+    modules: 12,
+    dateSubmitted: "Oct 28, 2024",
+    status: "Confirmed",
+  },
+  {
+    id: "BK-0041",
+    candidate: "Elena Rodriguez",
+    initials: "ER",
+    color: "bg-purple-500",
+    category: "Propulsion",
+    trainingPath: "Next-Gen Turbofans",
+    modules: 8,
+    dateSubmitted: "Oct 26, 2024",
+    status: "Pending",
+  },
+  {
+    id: "BK-0040",
+    candidate: "Marcus Kael",
+    initials: "MK",
+    color: "bg-rose-500",
+    category: "Aerodynamics",
+    trainingPath: "Hypersonic Fluid Dynamics",
+    modules: 15,
+    dateSubmitted: "Oct 24, 2024",
+    status: "Rejected",
+  },
+  {
+    id: "BK-0039",
+    candidate: "Sarah Takeda",
+    initials: "ST",
+    color: "bg-emerald-500",
+    category: "Flight Control",
+    trainingPath: "Autonomous Docking Systems",
+    modules: 6,
+    dateSubmitted: "Oct 22, 2024",
+    status: "Confirmed",
+  },
 ];
 
 const statusColors: Record<string, string> = {
-  Confirmed: "bg-emerald-100 text-emerald-700 border-emerald-200",
-  Pending: "bg-amber-100 text-amber-700 border-amber-200",
-  "In Progress": "bg-blue-100 text-blue-700 border-blue-200",
-  Cancelled: "bg-red-100 text-red-700 border-red-200",
-  Completed: "bg-gray-100 text-gray-600 border-gray-200",
+  Confirmed: "bg-emerald-50 text-emerald-600 border border-emerald-200",
+  Pending: "bg-amber-50 text-amber-600 border border-amber-200",
+  Rejected: "bg-[#ffdad6] text-[#ba1a1a] border border-red-200",
 };
 
+const quickFilters = ["All Bookings", "Aerodynamics", "Avionics Systems", "Flight Control"];
+
 export default function AdminBookingsPage() {
-  const totalRevenue = bookings.reduce((s, b) => s + b.amount, 0);
-
   return (
-    <div className="space-y-6">
+    <div className="p-8 space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
         <div>
-          <h1 className="text-2xl font-black text-[#0A1628]">Bookings</h1>
-          <p className="text-gray-500 text-sm mt-0.5">{bookings.length} total bookings · ${(totalRevenue / 1000).toFixed(1)}k revenue</p>
-        </div>
-        <div className="flex gap-2">
-          <button className="flex items-center gap-2 bg-white border border-gray-200 hover:border-gray-300 text-gray-600 font-medium px-4 py-2 rounded-lg text-sm transition-colors">
-            <Download className="w-4 h-4" /> Export CSV
-          </button>
-          <Link
-            href="/booking"
-            className="flex items-center gap-2 bg-[#F59E0B] hover:bg-[#D97706] text-[#0A1628] font-semibold px-4 py-2 rounded-lg text-sm transition-colors"
-          >
-            <Plus className="w-4 h-4" /> New Booking
-          </Link>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-4">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search by client, company, or booking ID..."
-              className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#1E3A8A] transition-colors"
-            />
+          <div className="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-slate-400 mb-2">
+            Candidate Management
           </div>
-          <select className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-600 focus:outline-none focus:border-[#1E3A8A] bg-white">
-            <option>All Statuses</option>
-            <option>Confirmed</option>
-            <option>Pending</option>
-            <option>In Progress</option>
-            <option>Completed</option>
-            <option>Cancelled</option>
-          </select>
-          <select className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-600 focus:outline-none focus:border-[#1E3A8A] bg-white">
-            <option>All Modules</option>
-            <option>Safety Management Systems</option>
-            <option>Flight Operations</option>
-            <option>Regulatory Compliance</option>
-            <option>CRM Training</option>
-          </select>
-          <button className="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-600 hover:border-gray-300 transition-colors bg-white">
-            <Filter className="w-4 h-4" /> More Filters
+          <h1 className="font-headline font-extrabold text-5xl text-[#161c22] leading-none">
+            Bookings Management
+          </h1>
+          <p className="text-[#414754] text-sm mt-3">
+            Manage and track all training bookings and candidate registrations across programs.
+          </p>
+        </div>
+        <div className="flex-shrink-0">
+          <button className="bg-gradient-to-r from-[#0059bb] to-[#0070ea] text-white font-['Manrope'] uppercase tracking-widest text-[11px] font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
+            <span className="material-symbols-outlined text-[18px]">add</span>
+            Add New Booking
           </button>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-12 gap-5">
+        {/* Large Card */}
+        <div className="col-span-12 lg:col-span-8 bg-white rounded-xl shadow-sm p-8">
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-1">
+                Total Pipeline
+              </div>
+              <div className="font-headline font-extrabold text-4xl text-[#161c22]">
+                Active Candidates: <span className="text-[#0059bb]">1,284</span>
+              </div>
+            </div>
+            <div className="w-10 h-10 bg-[#d8e2ff] rounded-lg flex items-center justify-center">
+              <span className="material-symbols-outlined text-[20px] text-[#0059bb]">groups</span>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="font-['Manrope'] text-[11px] uppercase tracking-widest font-bold text-slate-400">
+                Enrollment Progress
+              </span>
+              <span className="font-['Manrope'] text-[11px] font-bold text-[#0059bb]">84%</span>
+            </div>
+            <div className="h-2.5 bg-[#e8eef6] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-[#0059bb] to-[#0070ea] rounded-full"
+                style={{ width: "84%" }}
+              />
+            </div>
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-4 pt-4 border-t border-[#e8eef6]">
+            {[
+              { label: "Confirmed", value: "986" },
+              { label: "Pending", value: "214" },
+              { label: "Rejected", value: "84" },
+            ].map((s) => (
+              <div key={s.label}>
+                <div className="font-headline text-2xl font-extrabold text-[#161c22]">{s.value}</div>
+                <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mt-0.5">
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Small Card */}
+        <div className="col-span-12 lg:col-span-4 bg-[#ffdad6] rounded-xl shadow-sm p-8 flex flex-col justify-between">
+          <div>
+            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-[#ba1a1a]/70 mb-1">
+              Requires Action
+            </div>
+            <div className="font-headline font-extrabold text-4xl text-[#ba1a1a]">42</div>
+            <div className="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-[#ba1a1a] mt-1">
+              Pending Review
+            </div>
+          </div>
+          <div className="mt-6 flex items-center gap-2">
+            <span className="w-2 h-2 bg-[#ba1a1a] rounded-full animate-pulse" />
+            <span className="font-['Manrope'] text-[10px] uppercase tracking-widest font-bold text-[#ba1a1a]/70">
+              Requires immediate attention
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Filter Strip */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-2 flex-wrap">
+          {quickFilters.map((filter, i) => (
+            <button
+              key={filter}
+              className={`font-['Manrope'] uppercase tracking-widest text-[11px] font-bold px-4 py-2 rounded-xl transition-colors ${
+                i === 0
+                  ? "bg-[#0059bb] text-white"
+                  : "bg-white text-slate-500 hover:bg-[#e8eef6] border border-[#e8eef6]"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+        <select className="bg-white border border-[#e8eef6] rounded-xl px-4 py-2 text-sm text-[#414754] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20">
+          <option>All Statuses</option>
+          <option>Confirmed</option>
+          <option>Pending</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+
+      {/* Data Table */}
+      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-gray-100 bg-[#F8FAFC]">
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  <input type="checkbox" className="rounded border-gray-300" />
-                </th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
-                  Booking ID
-                </th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
-                  Client
-                </th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
-                  Module
-                </th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
-                  Country
-                </th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700">
-                  Amount
-                </th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell cursor-pointer hover:text-gray-700">
-                  Date
-                </th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
+              <tr className="bg-[#f6f9ff] border-b border-[#e8eef6]">
+                {["Candidate Name", "Category", "Training Path", "Modules", "Date Submitted", "Status", "Actions"].map(
+                  (col) => (
+                    <th
+                      key={col}
+                      className="text-left px-6 py-4 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 whitespace-nowrap"
+                    >
+                      {col}
+                    </th>
+                  )
+                )}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-[#f6f9ff]">
               {bookings.map((booking) => (
-                <tr key={booking.id} className="hover:bg-[#F8FAFC] transition-colors group">
-                  <td className="px-5 py-4">
-                    <input type="checkbox" className="rounded border-gray-300" />
-                  </td>
-                  <td className="px-5 py-4">
-                    <span className="text-[#1E3A8A] font-bold text-sm">{booking.id}</span>
-                  </td>
-                  <td className="px-5 py-4">
+                <tr key={booking.id} className="hover:bg-[#f6f9ff] transition-colors group">
+                  <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-gradient-to-br from-[#1E3A8A] to-[#0A1628] rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                        {booking.client.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                      <div
+                        className={`w-9 h-9 ${booking.color} rounded-full flex items-center justify-center text-white text-xs font-bold font-['Manrope'] flex-shrink-0`}
+                      >
+                        {booking.initials}
                       </div>
                       <div>
-                        <div className="font-semibold text-[#0A1628] text-sm">{booking.client}</div>
-                        <div className="text-gray-400 text-xs">{booking.email}</div>
+                        <div className="font-semibold text-[#161c22] text-sm">{booking.candidate}</div>
+                        <div className="text-xs text-slate-400">{booking.id}</div>
                       </div>
                     </div>
                   </td>
-                  <td className="px-5 py-4 hidden lg:table-cell">
-                    <span className="text-gray-600 text-sm">{booking.module}</span>
+                  <td className="px-6 py-5">
+                    <span className="font-['Manrope'] text-[11px] uppercase tracking-widest font-bold text-[#414754]">
+                      {booking.category}
+                    </span>
                   </td>
-                  <td className="px-5 py-4 hidden md:table-cell">
-                    <span className="text-gray-500 text-sm">{booking.country}</span>
+                  <td className="px-6 py-5">
+                    <span className="text-sm text-[#414754]">{booking.trainingPath}</span>
                   </td>
-                  <td className="px-5 py-4">
-                    <span className="font-bold text-[#0A1628] text-sm">${booking.amount.toLocaleString()}</span>
+                  <td className="px-6 py-5">
+                    <span className="font-['Manrope'] text-[11px] font-bold text-[#161c22]">
+                      {booking.modules}
+                    </span>
                   </td>
-                  <td className="px-5 py-4 hidden sm:table-cell">
-                    <span className="text-gray-500 text-sm">{booking.date}</span>
+                  <td className="px-6 py-5">
+                    <span className="text-sm text-slate-400">{booking.dateSubmitted}</span>
                   </td>
-                  <td className="px-5 py-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusColors[booking.status]}`}>
+                  <td className="px-6 py-5">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold font-['Manrope'] ${statusColors[booking.status]}`}
+                    >
                       {booking.status}
                     </span>
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="px-6 py-5">
                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button className="p-1.5 hover:bg-blue-50 text-blue-600 rounded-lg transition-colors" title="View">
-                        <Eye className="w-4 h-4" />
+                      <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#d8e2ff] text-[#0059bb] transition-colors" title="Edit">
+                        <span className="material-symbols-outlined text-[18px]">edit</span>
                       </button>
-                      <button className="p-1.5 hover:bg-amber-50 text-amber-600 rounded-lg transition-colors" title="Edit">
-                        <Edit className="w-4 h-4" />
-                      </button>
-                      <button className="p-1.5 hover:bg-red-50 text-red-500 rounded-lg transition-colors" title="Delete">
-                        <Trash2 className="w-4 h-4" />
+                      <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#d8e2ff] text-[#0059bb] transition-colors" title="View">
+                        <span className="material-symbols-outlined text-[18px]">visibility</span>
                       </button>
                     </div>
                   </td>
@@ -188,27 +242,66 @@ export default function AdminBookingsPage() {
         </div>
 
         {/* Pagination */}
-        <div className="flex items-center justify-between px-5 py-4 border-t border-gray-100 bg-[#F8FAFC]">
-          <p className="text-sm text-gray-500">Showing 1–12 of 248 bookings</p>
+        <div className="flex items-center justify-between px-6 py-4 border-t border-[#e8eef6] bg-[#f6f9ff]">
+          <span className="text-sm text-slate-400 font-['Manrope']">1–4 of 42 bookings</span>
           <div className="flex items-center gap-1">
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:border-gray-300 transition-colors">
-              <ChevronLeft className="w-4 h-4" />
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e8eef6] text-slate-400 hover:border-[#0059bb] hover:text-[#0059bb] transition-colors">
+              <span className="material-symbols-outlined text-[18px]">chevron_left</span>
             </button>
-            {[1, 2, 3, "...", 20].map((p, i) => (
+            {[1, 2, 3, 4, 5].map((p) => (
               <button
-                key={i}
-                className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                key={p}
+                className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold font-['Manrope'] transition-colors ${
                   p === 1
-                    ? "bg-[#1E3A8A] text-white"
-                    : "border border-gray-200 text-gray-500 hover:border-gray-300"
+                    ? "bg-[#0059bb] text-white"
+                    : "border border-[#e8eef6] text-slate-400 hover:border-[#0059bb] hover:text-[#0059bb]"
                 }`}
               >
                 {p}
               </button>
             ))}
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:border-gray-300 transition-colors">
-              <ChevronRight className="w-4 h-4" />
+            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e8eef6] text-slate-400 hover:border-[#0059bb] hover:text-[#0059bb] transition-colors">
+              <span className="material-symbols-outlined text-[18px]">chevron_right</span>
             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Editorial Block */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        {/* Image Card */}
+        <div className="bg-[#161c22] rounded-xl overflow-hidden relative min-h-[180px] flex items-end p-6">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0059bb]/40 to-[#161c22]/90" />
+          <div className="relative z-10">
+            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-blue-300 mb-1">
+              Editorial Report
+            </div>
+            <h3 className="font-headline font-extrabold text-2xl text-white">Global Connectivity Report</h3>
+            <p className="text-blue-200 text-sm mt-1">Q4 2024 Aviation Training Network Analysis</p>
+          </div>
+        </div>
+
+        {/* Precision Compliance Monitor */}
+        <div className="bg-white rounded-xl shadow-sm p-8">
+          <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
+            System Monitor
+          </div>
+          <h3 className="font-headline font-bold text-xl text-[#161c22] mb-6">
+            Precision Compliance Monitor
+          </h3>
+          <div className="grid grid-cols-3 gap-4">
+            {[
+              { label: "Latency", value: "0.04ms" },
+              { label: "Auth Rate", value: "99.9%" },
+              { label: "Integrity", value: "Verified" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="font-headline text-xl font-extrabold text-[#0059bb]">{stat.value}</div>
+                <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mt-0.5">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
