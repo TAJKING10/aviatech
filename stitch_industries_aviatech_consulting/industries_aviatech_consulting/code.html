@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-container": "#fefcff",
+              "on-secondary-container": "#445d80",
+              "outline": "#717786",
+              "surface-bright": "#f6f9ff",
+              "on-primary-fixed-variant": "#004493",
+              "surface-variant": "#dde3eb",
+              "on-tertiary-fixed": "#231b00",
+              "surface-tint": "#005bc0",
+              "surface-dim": "#d4dbe2",
+              "error-container": "#ffdad6",
+              "error": "#ba1a1a",
+              "primary-fixed": "#d8e2ff",
+              "on-surface-variant": "#414754",
+              "on-surface": "#161c22",
+              "on-primary-fixed": "#001a41",
+              "on-tertiary": "#ffffff",
+              "inverse-primary": "#adc7ff",
+              "on-secondary-fixed-variant": "#2f486a",
+              "on-primary": "#ffffff",
+              "secondary": "#476083",
+              "tertiary-fixed-dim": "#edc200",
+              "secondary-fixed": "#d4e3ff",
+              "surface-container-low": "#eef4fc",
+              "surface-container-high": "#e3e9f1",
+              "tertiary-container": "#cda800",
+              "primary-fixed-dim": "#adc7ff",
+              "secondary-fixed-dim": "#afc8f0",
+              "surface-container-highest": "#dde3eb",
+              "on-error": "#ffffff",
+              "primary-container": "#0070ea",
+              "surface-container": "#e8eef6",
+              "primary": "#0059bb",
+              "on-tertiary-fixed-variant": "#564500",
+              "background": "#f6f9ff",
+              "tertiary-fixed": "#ffe07f",
+              "on-tertiary-container": "#4e3e00",
+              "inverse-on-surface": "#ebf1f9",
+              "inverse-surface": "#2b3137",
+              "outline-variant": "#c1c6d7",
+              "on-secondary-fixed": "#001c3a",
+              "secondary-container": "#bdd6ff",
+              "on-error-container": "#93000a",
+              "tertiary": "#725c00",
+              "on-secondary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "surface": "#f6f9ff",
+              "on-background": "#161c22"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(22,28,34,0.05)]">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 py-4">
+<div class="text-xl font-bold tracking-tighter text-slate-900 uppercase">
+                Aviatech Consulting
+            </div>
+<div class="hidden md:flex items-center space-x-8 font-['Manrope'] font-medium tracking-tight text-sm">
+<a class="text-slate-600 hover:text-blue-600 transition-colors" href="#">Home</a>
+<a class="text-slate-600 hover:text-blue-600 transition-colors" href="#">Services</a>
+<a class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1" href="#">Industries</a>
+<a class="text-slate-600 hover:text-blue-600 transition-colors" href="#">About</a>
+<a class="text-slate-600 hover:text-blue-600 transition-colors" href="#">Insights</a>
+<a class="text-slate-600 hover:text-blue-600 transition-colors" href="#">Contact</a>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-6 py-3 rounded-md text-sm font-bold transition-all hover:scale-95 duration-200 ease-in-out">
+                Book a Consultation
+            </button>
+</div>
+<div class="bg-slate-100/50 h-[1px] w-full"></div>
+</nav>
+<main class="pt-32 pb-24">
+<!-- Hero Section: Editorial Style -->
+<section class="max-w-7xl mx-auto px-8 mb-24">
+<div class="editorial-grid gap-8">
+<div class="col-span-12 md:col-span-7">
+<span class="font-label text-primary uppercase tracking-[0.2rem] text-xs font-bold mb-4 block">Sector Expertise</span>
+<h1 class="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter text-on-surface leading-[1.1] mb-8">
+                        Precision Solutions for the <span class="text-primary">Global Skyway</span>.
+                    </h1>
+</div>
+<div class="col-span-12 md:col-span-4 md:col-start-9 flex flex-col justify-end">
+<p class="text-on-surface-variant text-lg leading-relaxed mb-6">
+                        Aviatech Consulting provides instrument-grade strategic guidance across the full aerospace ecosystem, from legacy carriers to emerging tech vendors.
+                    </p>
+<div class="h-1 w-24 bg-primary"></div>
+</div>
+</div>
+</section>
+<!-- Industry Grid: Bento Style -->
+<section class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Airlines -->
+<div class="group relative bg-surface-container rounded-xl overflow-hidden p-8 transition-all duration-300 hover:bg-surface-container-highest">
+<div class="mb-12">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="flight_takeoff">flight_takeoff</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4">Airlines</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Optimizing fleet management, network planning, and passenger experience through data-driven operational intelligence.
+                    </p>
+<div class="absolute bottom-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl" data-icon="flight">flight</span>
+</div>
+</div>
+<!-- Airports -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden p-8 transition-all duration-300 hover:bg-surface-container-highest">
+<div class="mb-12">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="hub">hub</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4">Airports</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Modernizing ground operations and terminal logistics to maximize throughput and minimize environmental impact.
+                    </p>
+<div class="absolute bottom-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-8xl" data-icon="corporate_fare">corporate_fare</span>
+</div>
+</div>
+<!-- Logistics & Cargo -->
+<div class="group relative bg-surface-container rounded-xl overflow-hidden p-8 md:row-span-2 transition-all duration-300 hover:bg-surface-container-highest">
+<div class="mb-12">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="inventory_2">inventory_2</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4">Logistics &amp; Cargo</h3>
+<p class="text-on-surface-variant leading-relaxed mb-8">
+                        Streamlining global supply chains with automated tracking and strategic route optimization for high-velocity freight.
+                    </p>
+<img class="w-full h-64 object-cover rounded-lg shadow-sm mt-4 grayscale hover:grayscale-0 transition-all duration-500" data-alt="industrial cargo aircraft being loaded with containers at a high-tech logistics hub during twilight with glowing blue lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWjxpCK82nocNafsjbRZQEfXy_a08ulR0OdWli3zQeeqCSodgyyr8n2UezNA1q8nhQQAR-xWXFYr4P7EFbgxRaAMNOXUvLoyL2OvgnxpHmDR91icwcJq8ORqc_Kv6ZGboKSqDbuityWNURuKQjpp3kQW42UCwpNK0ufVsP_eknij1_axcUJK37X_jy9EXz2zNHdNmU91NeAQILDBfRJUx3v4eOumGCEMxYlA8CvkGAsqXfz_tZnYRXDJH_TIhRVF_Sjvx9PzwMO1Qh"/>
+</div>
+<!-- Aerospace Support -->
+<div class="group relative bg-surface-container-low rounded-xl overflow-hidden p-8 transition-all duration-300 hover:bg-surface-container-highest">
+<div class="mb-12">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="build_circle">build_circle</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4">Aerospace Support</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        MRO strategies and supply chain resilience for component manufacturers and ground handling specialists.
+                    </p>
+</div>
+<!-- Technology Vendors -->
+<div class="group relative bg-surface-container rounded-xl overflow-hidden p-8 transition-all duration-300 hover:bg-surface-container-highest">
+<div class="mb-12">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="memory">memory</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4">Technology Vendors</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Bridging the gap between software innovation and regulatory compliance for NextGen aviation systems.
+                    </p>
+</div>
+<!-- SMEs -->
+<div class="col-span-1 md:col-span-2 group relative bg-primary-container text-white rounded-xl overflow-hidden p-8 flex flex-col md:flex-row items-center gap-8 transition-all duration-300">
+<div class="flex-1">
+<div class="mb-6">
+<span class="material-symbols-outlined text-4xl" data-icon="rocket_launch" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<h3 class="font-headline text-3xl font-bold mb-4">SMEs &amp; Startups</h3>
+<p class="text-white/80 leading-relaxed max-w-md">
+                            Scaling the future of flight. We provide lean, tactical consulting for boutique aerospace firms and emerging drone technologies.
+                        </p>
+</div>
+<div class="flex-shrink-0">
+<button class="bg-white text-primary px-8 py-4 rounded-md font-bold hover:bg-surface-bright transition-colors">
+                            Explore SME Solutions
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Break: Tonal Shift -->
+<section class="mt-24 py-24 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-12">
+<div class="w-full md:w-1/2">
+<h2 class="font-headline text-4xl font-bold tracking-tight mb-6">Cross-Sector Integration</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed">
+                        Our unique advantage lies in our ability to connect different sectors. We understand how airport infrastructure impacts airline efficiency, and how technology vendors must align with MRO workflows.
+                    </p>
+<ul class="mt-8 space-y-4">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<span class="font-medium">Regulatory Alignment</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<span class="font-medium">Operational Synchronicity</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<span class="font-medium">Data Liquidity</span>
+</li>
+</ul>
+</div>
+<div class="w-full md:w-1/2 relative">
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl"></div>
+<img class="relative z-10 w-full aspect-square object-cover rounded-xl" data-alt="abstract view of a modern airplane wing against a clear blue sky, showing geometric precision and clean metallic lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN5VUNY9jKPh1jwQ7BkMEprxXG1Aava9pBu1nxBDASsLSIyqd0fTZSrrOQgd7wZoOqlhzOlLNNhnH_eFUvvgYf-qaeJLC46NViyoH-h5xXUk6MSWqBhCW6cl5N5ssBaBCG8URU5MlO4tihKQl-yAsxBzQmCLhaws4N9mfwt5LObkpAlgTarJwWJYGCLxFttAv2KSUaw509bLen4agoQ_jakic42cq8AyXwoB9kUWlgOjgP7EtykkE9FEV3rZe7TYrnFJ9MyG2BzDQS"/>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-50 w-full pt-20 pb-10">
+<div class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-1">
+<div class="text-lg font-bold text-slate-900 mb-6">Aviatech Consulting</div>
+<p class="text-slate-500 font-['Inter'] text-sm leading-relaxed mb-6">
+                    Engineering the future of aviation through precision consulting and technological excellence.
+                </p>
+</div>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-widest mb-6">Navigation</h4>
+<div class="flex flex-col space-y-4 text-sm font-['Inter'] text-slate-500">
+<a class="hover:text-blue-500 underline-offset-4 hover:underline transition-opacity duration-300" href="#">Home</a>
+<a class="hover:text-blue-500 underline-offset-4 hover:underline transition-opacity duration-300" href="#">Services</a>
+<a class="text-blue-600 font-bold" href="#">Industries</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-widest mb-6">Legal</h4>
+<div class="flex flex-col space-y-4 text-sm font-['Inter'] text-slate-500">
+<a class="hover:text-blue-500 underline-offset-4 hover:underline transition-opacity duration-300" href="#">Privacy Policy</a>
+<a class="hover:text-blue-500 underline-offset-4 hover:underline transition-opacity duration-300" href="#">Terms of Service</a>
+<a class="hover:text-blue-500 underline-offset-4 hover:underline transition-opacity duration-300" href="#">Cookie Policy</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-sm uppercase tracking-widest mb-6">Connect</h4>
+<div class="flex flex-col space-y-4 text-sm font-['Inter'] text-slate-500">
+<a class="hover:text-blue-500 underline-offset-4 hover:underline transition-opacity duration-300" href="#">LinkedIn</a>
+<a class="hover:text-blue-500 underline-offset-4 hover:underline transition-opacity duration-300" href="#">Twitter / X</a>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-slate-200/50">
+<p class="text-slate-500 font-['Inter'] text-sm">© 2024 Aviatech Consulting. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

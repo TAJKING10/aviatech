@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aviatech Consulting | Precision Aerospace Engineering</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "on-tertiary-fixed-variant": "#564500",
+              "on-primary-container": "#fefcff",
+              "outline": "#717786",
+              "on-secondary-fixed-variant": "#2f486a",
+              "surface-container-highest": "#dde3eb",
+              "on-tertiary": "#ffffff",
+              "on-primary-fixed-variant": "#004493",
+              "secondary-fixed-dim": "#afc8f0",
+              "on-secondary-fixed": "#001c3a",
+              "secondary-fixed": "#d4e3ff",
+              "inverse-on-surface": "#ebf1f9",
+              "surface-container-lowest": "#ffffff",
+              "primary-container": "#0070ea",
+              "on-background": "#161c22",
+              "secondary-container": "#bdd6ff",
+              "surface-container-high": "#e3e9f1",
+              "tertiary-fixed-dim": "#edc200",
+              "on-primary-fixed": "#001a41",
+              "surface-container-low": "#eef4fc",
+              "surface-variant": "#dde3eb",
+              "secondary": "#476083",
+              "inverse-surface": "#2b3137",
+              "tertiary": "#725c00",
+              "on-surface": "#161c22",
+              "on-secondary-container": "#445d80",
+              "outline-variant": "#c1c6d7",
+              "on-surface-variant": "#414754",
+              "surface": "#f6f9ff",
+              "tertiary-container": "#cda800",
+              "surface-dim": "#d4dbe2",
+              "inverse-primary": "#adc7ff",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffe07f",
+              "surface-tint": "#005bc0",
+              "primary-fixed": "#d8e2ff",
+              "on-error": "#ffffff",
+              "surface-bright": "#f6f9ff",
+              "primary": "#0059bb",
+              "on-tertiary-fixed": "#231b00",
+              "error-container": "#ffdad6",
+              "primary-fixed-dim": "#adc7ff",
+              "background": "#f6f9ff",
+              "on-tertiary-container": "#4e3e00",
+              "on-primary": "#ffffff",
+              "surface-container": "#e8eef6",
+              "error": "#ba1a1a"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .primary-gradient {
+        background: linear-gradient(135deg, #0059bb 0%, #0070ea 100%);
+      }
+      .atmospheric-shadow {
+        box-shadow: 0px 20px 40px rgba(22, 28, 34, 0.05);
+      }
+      .booking-module-container {
+        display: none;
+      }
+      .booking-module-container.active {
+        display: block;
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-background antialiased">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-[0_20px_40px_rgba(22,28,34,0.05)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-xl font-bold tracking-tighter text-slate-900 dark:text-white font-headline">
+            Aviatech Consulting
+        </div>
+<div class="hidden md:flex items-center space-x-8 font-headline font-medium tracking-tight">
+<a class="text-blue-700 dark:text-blue-400 border-b-2 border-blue-700 dark:border-blue-400 pb-1" href="#">Home</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" href="#">Services</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" href="#">Industries</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" href="#">About</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors" href="#">Insights</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="hidden lg:block text-slate-600 hover:text-blue-600 font-medium transition-colors">Contact</button>
+<button class="primary-gradient text-white px-6 py-3 rounded-lg font-medium active:scale-95 transition-transform atmospheric-shadow">
+                Book a Consultation
+            </button>
+</div>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section: Horizon Nexus -->
+<section class="relative min-h-[870px] flex items-center overflow-hidden px-8">
+<div class="absolute inset-0 z-0">
+<img alt="aviation horizon" class="w-full h-full object-cover" data-alt="cinematic wide shot of a modern jet wing silhouetted against a deep blue sunset horizon with glowing cockpit instrumentation reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTyhRE_s9wbZKfznDOjXjn3aQvb9ECIrqSpFovOTr820vniKxPjiI_O4pcG56xWA7_GDRO-TU0_x_znc694eglxqjcWpASm87an-Rlr8-guUoubNhgfKJlJtcZ_TPeJVeWpyqJdXBLaREZveJDj7y_K6hNZvY9IB3AczlyPWURVwlhgPjpQNs3fxa6dCKkCiwn2UUYg36kihqhoWzb-jcMTJcNqOk-GunN03FQY3qsonXLVDBHfhUMTsYtzRrZAJHQiiTwyExpkRxJ"/>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/90 via-on-background/40 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-screen-2xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-8">
+<span class="inline-block bg-primary-container/20 text-primary-container px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-6 font-label">
+                    Engineering Excellence
+                </span>
+<h1 class="text-white font-headline font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight mb-8">
+                    Engineering <span class="text-primary-container">Clarity.</span><br/>
+                    Technology Confidence.<br/>
+                    Aviation Focus.
+                </h1>
+<p class="text-slate-300 text-lg md:text-xl max-w-xl mb-10 leading-relaxed font-light">
+                    Navigating the complexities of modern aerospace with precision-engineered consultancy and regulatory expertise at Aviatech Consulting.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="primary-gradient text-white px-8 py-4 rounded-lg font-bold text-lg atmospheric-shadow hover:brightness-110 transition-all">
+                        Explore Services
+                    </button>
+<button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/20 transition-all">
+                        View Case Studies
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Professional Training Booking Module -->
+<section class="max-w-6xl mx-auto -mt-32 relative z-20 mb-24 px-4 sm:px-6 lg:px-8">
+<div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-outline-variant/10">
+<!-- Step 1: Select Modules -->
+<div class="booking-module-container active" id="step-1">
+<!-- Progress Header -->
+<div class="bg-surface-container-low px-8 py-10 border-b border-outline-variant/10">
+<div class="flex justify-center items-center gap-4">
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded bg-[#001c3a] text-white flex items-center justify-center font-bold text-lg">1</span>
+<span class="font-headline font-bold text-on-surface">Select Modules</span>
+</div>
+<div class="w-16 h-px bg-outline-variant/30"></div>
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-lg">2</span>
+<span class="font-headline font-medium text-on-surface-variant">Your Details</span>
+</div>
+</div>
+</div>
+<div class="p-8 lg:p-12">
+<h2 class="font-headline text-2xl font-bold mb-8 text-[#001c3a]">Select Your Modules</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Category</label>
+<div class="relative">
+<select class="w-full appearance-none bg-white border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+<option>B1.1 - Aeroplanes Turbine</option>
+<option>B1.2 - Aeroplanes Piston</option>
+<option>B1.3 - Helicopters Turbine</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Training Path</label>
+<div class="relative">
+<select class="w-full appearance-none bg-white border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+<option>Training + Examination</option>
+<option>Examination Only</option>
+<option>Training Only</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-on-surface-variant">Available Modules (13)</h3>
+<button class="text-sm font-medium text-on-surface-variant bg-surface-container hover:bg-surface-container-high px-4 py-2 rounded-lg transition-colors">Select All</button>
+</div>
+<div class="border border-outline-variant/20 rounded-xl overflow-hidden mb-10 max-h-[400px] overflow-y-auto">
+<div class="divide-y divide-outline-variant/10">
+<!-- Module Items -->
+<label class="flex items-center gap-4 p-4 hover:bg-surface transition-colors cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-bold text-[#001c3a] min-w-[3rem]">M1</span>
+<span class="text-on-surface-variant">Mathematics</span>
+</label>
+<label class="flex items-center gap-4 p-4 hover:bg-surface transition-colors cursor-pointer">
+<input class="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-bold text-[#001c3a] min-w-[3rem]">M2</span>
+<span class="text-on-surface-variant">Physics</span>
+</label>
+<label class="flex items-center gap-4 p-4 hover:bg-surface transition-colors cursor-pointer">
+<input class="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-bold text-[#001c3a] min-w-[3rem]">M3</span>
+<span class="text-on-surface-variant">Electrical Fundamentals</span>
+</label>
+<label class="flex items-center gap-4 p-4 hover:bg-surface transition-colors cursor-pointer">
+<input class="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-bold text-[#001c3a] min-w-[3rem]">M4</span>
+<span class="text-on-surface-variant">Electronic Fundamentals</span>
+</label>
+<label class="flex items-center gap-4 p-4 hover:bg-surface transition-colors cursor-pointer">
+<input class="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-bold text-[#001c3a] min-w-[3rem]">M5</span>
+<span class="text-on-surface-variant">Digital Techniques / Electronic Instrument Systems</span>
+</label>
+<label class="flex items-center gap-4 p-4 hover:bg-surface transition-colors cursor-pointer">
+<input class="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-bold text-[#001c3a] min-w-[3rem]">M6</span>
+<span class="text-on-surface-variant">Materials and Hardware</span>
+</label>
+<label class="flex items-center gap-4 p-4 hover:bg-surface transition-colors cursor-pointer">
+<input class="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-bold text-[#001c3a] min-w-[3rem]">M7</span>
+<span class="text-on-surface-variant">Maintenance Practices</span>
+</label>
+</div>
+</div>
+<div class="flex justify-end">
+<button class="bg-[#001c3a] text-white px-10 py-4 rounded-lg font-bold flex items-center gap-2 hover:bg-primary transition-all active:scale-95 shadow-lg" onclick="document.getElementById('step-1').classList.remove('active'); document.getElementById('step-2').classList.add('active');">
+                            Continue <span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Step 2: Your Details -->
+<div class="booking-module-container" id="step-2">
+<!-- Progress Header -->
+<div class="bg-surface-container-low px-8 py-10 border-b border-outline-variant/10">
+<div class="flex justify-center items-center gap-4">
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded bg-[#00cba9] text-white flex items-center justify-center">
+<span class="material-symbols-outlined font-bold">check</span>
+</span>
+<span class="font-headline font-medium text-on-surface">Select Modules</span>
+</div>
+<div class="w-16 h-px bg-[#00cba9]"></div>
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded bg-[#001c3a] text-white flex items-center justify-center font-bold text-lg">2</span>
+<span class="font-headline font-bold text-on-surface">Your Details</span>
+</div>
+</div>
+</div>
+<div class="p-8 lg:p-12">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<!-- Form Section -->
+<div class="lg:col-span-2 space-y-8">
+<h2 class="font-headline text-2xl font-bold text-[#001c3a] mb-6">Your Details</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">First Name *</label>
+<input class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none" placeholder="John" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Surname *</label>
+<input class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none" placeholder="Doe" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Email *</label>
+<input class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none" placeholder="john.doe@example.com" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Phone *</label>
+<input class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none" placeholder="+371 20000000" type="tel"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Date of Birth *</label>
+<input class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none" type="date"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Place of Birth</label>
+<input class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none" placeholder="City, Country" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Nationality</label>
+<input class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none" placeholder="e.g. Latvian" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Company/Organization</label>
+<input class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none" placeholder="If sponsored by company" type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant">Additional Notes</label>
+<textarea class="w-full bg-white border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none resize-none" placeholder="Any additional information, preferred dates, special requirements..." rows="4"></textarea>
+</div>
+<div class="flex gap-4 pt-4">
+<button class="bg-surface-container text-on-surface px-8 py-4 rounded-lg font-bold hover:bg-surface-container-high transition-all" onclick="document.getElementById('step-2').classList.remove('active'); document.getElementById('step-1').classList.add('active');">
+                                    Back
+                                </button>
+<button class="primary-gradient text-white px-10 py-4 rounded-lg font-bold flex-1 hover:brightness-110 transition-all active:scale-95 shadow-lg">
+                                    Submit Application
+                                </button>
+</div>
+</div>
+<!-- Summary Section -->
+<div class="lg:col-span-1">
+<div class="bg-surface-container-low rounded-xl p-8 border border-outline-variant/20 sticky top-32">
+<h3 class="font-headline font-bold text-xl text-[#001c3a] mb-6">Application Summary</h3>
+<div class="space-y-6">
+<div>
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Category</p>
+<p class="font-medium text-on-surface">B1.1</p>
+</div>
+<div>
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Path</p>
+<p class="font-medium text-on-surface">Training + Examination</p>
+</div>
+<div>
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-1">Selected Modules</p>
+<ul class="space-y-2 mt-2">
+<li class="flex items-center gap-2 text-sm text-on-surface">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                                M1 Mathematics
+                                            </li>
+<li class="flex items-center gap-2 text-sm text-on-surface opacity-60">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                                                ... more selected
+                                            </li>
+</ul>
+</div>
+<div class="pt-6 border-t border-outline-variant/10">
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                                            Our team will review your application and contact you within 24 hours with scheduling details and pricing.
+                                        </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Aviatech Section -->
+<section class="py-24 px-8 bg-surface-container-low">
+<div class="max-w-screen-2xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+<div class="lg:col-span-4">
+<span class="text-primary font-bold font-label uppercase text-xs tracking-[0.2em] mb-4 block">Proven Performance</span>
+<h2 class="font-headline font-extrabold text-4xl lg:text-5xl mb-8 leading-tight">Why Leading Carriers Trust Aviatech</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-12">Our methodology is built on instrument-grade accuracy and decades of tier-one aerospace engineering experience.</p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-4 rounded-xl bg-surface-container-lowest">
+<span class="material-symbols-outlined text-primary" data-weight="fill">verified</span>
+<span class="font-medium text-on-surface">ISO 9001:2015 Certified Operations</span>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-xl bg-surface-container-lowest">
+<span class="material-symbols-outlined text-primary" data-weight="fill">shield</span>
+<span class="font-medium text-on-surface">Tier-1 Security Compliance</span>
+</div>
+</div>
+</div>
+<div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-surface p-12 rounded-2xl flex flex-col justify-between border border-outline-variant/10">
+<div>
+<span class="text-6xl font-headline font-extrabold text-primary mb-6 block">100%</span>
+<h3 class="text-2xl font-bold mb-4">Regulatory Compliance</h3>
+</div>
+<p class="text-on-surface-variant">Zero variance recorded in global regulatory audits for all managed consultancy projects over 15 years.</p>
+</div>
+<div class="bg-surface p-12 rounded-2xl flex flex-col justify-between border border-outline-variant/10">
+<div>
+<span class="text-6xl font-headline font-extrabold text-primary mb-6 block">24%</span>
+<h3 class="text-2xl font-bold mb-4">Operational Cost Reduction</h3>
+</div>
+<p class="text-on-surface-variant">Average maintenance cost reduction achieved through our proprietary predictive lifecycle modeling.</p>
+</div>
+<div class="bg-surface p-12 rounded-2xl flex flex-col justify-between border border-outline-variant/10">
+<div>
+<span class="text-6xl font-headline font-extrabold text-primary mb-6 block">500+</span>
+<h3 class="text-2xl font-bold mb-4">Aircraft Optimized</h3>
+</div>
+<p class="text-on-surface-variant">Our frameworks currently power navigation and maintenance systems for over 500 wide-body aircraft globally.</p>
+</div>
+<div class="bg-surface p-12 rounded-2xl flex flex-col justify-between border border-outline-variant/10">
+<div>
+<span class="text-6xl font-headline font-extrabold text-primary mb-6 block">40%</span>
+<h3 class="text-2xl font-bold mb-4">Faster Deployment</h3>
+</div>
+<p class="text-on-surface-variant">Accelerated time-to-market for new digital avionics interfaces through rapid prototyping loops.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Insights Preview -->
+<section class="py-32 px-8">
+<div class="max-w-screen-2xl mx-auto">
+<div class="flex justify-between items-end mb-16">
+<div>
+<span class="text-primary font-bold font-label uppercase text-xs tracking-[0.2em] mb-4 block">Knowledge Center</span>
+<h2 class="font-headline font-extrabold text-4xl lg:text-5xl">Aviation Insights</h2>
+</div>
+<a class="group text-primary font-bold flex items-center gap-2" href="#">
+                    Browse all insights
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 h-auto md:h-[700px]">
+<div class="md:col-span-7 relative group overflow-hidden rounded-2xl">
+<img alt="cockpit view" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="ultra-modern glass cockpit of a private jet with bright glowing displays and controls during night flight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMCxyneUccCBl8Mezch1SBJqOOmqIzxPQ-aspUSkQev7aFiqXWAyH_cYBP2Gu6dJx97FPhFPUTru52F4RAm5cyxV1IHlfDm8SY8ULoNTgo8od1hsHoK50suPCoBLnwSPLssuD8lMcBhbAEtT7wgwO_Qs2n-c9JOEOfstVuLq-qSfBXmZ_aglOOEMsiCgHBKufK3fiH-C0V1UB2Fo--ApTqF5K406TAmVAvF8HvX2b1Te2XJ_CxP0r6PqenBMwCgxbTrCgl_ZyXW230"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-12">
+<span class="text-primary-fixed font-bold text-sm uppercase tracking-widest mb-4">Special Report</span>
+<h3 class="text-white font-headline text-3xl md:text-4xl font-extrabold mb-6 max-w-lg leading-tight">
+                            The Future of Autonomous Flight Deck Integration
+                        </h3>
+<button class="bg-white text-on-background px-6 py-3 rounded-lg font-bold w-fit hover:bg-primary-fixed transition-colors">Read Report</button>
+</div>
+</div>
+<div class="md:col-span-5 grid grid-rows-2 gap-8">
+<div class="bg-surface-container p-8 rounded-2xl flex flex-col justify-between group hover:bg-surface-container-high transition-colors">
+<div class="space-y-4">
+<span class="text-primary font-bold text-xs uppercase tracking-widest">Case Study</span>
+<h4 class="font-headline font-bold text-2xl group-hover:text-primary transition-colors">Optimizing Fuel Efficiency through AI-Driven Pathfinding</h4>
+</div>
+<p class="text-on-surface-variant line-clamp-2">How a major transatlantic carrier saved $12M annually through algorithmic route optimization.</p>
+</div>
+<div class="bg-surface-container p-8 rounded-2xl flex flex-col justify-between group hover:bg-surface-container-high transition-colors">
+<div class="space-y-4">
+<span class="text-primary font-bold text-xs uppercase tracking-widest">Whitepaper</span>
+<h4 class="font-headline font-bold text-2xl group-hover:text-primary transition-colors">Next-Generation Maintenance Compliance Frameworks</h4>
+</div>
+<p class="text-on-surface-variant line-clamp-2">A technical deep-dive into EASA/FAA regulatory alignment for digital records.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-8 mt-24 bg-slate-50 dark:bg-slate-900">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-screen-2xl mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="text-lg font-black text-slate-900 dark:text-white uppercase letter-spacing-widest font-headline mb-6">
+                Aviatech Consulting
+            </div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xs">
+                Engineering clarity and technology confidence for the global aviation sector. High-performance consultancy for mission-critical operations.
+            </p>
+</div>
+<div class="flex flex-col space-y-4">
+<h5 class="font-bold text-on-surface mb-2 font-headline uppercase text-xs tracking-widest">Company</h5>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-sm transition-transform hover:translate-x-1" href="#">About Us</a>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-sm transition-transform hover:translate-x-1" href="#">Our Team</a>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-sm transition-transform hover:translate-x-1" href="#">Careers</a>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-sm transition-transform hover:translate-x-1" href="#">Global Offices</a>
+</div>
+<div class="flex flex-col space-y-4">
+<h5 class="font-bold text-on-surface mb-2 font-headline uppercase text-xs tracking-widest">Resources</h5>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-sm transition-transform hover:translate-x-1" href="#">Insights</a>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-sm transition-transform hover:translate-x-1" href="#">Regulatory Compliance</a>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-sm transition-transform hover:translate-x-1" href="#">Cookie Policy</a>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-sm transition-transform hover:translate-x-1" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col space-y-4">
+<h5 class="font-bold text-on-surface mb-2 font-headline uppercase text-xs tracking-widest">Connect</h5>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Stay updated with our latest aviation engineering insights.</p>
+<div class="flex bg-white dark:bg-slate-800 p-1 rounded-lg border border-outline-variant/20">
+<input class="bg-transparent border-none text-sm px-4 w-full focus:ring-0" placeholder="email@precision.aero" type="email"/>
+<button class="primary-gradient text-white px-4 py-2 rounded-md font-bold text-xs uppercase">Join</button>
+</div>
+</div>
+</div>
+<div class="max-w-screen-2xl mx-auto pt-12 mt-12 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-body tracking-wide">
+            © 2024 Aviatech Consulting Editorial. All rights reserved. Engineered for Excellence.
+        </p>
+<div class="flex space-x-8">
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-xs" href="#">Privacy Policy</a>
+<a class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 text-xs" href="#">Accessibility</a>
+</div>
+</div>
+</footer>
+</body></html>

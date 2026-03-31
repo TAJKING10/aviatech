@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Training Module Management | Precision Aero</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary": "#725c00",
+                        "on-secondary-fixed": "#001c3a",
+                        "primary-fixed": "#d8e2ff",
+                        "on-background": "#161c22",
+                        "outline-variant": "#c1c6d7",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#564500",
+                        "on-tertiary-fixed": "#231b00",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#717786",
+                        "inverse-surface": "#2b3137",
+                        "surface-container": "#e8eef6",
+                        "primary-container": "#0070ea",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#edc200",
+                        "primary": "#0059bb",
+                        "on-secondary-fixed-variant": "#2f486a",
+                        "on-primary-container": "#fefcff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f6f9ff",
+                        "secondary-fixed-dim": "#afc8f0",
+                        "primary-fixed-dim": "#adc7ff",
+                        "tertiary-fixed": "#ffe07f",
+                        "secondary-fixed": "#d4e3ff",
+                        "on-secondary-container": "#445d80",
+                        "on-primary-fixed": "#001a41",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface": "#f6f9ff",
+                        "secondary-container": "#bdd6ff",
+                        "tertiary-container": "#cda800",
+                        "surface-container-low": "#eef4fc",
+                        "on-primary-fixed-variant": "#004493",
+                        "background": "#f6f9ff",
+                        "surface-dim": "#d4dbe2",
+                        "surface-tint": "#005bc0",
+                        "on-surface-variant": "#414754",
+                        "surface-container-high": "#e3e9f1",
+                        "on-surface": "#161c22",
+                        "on-tertiary-container": "#4e3e00",
+                        "inverse-on-surface": "#ebf1f9",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#dde3eb",
+                        "surface-container-highest": "#dde3eb",
+                        "inverse-primary": "#adc7ff",
+                        "secondary": "#476083",
+                        "on-error-container": "#93000a"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar Component -->
+<aside class="bg-[#f6f9ff] dark:bg-slate-900 h-screen w-64 fixed left-0 top-0 overflow-y-auto flex flex-col border-r border-slate-200/15 dark:border-slate-700/15 z-50">
+<div class="px-6 py-8">
+<div class="flex items-center gap-3 mb-10">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<div>
+<h1 class="text-xl font-black tracking-tighter text-[#161c22] dark:text-white">Precision Aero</h1>
+<p class="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">Editorial Admin</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-6 py-4 text-slate-500 dark:text-slate-400 hover:bg-[#e8eef6] dark:hover:bg-slate-800 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-4 text-slate-500 dark:text-slate-400 hover:bg-[#e8eef6] dark:hover:bg-slate-800 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Applications</span>
+</a>
+<!-- Active Tab: Training Modules -->
+<a class="flex items-center gap-3 px-6 py-4 bg-[#ffffff] dark:bg-slate-800 text-[#0059bb] dark:text-[#0070ea] border-r-4 border-[#0059bb] transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="school" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Training Modules</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-4 text-slate-500 dark:text-slate-400 hover:bg-[#e8eef6] dark:hover:bg-slate-800 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Users</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-4 text-slate-500 dark:text-slate-400 hover:bg-[#e8eef6] dark:hover:bg-slate-800 transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Site Settings</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-slate-200/10">
+<button class="w-full mb-6 bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-md font-headline text-[11px] font-extrabold uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm" data-icon="flight_takeoff">flight_takeoff</span>
+                Flight Status
+            </button>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 text-[11px] font-bold uppercase tracking-widest hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="help">help</span>
+                    Support
+                </a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 text-[11px] font-bold uppercase tracking-widest hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span>
+                    Sign Out
+                </a>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Component -->
+<header class="bg-[#f6f9ff]/80 dark:bg-slate-900/80 backdrop-blur-xl sticky top-0 w-full z-40 border-b border-slate-200/15 dark:border-slate-700/15 shadow-[0px_20px_40px_rgba(22,28,34,0.05)]">
+<div class="flex justify-between items-center px-8 h-16 ml-64">
+<div class="flex items-center gap-8">
+<div class="relative group">
+<span class="absolute inset-y-0 left-3 flex items-center text-slate-400">
+<span class="material-symbols-outlined text-sm" data-icon="search">search</span>
+</span>
+<input class="bg-surface-variant/50 border-none rounded-full py-2 pl-10 pr-4 text-sm w-80 focus:ring-1 focus:ring-primary/20 focus:bg-surface-container-lowest outline-none transition-all placeholder:text-slate-500" placeholder="Search modules, technical codes..." type="text"/>
+</div>
+<nav class="flex items-center gap-6 font-['Inter'] text-sm font-medium">
+<a class="text-slate-600 hover:text-[#0059bb] transition-all" href="#">Global View</a>
+<a class="text-slate-600 hover:text-[#0059bb] transition-all" href="#">Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 mr-4 border-r border-slate-200/20 pr-6">
+<button class="text-slate-500 hover:text-primary transition-all relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full border-2 border-surface"></span>
+</button>
+<button class="text-slate-500 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-[12px] font-bold text-on-surface">Alex Stratton</p>
+<p class="text-[10px] text-slate-500 font-medium">Chief Editor</p>
+</div>
+<img alt="User Profile Avatar" class="w-9 h-9 rounded-full ring-2 ring-primary/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEmyzGxK6595p_GEEOhDm7V5Ucp-nRhiNs7qyVNmo2T1IikCXBjvVdF-yOoq_3UnO98f9cjz5N1glh0pdoocHR_CwYxoiqhBVZIXW8GEgbBzK2ynduY-in2JdzB7fwv6BDVfILImS5fmT3RRiBaxJGUyyKVla6Yq-j-CUVXcOlI6BpovrqNgycpc5ZDJhLOVBxdy9XF5IJv2rrRjCz8ha2JVMED8iYtZIzJZ3wb2E53OA66ShwJ2oYbO1G7RJWG3sPkAH2eC885rc0"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-8 min-h-screen">
+<!-- Editorial Header Section -->
+<section class="mb-12 flex justify-between items-end">
+<div class="max-w-2xl">
+<nav class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Curriculum</span>
+<span class="material-symbols-outlined text-slate-300 text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary text-[10px] font-bold uppercase tracking-wider">Technical Training</span>
+</nav>
+<h2 class="text-5xl font-extrabold font-headline tracking-tighter text-on-background mb-4">Training Modules</h2>
+<p class="text-slate-500 text-lg font-light leading-relaxed">Manage and audit the core aerospace engineering curriculum. Ensure all modules align with Part-66 regulatory standards.</p>
+</div>
+<div class="flex gap-4">
+<button class="bg-surface-container border border-outline-variant/15 text-on-surface px-6 py-3 rounded-md font-headline text-[11px] font-bold uppercase tracking-widest hover:bg-surface-container-high transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="file_download">file_download</span>
+                    Export PDF
+                </button>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-3 rounded-md font-headline text-[11px] font-extrabold uppercase tracking-widest shadow-xl shadow-primary/25 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    Add New Module
+                </button>
+</div>
+</section>
+<!-- Technical Data Grid (Bento Style) -->
+<div class="grid grid-cols-12 gap-8 mb-12">
+<!-- Stats Insight -->
+<div class="col-span-3 bg-surface-container-low p-6 rounded-xl flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-primary mb-4" data-icon="analytics">analytics</span>
+<h4 class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Active Modules</h4>
+</div>
+<div class="mt-8">
+<p class="text-4xl font-headline font-extrabold">17 <span class="text-sm font-normal text-slate-400">/ 24</span></p>
+<div class="w-full bg-surface-variant h-1 mt-4 rounded-full overflow-hidden">
+<div class="bg-primary w-[70%] h-full"></div>
+</div>
+</div>
+</div>
+<div class="col-span-3 bg-surface-container-low p-6 rounded-xl flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-tertiary mb-4" data-icon="pending_actions">pending_actions</span>
+<h4 class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Draft Status</h4>
+</div>
+<div class="mt-8 text-4xl font-headline font-extrabold text-on-surface">
+                    04
+                    <p class="text-[10px] font-medium text-slate-400 mt-2">Ready for review</p>
+</div>
+</div>
+<!-- Visual Decorative Card -->
+<div class="col-span-6 relative overflow-hidden rounded-xl h-48 group">
+<img alt="Aerospace workshop" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-transform duration-700" data-alt="high-tech aircraft hangar with engineers working on a jet engine under bright clinical white studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOlERpSioWe3Pk3bVZShASVFqE-xfhLTlV-GcpWLq5xxux6216mPfkSme5gUMyPaXKXCrBq9XSVIoomxtn3h43hbL59Zz3l5bagnfpBIz2stjLvzlPdA73tk3VNl8g-iAO2scLpIzD7_Y7TXW0fEDL0H9lvNrT3oVOkou_1XTVFmOKUlEWkWzTGVv4l-zTOdYnr7B6Hyc9FuDQpI1aPfHdlVQTyV5qzyaAGf7XdybTnb2vDSetlrihUR2BAIQTchb9lQPdQ2Youd5x"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-transparent flex flex-col justify-center px-10">
+<h3 class="text-white text-2xl font-headline font-bold">Regulatory Compliance</h3>
+<p class="text-white/80 text-sm max-w-xs mt-2">All current modules are verified against EASA Phase 4 protocols.</p>
+</div>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
+<div class="p-6 flex items-center justify-between border-b border-slate-100">
+<div class="flex items-center gap-4">
+<h3 class="font-headline font-bold text-on-surface">Module Directory</h3>
+<div class="flex gap-2">
+<span class="bg-primary-container/10 text-primary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider">All Modules</span>
+<span class="bg-surface-container text-slate-500 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider">B1.1 Category</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="sort">sort</span>
+</button>
+</div>
+</div>
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">Code</th>
+<th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">Title</th>
+<th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">Category</th>
+<th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">Status</th>
+<th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400">Last Updated</th>
+<th class="px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5 font-headline font-bold text-primary">M1</td>
+<td class="px-8 py-5">
+<p class="font-bold text-sm">Mathematics</p>
+<p class="text-[11px] text-slate-400">Arithmetic, Algebra, and Geometry fundamentals.</p>
+</td>
+<td class="px-8 py-5 text-sm text-slate-600">B1.1, B1.2, B2</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-600">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                                Published
+                            </span>
+</td>
+<td class="px-8 py-5 text-xs text-slate-500">Oct 24, 2023</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span></button>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span></button>
+<button class="text-slate-400 hover:text-error"><span class="material-symbols-outlined text-[18px]" data-icon="archive">archive</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5 font-headline font-bold text-primary">M2</td>
+<td class="px-8 py-5">
+<p class="font-bold text-sm">Physics</p>
+<p class="text-[11px] text-slate-400">Statics, Kinetics, and Fluid Dynamics.</p>
+</td>
+<td class="px-8 py-5 text-sm text-slate-600">B1, B2, B3</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-600">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                                Published
+                            </span>
+</td>
+<td class="px-8 py-5 text-xs text-slate-500">Nov 12, 2023</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span></button>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span></button>
+<button class="text-slate-400 hover:text-error"><span class="material-symbols-outlined text-[18px]" data-icon="archive">archive</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 (Draft) -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5 font-headline font-bold text-primary">M11</td>
+<td class="px-8 py-5">
+<p class="font-bold text-sm">Aeroplane Aerodynamics</p>
+<p class="text-[11px] text-slate-400">Structural Systems and Aircraft Dynamics.</p>
+</td>
+<td class="px-8 py-5 text-sm text-slate-600">B1.1, B1.3</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-600">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                                Draft
+                            </span>
+</td>
+<td class="px-8 py-5 text-xs text-slate-500">Dec 01, 2023</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span></button>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span></button>
+<button class="text-slate-400 hover:text-error"><span class="material-symbols-outlined text-[18px]" data-icon="archive">archive</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-8 py-5 font-headline font-bold text-primary">M17</td>
+<td class="px-8 py-5">
+<p class="font-bold text-sm">Propeller</p>
+<p class="text-[11px] text-slate-400">Construction, Maintenance, and Control systems.</p>
+</td>
+<td class="px-8 py-5 text-sm text-slate-600">B1.1, B1.2</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-600">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                                Published
+                            </span>
+</td>
+<td class="px-8 py-5 text-xs text-slate-500">Dec 15, 2023</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span></button>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span></button>
+<button class="text-slate-400 hover:text-error"><span class="material-symbols-outlined text-[18px]" data-icon="archive">archive</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-6 bg-surface-container-low/30 border-t border-slate-100 flex justify-between items-center">
+<p class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Showing 1 to 4 of 17 Modules</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-400 hover:bg-white"><span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-white font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-600 hover:bg-white font-bold text-xs">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-600 hover:bg-white font-bold text-xs">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-slate-200 text-slate-400 hover:bg-white"><span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Footer Editorial -->
+<footer class="mt-20 py-8 border-t border-slate-200/50 flex justify-between items-center">
+<div class="flex items-center gap-6">
+<span class="font-headline font-black tracking-tighter text-slate-300 text-lg">Nexus v4.2.0</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">System Online / Server: Zurich-Alpha</span>
+</div>
+<div class="text-[10px] font-medium text-slate-400 uppercase tracking-widest">
+                © 2024 Aviatech Consulting. All Technical Data Confidential.
+            </div>
+</footer>
+</main>
+</body></html>

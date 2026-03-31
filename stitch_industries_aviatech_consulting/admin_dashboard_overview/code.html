@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aviatech Consulting | Admin Dashboard</title>
+<!-- Tailwind CSS with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary": "#725c00",
+              "on-secondary-fixed": "#001c3a",
+              "primary-fixed": "#d8e2ff",
+              "on-background": "#161c22",
+              "outline-variant": "#c1c6d7",
+              "on-primary": "#ffffff",
+              "on-tertiary-fixed-variant": "#564500",
+              "on-tertiary-fixed": "#231b00",
+              "surface-container-lowest": "#ffffff",
+              "outline": "#717786",
+              "inverse-surface": "#2b3137",
+              "surface-container": "#e8eef6",
+              "primary-container": "#0070ea",
+              "on-error": "#ffffff",
+              "tertiary-fixed-dim": "#edc200",
+              "primary": "#0059bb",
+              "on-secondary-fixed-variant": "#2f486a",
+              "on-primary-container": "#fefcff",
+              "error-container": "#ffdad6",
+              "surface-bright": "#f6f9ff",
+              "secondary-fixed-dim": "#afc8f0",
+              "primary-fixed-dim": "#adc7ff",
+              "tertiary-fixed": "#ffe07f",
+              "secondary-fixed": "#d4e3ff",
+              "on-secondary-container": "#445d80",
+              "on-primary-fixed": "#001a41",
+              "on-secondary": "#ffffff",
+              "error": "#ba1a1a",
+              "surface": "#f6f9ff",
+              "secondary-container": "#bdd6ff",
+              "tertiary-container": "#cda800",
+              "surface-container-low": "#eef4fc",
+              "on-primary-fixed-variant": "#004493",
+              "background": "#f6f9ff",
+              "surface-dim": "#d4dbe2",
+              "surface-tint": "#005bc0",
+              "on-surface-variant": "#414754",
+              "surface-container-high": "#e3e9f1",
+              "on-surface": "#161c22",
+              "on-tertiary-container": "#4e3e00",
+              "inverse-on-surface": "#ebf1f9",
+              "on-tertiary": "#ffffff",
+              "surface-variant": "#dde3eb",
+              "surface-container-highest": "#dde3eb",
+              "inverse-primary": "#adc7ff",
+              "secondary": "#476083",
+              "on-error-container": "#93000a"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(20px);
+      }
+      .ghost-border {
+        border: 1px solid rgba(193, 198, 215, 0.15);
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f6f9ff;
+      }
+    </style>
+</head>
+<body class="text-on-background selection:bg-primary/20">
+<!-- SIDE NAVIGATION BAR -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-[#f6f9ff] flex flex-col border-r border-slate-200/15">
+<div class="px-6 py-8">
+<h1 class="text-xl font-black tracking-tighter text-[#161c22]">Precision Aero</h1>
+<p class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-slate-400 mt-1">Editorial Admin</p>
+</div>
+<nav class="flex-1">
+<ul class="space-y-1">
+<!-- Dashboard Active -->
+<li>
+<a class="flex items-center gap-3 px-6 py-4 bg-[#ffffff] text-[#0059bb] border-r-4 border-[#0059bb] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-4 text-slate-500 hover:bg-[#e8eef6] transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Applications</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-4 text-slate-500 hover:bg-[#e8eef6] transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Training Modules</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-4 text-slate-500 hover:bg-[#e8eef6] transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Users</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-4 text-slate-500 hover:bg-[#e8eef6] transition-colors duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Site Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<div class="p-6 border-t border-slate-200/15">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-md font-['Manrope'] uppercase tracking-widest text-[11px] font-bold shadow-lg hover:opacity-90 transition-all">
+                Flight Status
+            </button>
+<div class="mt-6 space-y-4">
+<a class="flex items-center gap-3 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Support</span>
+</a>
+<a class="flex items-center gap-3 text-slate-500 hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold">Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT CANVAS -->
+<main class="ml-64 min-h-screen bg-surface">
+<!-- TOP NAV BAR -->
+<header class="sticky top-0 w-full z-40 bg-[#f6f9ff]/80 backdrop-blur-xl border-b border-slate-200/15 shadow-[0px_20px_40px_rgba(22,28,34,0.05)]">
+<div class="flex justify-between items-center px-8 h-16">
+<div class="flex items-center gap-8">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-sm">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-variant/30 border-none rounded-md text-sm focus:ring-1 focus:ring-primary/20 w-64 transition-all" placeholder="Search Nexus..." type="text"/>
+</div>
+<nav class="flex gap-6">
+<a class="text-[#0059bb] font-bold border-b-2 border-[#0059bb] py-5 text-sm font-medium transition-all" href="#">Global View</a>
+<a class="text-slate-600 hover:text-[#0059bb] py-5 text-sm font-medium transition-all" href="#">Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<button class="text-slate-500 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-slate-500 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+</button>
+</div>
+<div class="h-6 w-px bg-slate-200/50"></div>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 border border-slate-200/30 text-slate-700 text-xs font-bold uppercase tracking-widest hover:bg-surface-container-high transition-all">Export</button>
+<button class="px-4 py-2 bg-gradient-to-r from-primary to-primary-container text-white text-xs font-bold uppercase tracking-widest rounded-md shadow-md hover:scale-[1.02] transition-all">New Entry</button>
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full border border-primary/20 object-cover" data-alt="professional headshot of a male aviation consultant in a crisp white shirt against a soft grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiuXUjkCCDFaMV5niQaPE6enBuPGRm14mK2ofTLERO1EI1epbRiPYpxYPVk4fhiNN8cF0T0VFxOf_ZFuoM1ngi1ipcOLOQ_oU8_h0lDVngSHwKuuO84omp0InmGvkrhT_2aUCz5-xYze6TXgJ-t4hsGqke9VAH26aEDVUvNYM5RgmIn1vU1zFCi4PRlsg9KP5T5w24Mo00RWfTMfhpzypsKbTL_k9rY5dDnd_T6uDpx3obT070-GEM-V-WIc3y_wfU2wTtPMiUvz97"/>
+</div>
+</div>
+</div>
+</header>
+<!-- DASHBOARD CONTENT -->
+<div class="p-12 max-w-[1400px] mx-auto">
+<!-- HERO HEADER ASYMMETRY -->
+<div class="flex flex-col md:flex-row justify-between items-end mb-20">
+<div class="max-w-2xl">
+<h2 class="font-headline text-5xl font-extrabold text-on-background tracking-tight leading-none mb-6">
+                        Operational <br/>Efficiency <span class="text-primary">02.</span>
+</h2>
+<p class="font-body text-slate-500 text-lg leading-relaxed">
+                        Precision Aerospace metrics for Q4 performance. Analyzing the intersection of personnel readiness and technical compliance through an editorial lens.
+                    </p>
+</div>
+<div class="flex gap-3 mb-2">
+<div class="h-1 w-12 bg-primary"></div>
+<div class="h-1 w-4 bg-slate-200"></div>
+<div class="h-1 w-4 bg-slate-200"></div>
+</div>
+</div>
+<!-- KPI GRID (BENTO STYLE) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-20">
+<!-- KPI Card 1 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(22,28,34,0.02)] transition-all hover:bg-surface-container-high group border-t-2 border-primary">
+<p class="font-label uppercase tracking-[0.2em] text-[10px] font-black text-slate-400 mb-4">Total Applications</p>
+<div class="flex items-center justify-between">
+<h3 class="font-headline text-4xl font-extrabold text-on-background">1,284</h3>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="description">description</span>
+</div>
+<p class="mt-4 text-xs font-medium text-emerald-600 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +12% vs last month
+                    </p>
+</div>
+<!-- KPI Card 2 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(22,28,34,0.02)] transition-all hover:bg-surface-container-high group border-t-2 border-primary-container">
+<p class="font-label uppercase tracking-[0.2em] text-[10px] font-black text-slate-400 mb-4">Active Modules</p>
+<div class="flex items-center justify-between">
+<h3 class="font-headline text-4xl font-extrabold text-on-background">42</h3>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="school">school</span>
+</div>
+<p class="mt-4 text-xs font-medium text-slate-400">Steady capacity level</p>
+</div>
+<!-- KPI Card 3 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(22,28,34,0.02)] transition-all hover:bg-surface-container-high group border-t-2 border-tertiary-container">
+<p class="font-label uppercase tracking-[0.2em] text-[10px] font-black text-slate-400 mb-4">Monthly Revenue</p>
+<div class="flex items-center justify-between">
+<h3 class="font-headline text-4xl font-extrabold text-on-background">$84.2k</h3>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="payments">payments</span>
+</div>
+<p class="mt-4 text-xs font-medium text-emerald-600 flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span> +5.4% growth
+                    </p>
+</div>
+<!-- KPI Card 4 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(22,28,34,0.02)] transition-all hover:bg-surface-container-high group border-t-2 border-error">
+<p class="font-label uppercase tracking-[0.2em] text-[10px] font-black text-slate-400 mb-4">Pending Reviews</p>
+<div class="flex items-center justify-between">
+<h3 class="font-headline text-4xl font-extrabold text-on-background">18</h3>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="assignment_late">assignment_late</span>
+</div>
+<p class="mt-4 text-xs font-medium text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">priority_high</span> Action required
+                    </p>
+</div>
+</div>
+<!-- MAIN DATA MODULES -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<!-- RECENT APPLICATIONS (LEFT 2/3) -->
+<div class="lg:col-span-2">
+<div class="flex justify-between items-center mb-10">
+<h4 class="font-headline text-2xl font-bold">Recent Applications</h4>
+<a class="font-label uppercase tracking-widest text-[10px] font-bold text-primary border-b border-primary pb-1" href="#">View All Records</a>
+</div>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_40px_80px_rgba(0,0,0,0.02)]">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Candidate</th>
+<th class="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Role</th>
+<th class="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Date</th>
+<th class="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Sarah J." class="object-cover" data-alt="portrait of a confident woman engineer in an aerospace hangar environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXr1swUXUkqwLDU4NGiGFcD9czwdkXxg8Qzv9GUyGbv3n2Ev7v5MC8SR-HB2Nfg-m5DkdLf4iqshUPFaWph4LqjLV6QOgcQX2Epri-z-1pC20qV7WqJLGZYIn7W7HmXY1wGTOeKafqvdHQRAW5MDHtdt9ayOSxhfCoSS-2_p6HELIfUPdF3FoaOWFP-UvBA0gHZ6xywPYxhYJluA_sJ91mB9e3aqPzZRLi9D7eCVYpex0q9nuXwn6IYNhxkrBo6X9TH2umA4PSQowp"/>
+</div>
+<div>
+<p class="font-bold text-sm">Sarah Jenkins</p>
+<p class="text-xs text-slate-400">s.jenkins@skybound.com</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6 text-sm font-medium text-slate-600">Avionics Technician</td>
+<td class="px-8 py-6 text-sm text-slate-400">Oct 24, 2023</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-full">Approved</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="David M." class="object-cover" data-alt="close up headshot of a professional pilot wearing glasses in a cockpit setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYFvLB5XI47NLsA9C0FBalOfqBB826rF8zAtr6pDLACzu5VaTFZ6ipw4MUZv_OIUUDmZyqBHmjYubnuXPPN_dJljEoFs6g8wQRbGMYJrOz9vU5v_315P0NJJzLpmd8kmMXZdYK7loSMuBomE9VkjMTVMITiukfYR84yXCnJ-F-12tXawDwtggzD89KKijxidVMK2IZGNIiq3wLGrClOJ__VUeFp6yg1tKBuhjCluH_6LB3wRC4EJXQnBMq4ufCFqRyobVKNv-qAP1c"/>
+</div>
+<div>
+<p class="font-bold text-sm">David Miller</p>
+<p class="text-xs text-slate-400">d.miller@vector.aero</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6 text-sm font-medium text-slate-600">Safety Inspector</td>
+<td class="px-8 py-6 text-sm text-slate-400">Oct 23, 2023</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 bg-tertiary-fixed text-tertiary-container text-[10px] font-black uppercase tracking-widest rounded-full">Pending</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Elena R." class="object-cover" data-alt="portrait of a focused female aerospace designer looking at a digital screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFswUlB4LB66rDsfG7y7OuEBy9AtZnM6NVOCFIBqerJuyEL23cdka0mKkN1c7uBA600qP7789vI5jdJzXsoibdvJnFGP8wgp_gw6tS8PldYTJ_pz8UsmybhXQSrA2aa00vVMZ1GHIyzsrZPypHxHQyhPl2tAKwwU9gTe0A5-z4V74NSSapKdLRA9gvY6QCA-9QxKVsLToPHWkoT0oN4-ZWuDuKd1oVylg4qnIIOHufp1mXrOTf8H22OUI6wW4C4lG2rdy8RYR3qUp5"/>
+</div>
+<div>
+<p class="font-bold text-sm">Elena Rodriguez</p>
+<p class="text-xs text-slate-400">elena.rod@orbit.io</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-6 text-sm font-medium text-slate-600">Structural Engineer</td>
+<td class="px-8 py-6 text-sm text-slate-400">Oct 22, 2023</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 bg-error-container text-error text-[10px] font-black uppercase tracking-widest rounded-full">Rejected</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- PERFORMANCE CHART (RIGHT 1/3) -->
+<div>
+<div class="flex justify-between items-center mb-10">
+<h4 class="font-headline text-2xl font-bold">Module Performance</h4>
+<span class="material-symbols-outlined text-slate-300">more_vert</span>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_40px_80px_rgba(0,0,0,0.02)] h-[400px] flex flex-col">
+<p class="font-body text-xs text-slate-400 mb-8">Completion rates across technical training silos.</p>
+<div class="flex-1 flex items-end gap-6 px-4">
+<!-- Bar 1 -->
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-primary-container/10 rounded-t-sm relative group h-full flex flex-col justify-end">
+<div class="bg-gradient-to-t from-primary to-primary-container w-full rounded-t-sm h-[85%] transition-all group-hover:opacity-80"></div>
+</div>
+<span class="font-label text-[9px] uppercase tracking-tighter text-slate-500">Avionics</span>
+</div>
+<!-- Bar 2 -->
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-primary-container/10 rounded-t-sm relative group h-full flex flex-col justify-end">
+<div class="bg-gradient-to-t from-primary to-primary-container w-full rounded-t-sm h-[62%] transition-all group-hover:opacity-80"></div>
+</div>
+<span class="font-label text-[9px] uppercase tracking-tighter text-slate-500">Safety</span>
+</div>
+<!-- Bar 3 -->
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-primary-container/10 rounded-t-sm relative group h-full flex flex-col justify-end">
+<div class="bg-gradient-to-t from-primary to-primary-container w-full rounded-t-sm h-[94%] transition-all group-hover:opacity-80"></div>
+</div>
+<span class="font-label text-[9px] uppercase tracking-tighter text-slate-500">Engines</span>
+</div>
+<!-- Bar 4 -->
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-full bg-primary-container/10 rounded-t-sm relative group h-full flex flex-col justify-end">
+<div class="bg-gradient-to-t from-primary to-primary-container w-full rounded-t-sm h-[45%] transition-all group-hover:opacity-80"></div>
+</div>
+<span class="font-label text-[9px] uppercase tracking-tighter text-slate-500">Logistics</span>
+</div>
+</div>
+<div class="mt-10 pt-6 border-t border-slate-100 flex justify-between items-center">
+<div>
+<p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Total Progress</p>
+<p class="text-lg font-bold">78.4%</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Active Users</p>
+<p class="text-lg font-bold">1.2k</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SECONDARY ANALYTICS (ASKEW GRID) -->
+<section class="mt-24">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+<div class="bg-primary p-12 rounded-xl text-white md:col-span-2 relative overflow-hidden">
+<div class="relative z-10">
+<span class="px-3 py-1 bg-white/10 glass-effect text-[10px] font-black uppercase tracking-[0.3em] mb-6 inline-block">System Intelligence</span>
+<h3 class="font-headline text-3xl font-extrabold mb-6">Nexus Insights Engine</h3>
+<p class="font-body text-primary-fixed/80 max-w-lg mb-8">
+                                Real-time predictive analytics suggesting a 14% increase in application volume for Avionics roles in the upcoming quarter. Adjust training capacity accordingly.
+                            </p>
+<button class="bg-white text-primary px-8 py-3 rounded-md font-['Manrope'] uppercase tracking-widest text-[11px] font-bold shadow-xl hover:bg-slate-50 transition-all">Launch Deep Audit</button>
+</div>
+<!-- Abstract Decorative Element -->
+<div class="absolute -right-20 -bottom-20 w-80 h-80 border-[40px] border-white/5 rounded-full"></div>
+<div class="absolute right-10 top-10 w-20 h-20 border-2 border-white/10 rotate-45"></div>
+</div>
+<div class="bg-surface-container p-12 rounded-xl h-full flex flex-col justify-center">
+<p class="font-label uppercase tracking-widest text-[10px] font-black text-slate-400 mb-4">Compliance Status</p>
+<h4 class="font-headline text-xl font-bold mb-6">FAA/EASA Synchronization</h4>
+<div class="space-y-6">
+<div class="flex justify-between items-center text-xs">
+<span class="text-slate-600">Documentation Accuracy</span>
+<span class="font-bold text-primary">98%</span>
+</div>
+<div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[98%]"></div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-slate-600">Renewal Readiness</span>
+<span class="font-bold text-primary">82%</span>
+</div>
+<div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[82%]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- FOOTER INFO -->
+<footer class="p-8 border-t border-slate-200/10 mt-20">
+<div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-slate-400">
+<span>© 2024 Precision Aerospace Editorial System</span>
+<div class="flex gap-8">
+<a class="hover:text-primary transition-colors" href="#">Privacy Protocol</a>
+<a class="hover:text-primary transition-colors" href="#">Audit Logs</a>
+<a class="hover:text-primary transition-colors" href="#">System v2.4.1</a>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

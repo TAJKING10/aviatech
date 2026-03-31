@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Aviatech Consulting | Your Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-primary": "#adc7ff",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#eef4fc",
+                        "surface-container": "#e8eef6",
+                        "primary": "#0059bb",
+                        "outline-variant": "#c1c6d7",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#afc8f0",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e3e9f1",
+                        "surface-dim": "#d4dbe2",
+                        "on-primary-container": "#fefcff",
+                        "surface-tint": "#005bc0",
+                        "on-surface-variant": "#414754",
+                        "on-surface": "#161c22",
+                        "surface": "#f6f9ff",
+                        "on-error-container": "#93000a",
+                        "background": "#f6f9ff",
+                        "on-tertiary-fixed-variant": "#564500",
+                        "secondary-fixed": "#d4e3ff",
+                        "on-secondary-fixed": "#001c3a",
+                        "inverse-surface": "#2b3137",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#d8e2ff",
+                        "secondary-container": "#bdd6ff",
+                        "tertiary": "#725c00",
+                        "on-tertiary-fixed": "#231b00",
+                        "on-secondary-container": "#445d80",
+                        "inverse-on-surface": "#ebf1f9",
+                        "on-primary-fixed": "#001a41",
+                        "primary-fixed-dim": "#adc7ff",
+                        "primary-container": "#0070ea",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#dde3eb",
+                        "tertiary-fixed": "#ffe07f",
+                        "on-primary-fixed-variant": "#004493",
+                        "surface-bright": "#f6f9ff",
+                        "tertiary-container": "#cda800",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#717786",
+                        "on-tertiary-container": "#4e3e00",
+                        "on-background": "#161c22",
+                        "surface-container-highest": "#dde3eb",
+                        "on-secondary-fixed-variant": "#2f486a",
+                        "tertiary-fixed-dim": "#edc200",
+                        "secondary": "#476083"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(246, 249, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 glass-header shadow-[0px_20px_40px_rgba(22,28,34,0.05)]">
+<div class="flex justify-between items-center px-12 py-6 w-full mx-auto">
+<div class="text-lg font-extrabold tracking-tighter text-[#161c22] uppercase font-headline">
+                Aviatech Consulting
+            </div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-headline text-sm tracking-wide uppercase font-semibold text-[#161c22]/60 hover:text-[#0059bb] transition-all duration-300" href="#">Home</a>
+<a class="font-headline text-sm tracking-wide uppercase font-semibold text-[#0059bb] border-b-2 border-[#0059bb] pb-1" href="#">Training</a>
+<a class="font-headline text-sm tracking-wide uppercase font-semibold text-[#161c22]/60 hover:text-[#0059bb] transition-all duration-300" href="#">Consulting</a>
+<a class="font-headline text-sm tracking-wide uppercase font-semibold text-[#161c22]/60 hover:text-[#0059bb] transition-all duration-300" href="#">Partners</a>
+<a class="font-headline text-sm tracking-wide uppercase font-semibold text-[#161c22]/60 hover:text-[#0059bb] transition-all duration-300" href="#">About Us</a>
+<a class="font-headline text-sm tracking-wide uppercase font-semibold text-[#161c22]/60 hover:text-[#0059bb] transition-all duration-300" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-[#161c22]/60 cursor-pointer hover:text-[#0059bb]">language</span>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-6 py-3 font-headline text-sm font-bold uppercase tracking-widest rounded-md active:scale-95 transition-all duration-200 shadow-lg">Get Started</button>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-24 px-6 md:px-12 max-w-[1440px] mx-auto min-h-screen">
+<!-- Progress Stepper -->
+<div class="mb-16 max-w-4xl mx-auto">
+<div class="flex justify-between items-start">
+<!-- Step 1 (Completed) -->
+<div class="flex flex-col items-center gap-3 group relative flex-1">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm shadow-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-label text-[10px] uppercase tracking-[0.15em] font-semibold text-primary">Select Modules</span>
+<div class="absolute top-5 left-1/2 w-full h-[2px] bg-primary -z-10"></div>
+</div>
+<!-- Step 2 (Active) -->
+<div class="flex flex-col items-center gap-3 flex-1 relative">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white font-bold text-sm shadow-xl ring-4 ring-primary/10">
+                        2
+                    </div>
+<span class="font-label text-[10px] uppercase tracking-[0.15em] font-bold text-on-surface">Your Details</span>
+<div class="absolute top-5 left-1/2 w-full h-[2px] bg-surface-variant -z-10"></div>
+</div>
+<!-- Step 3 (Pending) -->
+<div class="flex flex-col items-center gap-3 flex-1 relative">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-bold text-sm">
+                        3
+                    </div>
+<span class="font-label text-[10px] uppercase tracking-[0.15em] font-semibold text-on-surface-variant/50">Review &amp; Confirm</span>
+<div class="absolute top-5 left-1/2 w-full h-[2px] bg-surface-variant -z-10"></div>
+</div>
+<!-- Step 4 (Pending) -->
+<div class="flex flex-col items-center gap-3 flex-1">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-bold text-sm">
+                        4
+                    </div>
+<span class="font-label text-[10px] uppercase tracking-[0.15em] font-semibold text-on-surface-variant/50">Success</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Left Side: Form Section -->
+<div class="lg:col-span-8 bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-[0px_20px_40px_rgba(22,28,34,0.03)] border border-outline-variant/10">
+<div class="mb-10">
+<h1 class="font-headline text-3xl font-extrabold tracking-tight mb-2">Technical Training Application</h1>
+<p class="font-body text-on-surface-variant text-sm max-w-xl">Please provide your professional identification and corporate affiliation. All data is processed according to EASA Part-147 data protection standards.</p>
+</div>
+<form class="space-y-8">
+<!-- Personal Info Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">First Name</label>
+<input class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200" placeholder="e.g. Jean" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Last Name</label>
+<input class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200" placeholder="e.g. Dupont" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Professional Email</label>
+<input class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200" placeholder="j.dupont@airline.com" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Phone Number</label>
+<input class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200" placeholder="+33 1 00 00 00 00" type="tel"/>
+</div>
+</div>
+<div class="h-px bg-surface-container-high w-full"></div>
+<!-- Company Info Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+<div class="md:col-span-2 space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Company / Organization</label>
+<input class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200" placeholder="Full legal name of the entity" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Country of Operations</label>
+<select class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200">
+<option>United Kingdom</option>
+<option>France</option>
+<option>Germany</option>
+<option>United States</option>
+<option>United Arab Emirates</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">ZIP / Postal Code</label>
+<input class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200" placeholder="XXXXX" type="text"/>
+</div>
+<div class="md:col-span-2 space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Registered Office Address</label>
+<input class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200" placeholder="Street name and number" type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">Additional Notes / Technical Requirements</label>
+<textarea class="w-full bg-surface-variant/30 border-none rounded-md px-4 py-3 focus:ring-1 focus:ring-primary focus:bg-white transition-all duration-200" placeholder="Specify any previous certifications or specific scheduling requirements..." rows="4"></textarea>
+</div>
+<!-- Checkbox -->
+<div class="flex items-start gap-3 pt-4">
+<input class="mt-1 rounded border-outline-variant text-primary focus:ring-primary" id="terms" type="checkbox"/>
+<label class="font-body text-sm text-on-surface-variant leading-relaxed" for="terms">
+                            I agree to the <a class="text-primary underline" href="#">terms and conditions</a> and understand that final pricing and scheduling confirmation will be provided after review by our technical team.
+                        </label>
+</div>
+<!-- Actions -->
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-surface-container-high">
+<button class="flex items-center gap-2 px-8 py-3 text-sm font-headline font-bold uppercase tracking-widest text-on-surface hover:bg-surface-container transition-colors rounded-md group" type="button">
+<span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                            Back
+                        </button>
+<button class="w-full md:w-auto bg-gradient-to-br from-primary to-primary-container text-white px-12 py-4 font-headline text-sm font-bold uppercase tracking-[0.2em] rounded-md shadow-xl hover:shadow-primary/20 active:scale-[0.98] transition-all" type="button">
+                            Review Application
+                        </button>
+</div>
+</form>
+</div>
+<!-- Right Side: Application Summary Sidebar -->
+<aside class="lg:col-span-4 sticky top-32 space-y-6">
+<div class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/10">
+<div class="p-6 bg-surface-container-high">
+<h3 class="font-headline font-extrabold text-sm uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">fact_check</span>
+                            Application Summary
+                        </h3>
+</div>
+<div class="p-6 space-y-8">
+<div>
+<span class="font-label text-[10px] uppercase tracking-widest font-bold text-on-surface-variant opacity-60">Category</span>
+<p class="font-headline font-bold text-lg text-primary mt-1">B1.1 Aeroplanes Turbine</p>
+</div>
+<div>
+<span class="font-label text-[10px] uppercase tracking-widest font-bold text-on-surface-variant opacity-60">Path</span>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-white px-3 py-1 rounded text-[11px] font-bold text-on-surface shadow-sm">Training</span>
+<span class="text-on-surface-variant text-xs font-bold">+</span>
+<span class="bg-white px-3 py-1 rounded text-[11px] font-bold text-on-surface shadow-sm">Examination</span>
+</div>
+</div>
+<div>
+<span class="font-label text-[10px] uppercase tracking-widest font-bold text-on-surface-variant opacity-60 mb-3 block">Selected Modules</span>
+<div class="space-y-3">
+<div class="flex justify-between items-center bg-white p-3 rounded shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center font-headline font-bold text-xs text-primary">M1</div>
+<span class="text-xs font-semibold text-on-surface">Mathematics</span>
+</div>
+<span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex justify-between items-center bg-white p-3 rounded shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center font-headline font-bold text-xs text-primary">M6</div>
+<span class="text-xs font-semibold text-on-surface">Hardware &amp; Materials</span>
+</div>
+<span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex justify-between items-center bg-white p-3 rounded shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center font-headline font-bold text-xs text-primary">M11</div>
+<span class="text-xs font-semibold text-on-surface">Aeroplane Aerodynamics</span>
+</div>
+<span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-high/50 border-t border-white/50">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">verified_user</span>
+</div>
+<p class="text-[10px] font-medium text-on-surface-variant leading-tight">
+                                Your application is secured and encrypted. One of our consultants will contact you within 24 hours.
+                            </p>
+</div>
+</div>
+</div>
+<!-- Support Card -->
+<div class="bg-gradient-to-br from-inverse-surface to-[#161c22] p-8 rounded-xl relative overflow-hidden text-white">
+<div class="relative z-10">
+<h4 class="font-headline font-bold text-sm mb-2">Need Assistance?</h4>
+<p class="text-xs text-white/60 mb-6 leading-relaxed">Our aviation experts are ready to assist with group bookings or custom curriculum needs.</p>
+<a class="text-xs font-bold border-b-2 border-primary-fixed-dim pb-1 hover:text-primary-fixed-dim transition-colors" href="#">Speak to an Advisor</a>
+</div>
+<!-- Aesthetic flight path line overlay -->
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-7xl" style="font-variation-settings: 'opsz' 48;">flight_takeoff</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-12 bg-[#eef4fc] dark:bg-slate-900 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center w-full max-w-[1440px] mx-auto gap-4">
+<span class="font-['Inter'] text-xs text-[#161c22]/50 dark:text-slate-500">© 2024 Aviatech Consulting. Aerospace Precision.</span>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs text-[#161c22]/50 dark:text-slate-500 hover:text-[#0059bb] transition-opacity duration-300" href="#">Privacy Policy</a>
+<a class="font-['Inter'] text-xs text-[#161c22]/50 dark:text-slate-500 hover:text-[#0059bb] transition-opacity duration-300" href="#">Terms of Service</a>
+<a class="font-['Inter'] text-xs text-[#161c22]/50 dark:text-slate-500 hover:text-[#0059bb] transition-opacity duration-300" href="#">Cookie Settings</a>
+</div>
+</div>
+</footer>
+</body></html>

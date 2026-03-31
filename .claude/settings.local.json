@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:stitch.withanthopic.com)",
+      "WebSearch",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.sotaaz.com)",
+      "Skill(update-config)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(mv \"app/page.tsx\" \"app/\\(main\\)/page.tsx\")",
+      "Bash(mv \"app/services/page.tsx\" \"app/\\(main\\)/services/page.tsx\")",
+      "Bash(mv \"app/industries/page.tsx\" \"app/\\(main\\)/industries/page.tsx\")",
+      "Bash(mv \"app/about/page.tsx\" \"app/\\(main\\)/about/page.tsx\")",
+      "Bash(mv \"app/contact/page.tsx\" \"app/\\(main\\)/contact/page.tsx\")",
+      "Bash(cd:*)",
+      "Bash(node -e \"const lr = require\\(''lucide-react''\\); console.log\\(''FileUser:'', typeof lr.FileUser\\); console.log\\(''lucide version:'', require\\(''./node_modules/lucide-react/package.json''\\).version\\)\")",
+      "Bash(node -e \"const lr = require\\(''lucide-react''\\); const keys = Object.keys\\(lr\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''file''\\) || k.toLowerCase\\(\\).includes\\(''user''\\)\\); console.log\\(keys.join\\(''\\\\n''\\)\\)\")",
+      "Bash(npx -y @_davideast/stitch-mcp proxy --help)",
+      "WebFetch(domain:stitch.withgoogle.com)"
+    ]
+  }
+}
