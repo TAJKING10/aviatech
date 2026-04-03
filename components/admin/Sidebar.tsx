@@ -2,77 +2,73 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
-const navItems = [
-  { href: "/admin", label: "Dashboard", icon: "dashboard", exact: true },
-  { href: "/admin/bookings", label: "Bookings", icon: "calendar_today" },
-  { href: "/admin/training", label: "Training Modules", icon: "school" },
-  { href: "/admin/messages", label: "Messages", icon: "mail" },
-  { href: "/admin/applications", label: "Applications", icon: "description" },
-  { href: "/admin/settings", label: "Site Settings", icon: "settings" },
+const menuItems = [
+  { icon: "dashboard", label: "Dashboard", href: "/admin" },
+  { icon: "description", label: "Applications", href: "/admin/applications" },
+  { icon: "school", label: "Training Modules", href: "/admin/training" },
+  { icon: "group", label: "Bookings", href: "/admin/bookings" },
+  { icon: "mail", label: "Messages", href: "/admin/messages" },
+  { icon: "settings", label: "Site Settings", href: "/admin/settings" },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
 
-  const isActive = (href: string, exact?: boolean) => {
-    if (exact) return pathname === href;
-    return pathname.startsWith(href);
-  };
-
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-[#f6f9ff] border-r border-slate-200/15 z-50 flex flex-col">
-      {/* Logo Area */}
+    <aside className="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-[#f6f9ff] flex flex-col border-r border-slate-200/15 z-50">
       <div className="px-6 py-8">
-        <div className="text-[#161c22] font-headline font-black text-xl leading-none">Aviatech</div>
-        <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mt-1">
-          Precision Admin
-        </div>
+        <h1 className="text-xl font-black tracking-tighter text-[#161c22]">Precision Aero</h1>
+        <p className="font-headline uppercase tracking-widest text-[11px] font-bold text-slate-400 mt-1">Editorial Admin</p>
       </div>
 
-      {/* Nav Items */}
-      <nav className="flex-1 overflow-y-auto">
-        {navItems.map((item) => {
-          const active = isActive(item.href, item.exact);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={
-                active
-                  ? "flex items-center gap-3 px-6 py-4 bg-white text-[#0059bb] border-r-4 border-[#0059bb] font-bold font-['Manrope'] uppercase tracking-widest text-[11px]"
-                  : "flex items-center gap-3 px-6 py-4 text-slate-500 hover:bg-[#e8eef6] transition-colors font-['Manrope'] uppercase tracking-widest text-[11px] font-bold"
-              }
-            >
-              <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
-              {item.label}
-            </Link>
-          );
-        })}
+      <nav className="flex-1">
+        <ul className="space-y-1">
+          {menuItems.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-3 px-6 py-4 transition-all relative group",
+                    active 
+                      ? "bg-white text-primary border-r-4 border-primary" 
+                      : "text-slate-500 hover:bg-[#e8eef6]"
+                  )}
+                >
+                  <span className="material-symbols-outlined">{item.icon}</span>
+                  <span className="font-headline uppercase tracking-widest text-[11px] font-bold">{item.label}</span>
+                  {active && (
+                    <motion.div 
+                      layoutId="admin-nav-active"
+                      className="absolute inset-0 bg-white -z-10"
+                      initial={false}
+                    />
+                  )}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
 
-      {/* Bottom Section */}
-      <div className="px-6 pb-8 pt-4 space-y-3">
-        {/* Flight Status Button */}
-        <button className="w-full bg-gradient-to-r from-[#0059bb] to-[#0070ea] text-white font-['Manrope'] font-bold uppercase tracking-widest text-[10px] py-3 px-4 rounded-xl flex items-center gap-2 justify-center hover:opacity-90 transition-opacity">
-          <span className="material-symbols-outlined text-[16px]">flight</span>
+      <div className="p-6 border-t border-slate-200/15">
+        <button className="w-full primary-gradient text-white py-3 rounded-md font-headline uppercase tracking-widest text-[11px] font-bold shadow-lg hover:opacity-90 transition-all active:scale-95">
           Flight Status
         </button>
-
-        {/* Support */}
-        <Link
-          href="/support"
-          className="flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors font-['Manrope'] uppercase tracking-widest text-[10px] font-bold py-1"
-        >
-          <span className="material-symbols-outlined text-[16px]">help_outline</span>
-          Support
-        </Link>
-
-        {/* Sign Out */}
-        <button className="flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors font-['Manrope'] uppercase tracking-widest text-[10px] font-bold py-1 w-full text-left">
-          <span className="material-symbols-outlined text-[16px]">logout</span>
-          Sign Out
-        </button>
+        <div className="mt-6 space-y-4">
+          <Link href="/support" className="flex items-center gap-3 text-slate-500 hover:text-primary transition-colors group">
+            <span className="material-symbols-outlined group-hover:rotate-12 transition-transform">help</span>
+            <span className="font-headline uppercase tracking-widest text-[11px] font-bold">Support</span>
+          </Link>
+          <button className="flex items-center gap-3 text-slate-500 hover:text-error transition-colors group w-full text-left">
+            <span className="material-symbols-outlined group-hover:-translate-x-1 transition-transform">logout</span>
+            <span className="font-headline uppercase tracking-widest text-[11px] font-bold">Sign Out</span>
+          </button>
+        </div>
       </div>
     </aside>
   );

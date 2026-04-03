@@ -1,310 +1,271 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+
 const bookings = [
   {
-    id: "BK-0042",
-    candidate: "Jonathan Vance",
-    initials: "JV",
-    color: "bg-blue-500",
+    name: "Jonathan Vance",
+    email: "j.vance@aerocorp.com",
     category: "Avionics",
-    trainingPath: "Advanced Radar Systems",
+    path: "Advanced Radar Systems",
     modules: 12,
-    dateSubmitted: "Oct 28, 2024",
+    date: "Oct 24, 2023",
     status: "Confirmed",
+    initials: "JV",
+    color: "bg-secondary-container text-on-secondary-container",
   },
   {
-    id: "BK-0041",
-    candidate: "Elena Rodriguez",
-    initials: "ER",
-    color: "bg-purple-500",
+    name: "Elena Rodriguez",
+    email: "e.rod@skyline.io",
     category: "Propulsion",
-    trainingPath: "Next-Gen Turbofans",
+    path: "Next-Gen Turbofans",
     modules: 8,
-    dateSubmitted: "Oct 26, 2024",
+    date: "Oct 26, 2023",
     status: "Pending",
+    initials: "ER",
+    color: "bg-tertiary-fixed text-on-tertiary-fixed",
   },
   {
-    id: "BK-0040",
-    candidate: "Marcus Kael",
-    initials: "MK",
-    color: "bg-rose-500",
+    name: "Marcus Kael",
+    email: "m.kael@vector.com",
     category: "Aerodynamics",
-    trainingPath: "Hypersonic Fluid Dynamics",
+    path: "Hypersonic Fluid Dynamics",
     modules: 15,
-    dateSubmitted: "Oct 24, 2024",
+    date: "Oct 27, 2023",
     status: "Rejected",
+    initials: "MK",
+    color: "bg-primary-fixed text-on-primary-fixed",
   },
   {
-    id: "BK-0039",
-    candidate: "Sarah Takeda",
-    initials: "ST",
-    color: "bg-emerald-500",
+    name: "Sarah Takeda",
+    email: "s.takeda@globalair.net",
     category: "Flight Control",
-    trainingPath: "Autonomous Docking Systems",
+    path: "Autonomous Docking Systems",
     modules: 6,
-    dateSubmitted: "Oct 22, 2024",
+    date: "Oct 28, 2023",
     status: "Confirmed",
+    initials: "ST",
+    color: "bg-secondary-fixed text-on-secondary-fixed",
   },
 ];
 
-const statusColors: Record<string, string> = {
-  Confirmed: "bg-emerald-50 text-emerald-600 border border-emerald-200",
-  Pending: "bg-amber-50 text-amber-600 border border-amber-200",
-  Rejected: "bg-[#ffdad6] text-[#ba1a1a] border border-red-200",
-};
-
-const quickFilters = ["All Bookings", "Aerodynamics", "Avionics Systems", "Flight Control"];
-
-export default function AdminBookingsPage() {
+export default function BookingsPage() {
   return (
-    <div className="p-8 space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
-        <div>
-          <div className="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-slate-400 mb-2">
-            Candidate Management
-          </div>
-          <h1 className="font-headline font-extrabold text-5xl text-[#161c22] leading-none">
-            Bookings Management
-          </h1>
-          <p className="text-[#414754] text-sm mt-3">
-            Manage and track all training bookings and candidate registrations across programs.
+    <div className="p-12 max-w-[1400px] mx-auto">
+      {/* Page Header */}
+      <section className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <motion.div 
+          className="max-w-2xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary mb-3 block">Operations Deck</span>
+          <h2 className="text-5xl font-headline font-extrabold tracking-tight text-on-surface mb-4">Bookings Management</h2>
+          <p className="text-on-surface-variant font-body leading-relaxed opacity-80">
+            Oversee the full lifecycle of training module applications. Monitor candidate progress, manage institutional paths, and authorize high-precision training sequences.
           </p>
-        </div>
-        <div className="flex-shrink-0">
-          <button className="bg-gradient-to-r from-[#0059bb] to-[#0070ea] text-white font-['Manrope'] uppercase tracking-widest text-[11px] font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity inline-flex items-center gap-2">
-            <span className="material-symbols-outlined text-[18px]">add</span>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
+          <button className="primary-gradient text-white px-8 py-4 rounded-md flex items-center gap-3 font-bold text-sm tracking-wide shadow-lg hover:shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <span className="material-symbols-outlined">add_circle</span>
             Add New Booking
           </button>
-        </div>
-      </div>
+        </motion.div>
+      </section>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-12 gap-5">
-        {/* Large Card */}
-        <div className="col-span-12 lg:col-span-8 bg-white rounded-xl shadow-sm p-8">
-          <div className="flex items-start justify-between mb-6">
+      {/* Stats Overview */}
+      <section className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div 
+          className="md:col-span-2 bg-surface-container-lowest p-8 rounded-xl shadow-sm border-l-4 border-primary"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <div className="flex justify-between items-start">
             <div>
-              <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-1">
-                Total Pipeline
-              </div>
-              <div className="font-headline font-extrabold text-4xl text-[#161c22]">
-                Active Candidates: <span className="text-[#0059bb]">1,284</span>
-              </div>
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-outline mb-2">Active Candidates</h3>
+              <p className="text-4xl font-headline font-extrabold text-on-surface">1,284</p>
             </div>
-            <div className="w-10 h-10 bg-[#d8e2ff] rounded-lg flex items-center justify-center">
-              <span className="material-symbols-outlined text-[20px] text-[#0059bb]">groups</span>
+            <div className="text-right">
+              <span className="text-primary font-bold text-sm">+12% vs last month</span>
+              <div className="h-2 w-32 bg-surface-container rounded-full mt-3 overflow-hidden">
+                <motion.div 
+                  className="h-full bg-primary"
+                  initial={{ width: 0 }}
+                  animate={{ width: "75%" }}
+                  transition={{ duration: 1 }}
+                />
+              </div>
             </div>
           </div>
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="font-['Manrope'] text-[11px] uppercase tracking-widest font-bold text-slate-400">
-                Enrollment Progress
-              </span>
-              <span className="font-['Manrope'] text-[11px] font-bold text-[#0059bb]">84%</span>
-            </div>
-            <div className="h-2.5 bg-[#e8eef6] rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-[#0059bb] to-[#0070ea] rounded-full"
-                style={{ width: "84%" }}
-              />
-            </div>
+        </motion.div>
+        <motion.div 
+          className="bg-surface-container p-8 rounded-xl flex flex-col justify-center"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <h3 className="text-[10px] font-bold uppercase tracking-widest text-outline mb-2">Pending Review</h3>
+          <p className="text-4xl font-headline font-extrabold text-error">42</p>
+          <p className="text-xs text-on-surface-variant mt-2">Requires immediate flight authorization</p>
+        </motion.div>
+      </section>
+
+      {/* Filters */}
+      <section className="mb-6">
+        <div className="flex items-center gap-4 bg-surface-container-low p-4 rounded-xl">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-outline text-lg">filter_list</span>
+            <span className="text-xs font-bold uppercase tracking-tighter text-outline">Quick Filters:</span>
           </div>
-          <div className="mt-4 grid grid-cols-3 gap-4 pt-4 border-t border-[#e8eef6]">
-            {[
-              { label: "Confirmed", value: "986" },
-              { label: "Pending", value: "214" },
-              { label: "Rejected", value: "84" },
-            ].map((s) => (
-              <div key={s.label}>
-                <div className="font-headline text-2xl font-extrabold text-[#161c22]">{s.value}</div>
-                <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mt-0.5">
-                  {s.label}
-                </div>
-              </div>
+          <div className="flex gap-2">
+            {["All Bookings", "Aerodynamics", "Avionics Systems", "Flight Control"].map((f, i) => (
+              <button key={i} className={cn(
+                "px-4 py-1.5 text-xs font-bold rounded-full transition-colors",
+                i === 0 ? "bg-primary text-white" : "bg-white text-on-surface-variant hover:bg-surface-container-high"
+              )}>
+                {f}
+              </button>
             ))}
           </div>
-        </div>
-
-        {/* Small Card */}
-        <div className="col-span-12 lg:col-span-4 bg-[#ffdad6] rounded-xl shadow-sm p-8 flex flex-col justify-between">
-          <div>
-            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-[#ba1a1a]/70 mb-1">
-              Requires Action
-            </div>
-            <div className="font-headline font-extrabold text-4xl text-[#ba1a1a]">42</div>
-            <div className="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-[#ba1a1a] mt-1">
-              Pending Review
-            </div>
-          </div>
-          <div className="mt-6 flex items-center gap-2">
-            <span className="w-2 h-2 bg-[#ba1a1a] rounded-full animate-pulse" />
-            <span className="font-['Manrope'] text-[10px] uppercase tracking-widest font-bold text-[#ba1a1a]/70">
-              Requires immediate attention
-            </span>
+          <div className="ml-auto">
+            <select className="bg-white border-none text-xs font-bold rounded-lg px-4 py-2 focus:ring-1 focus:ring-primary/20 outline-none">
+              <option>Status: All</option>
+              <option>Confirmed</option>
+              <option>Pending</option>
+              <option>Rejected</option>
+            </select>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Filter Strip */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-2 flex-wrap">
-          {quickFilters.map((filter, i) => (
-            <button
-              key={filter}
-              className={`font-['Manrope'] uppercase tracking-widest text-[11px] font-bold px-4 py-2 rounded-xl transition-colors ${
-                i === 0
-                  ? "bg-[#0059bb] text-white"
-                  : "bg-white text-slate-500 hover:bg-[#e8eef6] border border-[#e8eef6]"
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
-        <select className="bg-white border border-[#e8eef6] rounded-xl px-4 py-2 text-sm text-[#414754] font-['Manrope'] focus:outline-none focus:ring-2 focus:ring-[#0059bb]/20">
-          <option>All Statuses</option>
-          <option>Confirmed</option>
-          <option>Pending</option>
-          <option>Rejected</option>
-        </select>
-      </div>
-
-      {/* Data Table */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
+      {/* Table */}
+      <section className="pb-20">
+        <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-outline-variant/10">
+          <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-[#f6f9ff] border-b border-[#e8eef6]">
-                {["Candidate Name", "Category", "Training Path", "Modules", "Date Submitted", "Status", "Actions"].map(
-                  (col) => (
-                    <th
-                      key={col}
-                      className="text-left px-6 py-4 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 whitespace-nowrap"
-                    >
-                      {col}
-                    </th>
-                  )
-                )}
+              <tr className="bg-surface-container-low">
+                <th className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Candidate Name</th>
+                <th className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Category</th>
+                <th className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Training Path</th>
+                <th className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Modules</th>
+                <th className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Date Submitted</th>
+                <th className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline text-center">Status</th>
+                <th className="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#f6f9ff]">
-              {bookings.map((booking) => (
-                <tr key={booking.id} className="hover:bg-[#f6f9ff] transition-colors group">
+            <tbody className="divide-y divide-surface-container-high">
+              {bookings.map((booking, i) => (
+                <motion.tr 
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="hover:bg-surface-container-low/50 transition-colors group"
+                >
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-3">
-                      <div
-                        className={`w-9 h-9 ${booking.color} rounded-full flex items-center justify-center text-white text-xs font-bold font-['Manrope'] flex-shrink-0`}
-                      >
+                      <div className={cn("w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs", booking.color)}>
                         {booking.initials}
                       </div>
                       <div>
-                        <div className="font-semibold text-[#161c22] text-sm">{booking.candidate}</div>
-                        <div className="text-xs text-slate-400">{booking.id}</div>
+                        <p className="text-sm font-bold text-on-surface">{booking.name}</p>
+                        <p className="text-[10px] text-outline">{booking.email}</p>
                       </div>
                     </div>
                   </td>
+                  <td className="px-6 py-5 text-sm font-medium text-on-surface-variant">{booking.category}</td>
                   <td className="px-6 py-5">
-                    <span className="font-['Manrope'] text-[11px] uppercase tracking-widest font-bold text-[#414754]">
-                      {booking.category}
-                    </span>
+                    <span className="px-3 py-1 bg-surface-container rounded text-[10px] font-bold uppercase tracking-tighter text-on-surface-variant">{booking.path}</span>
                   </td>
-                  <td className="px-6 py-5">
-                    <span className="text-sm text-[#414754]">{booking.trainingPath}</span>
-                  </td>
-                  <td className="px-6 py-5">
-                    <span className="font-['Manrope'] text-[11px] font-bold text-[#161c22]">
-                      {booking.modules}
-                    </span>
-                  </td>
-                  <td className="px-6 py-5">
-                    <span className="text-sm text-slate-400">{booking.dateSubmitted}</span>
-                  </td>
-                  <td className="px-6 py-5">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold font-['Manrope'] ${statusColors[booking.status]}`}
-                    >
+                  <td className="px-6 py-5 text-sm font-headline font-bold text-on-surface">{booking.modules}</td>
+                  <td className="px-6 py-5 text-sm text-outline">{booking.date}</td>
+                  <td className="px-6 py-5 text-center">
+                    <span className={cn(
+                      "inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase",
+                      booking.status === "Confirmed" ? "bg-green-100 text-green-700" :
+                      booking.status === "Pending" ? "bg-amber-100 text-amber-700" :
+                      "bg-red-100 text-red-700"
+                    )}>
                       {booking.status}
                     </span>
                   </td>
-                  <td className="px-6 py-5">
-                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#d8e2ff] text-[#0059bb] transition-colors" title="Edit">
-                        <span className="material-symbols-outlined text-[18px]">edit</span>
-                      </button>
-                      <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[#d8e2ff] text-[#0059bb] transition-colors" title="View">
-                        <span className="material-symbols-outlined text-[18px]">visibility</span>
-                      </button>
-                    </div>
+                  <td className="px-6 py-5 text-right space-x-2">
+                    <button className="text-primary hover:bg-primary/10 p-2 rounded transition-colors">
+                      <span className="material-symbols-outlined text-lg">edit</span>
+                    </button>
+                    <button className="text-on-surface opacity-60 hover:opacity-100 hover:bg-surface-container p-2 rounded transition-colors">
+                      <span className="material-symbols-outlined text-lg">visibility</span>
+                    </button>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
             </tbody>
           </table>
-        </div>
-
-        {/* Pagination */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-[#e8eef6] bg-[#f6f9ff]">
-          <span className="text-sm text-slate-400 font-['Manrope']">1–4 of 42 bookings</span>
-          <div className="flex items-center gap-1">
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e8eef6] text-slate-400 hover:border-[#0059bb] hover:text-[#0059bb] transition-colors">
-              <span className="material-symbols-outlined text-[18px]">chevron_left</span>
-            </button>
-            {[1, 2, 3, 4, 5].map((p) => (
-              <button
-                key={p}
-                className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold font-['Manrope'] transition-colors ${
-                  p === 1
-                    ? "bg-[#0059bb] text-white"
-                    : "border border-[#e8eef6] text-slate-400 hover:border-[#0059bb] hover:text-[#0059bb]"
-                }`}
-              >
-                {p}
+          
+          <div className="px-6 py-4 flex items-center justify-between border-t border-surface-container-high">
+            <p className="text-xs text-outline">Showing <span className="font-bold text-on-surface">1 - 4</span> of <span className="font-bold text-on-surface">42</span> results</p>
+            <div className="flex gap-2">
+              <button className="w-8 h-8 rounded bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors">
+                <span className="material-symbols-outlined text-lg">chevron_left</span>
               </button>
-            ))}
-            <button className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#e8eef6] text-slate-400 hover:border-[#0059bb] hover:text-[#0059bb] transition-colors">
-              <span className="material-symbols-outlined text-[18px]">chevron_right</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Editorial Block */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {/* Image Card */}
-        <div className="bg-[#161c22] rounded-xl overflow-hidden relative min-h-[180px] flex items-end p-6">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0059bb]/40 to-[#161c22]/90" />
-          <div className="relative z-10">
-            <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-blue-300 mb-1">
-              Editorial Report
+              <button className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center text-xs font-bold">1</button>
+              <button className="w-8 h-8 rounded bg-white border border-outline-variant/20 flex items-center justify-center text-xs font-bold hover:bg-surface-container-low transition-colors">2</button>
+              <button className="w-8 h-8 rounded bg-white border border-outline-variant/20 flex items-center justify-center text-xs font-bold hover:bg-surface-container-low transition-colors">3</button>
+              <button className="w-8 h-8 rounded bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors">
+                <span className="material-symbols-outlined text-lg">chevron_right</span>
+              </button>
             </div>
-            <h3 className="font-headline font-extrabold text-2xl text-white">Global Connectivity Report</h3>
-            <p className="text-blue-200 text-sm mt-1">Q4 2024 Aviation Training Network Analysis</p>
           </div>
         </div>
+      </section>
 
-        {/* Precision Compliance Monitor */}
-        <div className="bg-white rounded-xl shadow-sm p-8">
-          <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mb-2">
-            System Monitor
-          </div>
-          <h3 className="font-headline font-bold text-xl text-[#161c22] mb-6">
-            Precision Compliance Monitor
-          </h3>
-          <div className="grid grid-cols-3 gap-4">
-            {[
-              { label: "Latency", value: "0.04ms" },
-              { label: "Auth Rate", value: "99.9%" },
-              { label: "Integrity", value: "Verified" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div className="font-headline text-xl font-extrabold text-[#0059bb]">{stat.value}</div>
-                <div className="font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400 mt-0.5">
-                  {stat.label}
+      {/* Contextual Help */}
+      <section className="pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+          <motion.div 
+            className="md:col-span-4 h-64 rounded-xl overflow-hidden shadow-2xl relative group"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <Image 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT_5QLY97gYU7fTDIXDFQBL80if1RGi_aHTxSPPXSlrhYA4zew-xf_QdVW8YtpNJYWZPxZUtSl6BbJz_HPBXhEoG1XZxVRhyOGPD5R0T9-vjAVLHsmacHsDGlbh2owWliFawyQ2LMDtzjk2ORSeUErDzOwKuuzpwXlo9LaJCYXa114Hhxbv1rrSWxjzfRniA9neUl_CkzB9ybtWhaHh_yDpg6JwS0p5KIp4hlykNbs3mmcEP_RxCO91T0M0Rugpv6nWcG-FweeoFhp"
+              alt="earth view"
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+            <div className="absolute bottom-6 left-6 right-6">
+              <h4 className="text-white font-headline font-bold text-xl leading-tight">Global Connectivity Report</h4>
+              <p className="text-white/80 text-xs mt-2">Annual training analytics for aerospace flight operations.</p>
+            </div>
+          </motion.div>
+          <div className="md:col-span-8">
+            <h3 className="text-2xl font-headline font-extrabold mb-4 text-on-surface">Precision Compliance Monitor</h3>
+            <p className="text-on-surface-variant leading-relaxed text-sm mb-6 max-w-xl">
+              Aviatech&apos;s compliance engine automatically flags bookings that do not meet the prerequisite safety modules. Every confirmed booking generates a unique digital flight deck credential for the candidate, valid for 24 months across international airspace.
+            </p>
+            <div className="flex gap-8">
+              {[
+                { label: "System Latency", value: "0.04ms" },
+                { label: "Auth Success", value: "99.9%" },
+                { label: "Data Integrity", value: "Verified" },
+              ].map((stat, i) => (
+                <div key={i}>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-outline">{stat.label}</p>
+                  <p className="text-xl font-headline font-extrabold text-primary">{stat.value}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

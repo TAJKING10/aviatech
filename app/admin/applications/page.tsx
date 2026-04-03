@@ -1,265 +1,186 @@
-const applications = [
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+
+const applicants = [
   {
-    initials: "JV",
-    color: "bg-slate-700",
     name: "Jonathan Vickers",
-    title: "Sr. Avionics Engineer",
-    company: "Lufthansa Technik",
+    role: "Sr. Avionics Engineer • Lufthansa",
     modules: ["SYSTEM_DYNAMICS_4", "FLIGHT_SAFETY_II"],
-    moduleColors: ["bg-[#d8e2ff] text-[#0059bb]", "bg-[#bdd6ff] text-[#476083]"],
-    date: "Oct 28, 2024",
-    priority: "Urgent Review",
-    priorityStyle: "bg-[#ffdad6] text-[#ba1a1a]",
+    date: "Oct 14, 2023",
+    status: "Urgent Review",
+    statusVariant: "error",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBUlbWHk1ggD_IJ9oBjlXtiLAca0T1h2ZJXpAU7zGzAaS8DLgMV_i0WkSLJtxrxxpbQivJyIuJ6lYeDMM_x2e5Up4EiRQg41cBetk6vxZD0DSaJmNBWJQ6Qclj9XhgxtytjCAyvg7UfdMFtTK2kGKNv7hfKH5PnycdR5EZWcLTINBsT1cWlqfU1AO1C3gnG_7Oy4EAVuLd_ds9ZLlwhWaR8_l-UGklTZcoAUka2a1LZ4WNlntlvnkNATfcq_JKTyo604-E5aeFHNozq",
   },
   {
-    initials: "ER",
-    color: "bg-purple-700",
     name: "Elena Rodriguez",
-    title: "Fleet Ops Manager",
-    company: "Qatar Airways",
+    role: "Fleet Operations Manager • Qatar Airways",
     modules: ["STRATOSPHERIC_LOGISTICS"],
-    moduleColors: ["bg-emerald-50 text-emerald-700"],
-    date: "Oct 26, 2024",
-    priority: "Standard",
-    priorityStyle: "bg-[#e8eef6] text-[#414754]",
+    date: "Oct 15, 2023",
+    status: "Standard",
+    statusVariant: "standard",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfoEjhEANH-S17yVahXJxq9inuvKnf7JBywMIB91LTN85LrlktxbzKtIthwEcZltrHBxAMI4tcHw0CafWda5AwkYCAGHtQr6hsPXXrJ-CEH5DtYK6iQPmk2zj2qR7uh8ny3yZDKB3SxjRCnv1EH7dcBNX6iBa-6yfdn3rAdc7FD-zvWy5v2bD_eMNBWVjQeKQ-Y8vk8eY-kQUo5yLn5Iug7HRs1X2e-sDoAr1nYlvZNkef_yk7RGVlOneSLYiMI3dZQ1Bbwkz23oHB",
   },
   {
-    initials: "MT",
-    color: "bg-emerald-700",
     name: "Marcus Thorne",
-    title: "Independent Consultant",
-    company: "AeroConsult",
+    role: "Independent Consultant • AeroConsult",
     modules: ["JET_PROPULSION_X", "ADV_DIAGNOSTICS"],
-    moduleColors: ["bg-amber-50 text-amber-700", "bg-orange-50 text-orange-700"],
-    date: "Oct 24, 2024",
-    priority: "Consulting Priority",
-    priorityStyle: "bg-[#ffe07f]/40 text-[#cda800]",
+    date: "Oct 16, 2023",
+    status: "Consulting Priority",
+    statusVariant: "secondary",
+    img: null,
   },
   {
-    initials: "SZ",
-    color: "bg-blue-700",
     name: "Samuel Zhang",
-    title: "Data Analyst",
-    company: "Singapore Airlines",
+    role: "Data Analyst • Singapore Airlines",
     modules: ["PREDICTIVE_MAINTENANCE"],
-    moduleColors: ["bg-[#bdd6ff] text-[#476083]"],
-    date: "Oct 22, 2024",
-    priority: "Standard",
-    priorityStyle: "bg-[#e8eef6] text-[#414754]",
+    date: "Oct 16, 2023",
+    status: "Standard",
+    statusVariant: "standard",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA51AOTsKlwGJzwSyDQ6s44cAShs341113WZxRq8SHspy7WlNw9L0F83_q7UhEeM3HGbcdwwO6ZoZ7n3uyppztuc4Ee1RFp7ksXnTGUDjC3IqvCbGS5Ix64tNie82DRrQu4czrHMGwi_5Uk5eCxAaaZUOooWg2KYb2pR3vTFrWRM6CF92-sbZ_CUnTl7yMUw8xZlrDzLXv021lg3hiKKoT3nBNBbVOBgzz7IA7MQtkat3bF_KpQ3kVptaQQSv9CTFKA03MNyZ3N9kWR",
   },
 ];
 
-const metrics = [
-  {
-    label: "Total Queue",
-    value: "128",
-    icon: "inbox",
-    iconBg: "bg-[#d8e2ff]",
-    iconColor: "text-[#0059bb]",
-    borderColor: "border-[#0059bb]",
-    gradient: false,
-    isError: false,
-  },
-  {
-    label: "High Priority",
-    value: "24",
-    icon: "priority_high",
-    iconBg: "bg-[#ffdad6]",
-    iconColor: "text-[#ba1a1a]",
-    borderColor: "border-[#ba1a1a]",
-    gradient: false,
-    isError: true,
-  },
-  {
-    label: "Certification Velocity",
-    value: "94.2%",
-    icon: "speed",
-    iconBg: "",
-    iconColor: "",
-    borderColor: "border-[#0059bb]",
-    gradient: true,
-    isError: false,
-  },
-  {
-    label: "Avg. Review Time",
-    value: "2.4 days",
-    icon: "schedule",
-    iconBg: "bg-[#ffe07f]/30",
-    iconColor: "text-[#cda800]",
-    borderColor: "border-[#cda800]",
-    gradient: false,
-    isError: false,
-  },
-];
-
-export default function AdminApplicationsPage() {
+export default function ApplicationsPage() {
   return (
-    <div className="p-8 space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
-        <div>
-          <div className="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-slate-400 mb-2">
-            Candidate Pipeline
-          </div>
-          <h1 className="font-headline font-extrabold text-5xl text-[#161c22] leading-none">
-            Application Review
-          </h1>
-          <p className="text-[#414754] text-sm mt-3">
-            Review and process candidate applications across all training programs and certification paths.
-          </p>
+    <div className="p-12 max-w-[1400px] mx-auto">
+      {/* Page Header */}
+      <section className="mb-16 flex justify-between items-end">
+        <motion.div 
+          className="max-w-2xl"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <h2 className="font-headline text-5xl font-extrabold tracking-tighter text-on-surface mb-4">Application Review</h2>
+          <p className="text-on-surface-variant font-body text-lg leading-relaxed">Processing queue for Aviatech Consulting. High-volume candidate requests filtered by specialized aerospace modules and priority clearance status.</p>
+        </motion.div>
+        <div className="flex gap-2">
+          <span className="bg-surface-container-high px-4 py-2 rounded-full font-headline text-[11px] font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+            14 Active Reviews
+          </span>
         </div>
-        <div className="flex-shrink-0 flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-[#ffdad6] px-4 py-2 rounded-xl">
-            <span className="w-2 h-2 bg-[#ba1a1a] rounded-full animate-pulse" />
-            <span className="font-['Manrope'] uppercase tracking-widest text-[11px] font-bold text-[#ba1a1a]">
-              14 Active Reviews
-            </span>
-          </div>
-        </div>
-      </div>
+      </section>
 
-      {/* Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-        {metrics.map((metric) => (
-          <div
-            key={metric.label}
-            className={`rounded-xl p-6 shadow-sm border-t-2 ${metric.borderColor} ${
-              metric.gradient
-                ? "bg-gradient-to-br from-[#0059bb] to-[#0070ea] text-white"
-                : metric.isError
-                ? "bg-[#ffdad6]"
-                : "bg-white"
-            }`}
-          >
-            <div className="flex items-start justify-between mb-4">
-              {metric.gradient ? (
-                <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                  <span className="material-symbols-outlined text-[20px] text-white">{metric.icon}</span>
-                </div>
-              ) : (
-                <div className={`w-10 h-10 ${metric.iconBg} rounded-lg flex items-center justify-center`}>
-                  <span className={`material-symbols-outlined text-[20px] ${metric.iconColor}`}>{metric.icon}</span>
-                </div>
-              )}
-            </div>
-            <div
-              className={`font-['Manrope'] uppercase tracking-[0.2em] text-[10px] font-black mb-2 ${
-                metric.gradient ? "text-blue-200" : metric.isError ? "text-[#ba1a1a]/70" : "text-slate-400"
-              }`}
-            >
-              {metric.label}
-            </div>
-            <div
-              className={`font-headline text-3xl font-extrabold ${
-                metric.gradient ? "text-white" : metric.isError ? "text-[#ba1a1a]" : "text-[#161c22]"
-              }`}
-            >
-              {metric.value}
-            </div>
+      {/* Metrics Bento Grid */}
+      <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12">
+        <motion.div 
+          className="bg-surface-container-lowest p-6 rounded-xl border border-slate-100/50 shadow-sm transition-all hover:bg-surface-container-high group"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <p className="font-headline text-[10px] uppercase tracking-widest text-slate-500 mb-2">Total Queue</p>
+          <h3 className="text-3xl font-headline font-extrabold text-on-surface">128</h3>
+          <div className="mt-4 flex items-center gap-1 text-primary text-xs font-bold">
+            <span className="material-symbols-outlined text-sm">trending_up</span>
+            <span>+12% this week</span>
           </div>
-        ))}
-      </div>
+        </motion.div>
+        <motion.div 
+          className="bg-surface-container-lowest p-6 rounded-xl border border-slate-100/50 shadow-sm transition-all hover:bg-surface-container-high"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <p className="font-headline text-[10px] uppercase tracking-widest text-slate-500 mb-2">High Priority</p>
+          <h3 className="text-3xl font-headline font-extrabold text-error">24</h3>
+          <div className="mt-4 flex items-center gap-1 text-slate-400 text-xs font-medium italic">
+            <span>Requires Immediate Action</span>
+          </div>
+        </motion.div>
+        <motion.div 
+          className="col-span-1 md:col-span-2 primary-gradient p-6 rounded-xl shadow-lg shadow-primary/10 relative overflow-hidden"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <div className="relative z-10 text-white">
+            <p className="font-headline text-[10px] uppercase tracking-widest opacity-80 mb-2">Certification Velocity</p>
+            <h3 className="text-3xl font-headline font-extrabold">Advanced Diagnostics</h3>
+            <p className="mt-2 text-sm opacity-90 max-w-xs">Most requested module in last 24 hours. Consider increasing trainer capacity.</p>
+          </div>
+          <span className="absolute -right-4 -bottom-4 text-white/10 material-symbols-outlined text-[120px]">speed</span>
+        </motion.div>
+      </section>
 
       {/* List View */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        {/* Column Headers */}
-        <div className="grid grid-cols-12 px-6 py-4 bg-[#f6f9ff] border-b border-[#e8eef6]">
-          <div className="col-span-3 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
-            Candidate Profile
-          </div>
-          <div className="col-span-3 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
-            Assigned Modules
-          </div>
-          <div className="col-span-2 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
-            Submission Date
-          </div>
-          <div className="col-span-2 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
-            Priority Status
-          </div>
-          <div className="col-span-2 font-['Manrope'] uppercase tracking-widest text-[10px] font-bold text-slate-400">
-            Actions
-          </div>
+      <section className="space-y-4">
+        <div className="grid grid-cols-12 px-6 py-4 font-headline text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+          <div className="col-span-4">Candidate Profile</div>
+          <div className="col-span-3">Assigned Modules</div>
+          <div className="col-span-2">Submission Date</div>
+          <div className="col-span-2">Priority Status</div>
+          <div className="col-span-1 text-right">Actions</div>
         </div>
 
-        {/* Rows */}
-        <div className="divide-y divide-[#f6f9ff]">
-          {applications.map((app) => (
-            <div
-              key={app.name}
-              className="grid grid-cols-12 px-6 py-6 hover:bg-[#f6f9ff] transition-colors group items-center"
-            >
-              {/* Candidate Profile */}
-              <div className="col-span-3 flex items-center gap-4">
-                <div
-                  className={`w-12 h-12 ${app.color} rounded-xl flex items-center justify-center text-white font-bold font-['Manrope'] text-sm flex-shrink-0 grayscale group-hover:grayscale-0 transition-all`}
-                >
-                  {app.initials}
+        {applicants.map((applicant, i) => (
+          <motion.div 
+            key={i}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.05 }}
+            className="grid grid-cols-12 px-6 py-8 items-center bg-surface-container-lowest rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.02)] transition-all hover:bg-surface-container-high group border border-transparent hover:border-primary/10"
+          >
+            <div className="col-span-4 flex items-center gap-4">
+              {applicant.img ? (
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden grayscale group-hover:grayscale-0 transition-all">
+                  <Image src={applicant.img} alt={applicant.name} fill className="object-cover" />
                 </div>
-                <div>
-                  <div className="font-semibold text-[#161c22] text-sm">{app.name}</div>
-                  <div className="text-xs text-slate-400">{app.title}</div>
-                  <div className="text-xs text-[#0059bb] font-['Manrope'] font-bold">{app.company}</div>
+              ) : (
+                <div className="w-12 h-12 bg-surface-variant rounded-lg flex items-center justify-center text-slate-400">
+                  <span className="material-symbols-outlined">person</span>
                 </div>
-              </div>
-
-              {/* Assigned Modules */}
-              <div className="col-span-3 flex flex-wrap gap-1.5">
-                {app.modules.map((mod, i) => (
-                  <span
-                    key={mod}
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold font-['Manrope'] uppercase tracking-wider ${app.moduleColors[i]}`}
-                  >
-                    {mod}
-                  </span>
-                ))}
-              </div>
-
-              {/* Submission Date */}
-              <div className="col-span-2">
-                <span className="text-sm text-slate-400">{app.date}</span>
-              </div>
-
-              {/* Priority Status */}
-              <div className="col-span-2">
-                <span
-                  className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold font-['Manrope'] ${app.priorityStyle}`}
-                >
-                  {app.priority}
-                </span>
-              </div>
-
-              {/* Actions */}
-              <div className="col-span-2">
-                <a
-                  href="#"
-                  className="text-[#0059bb] font-['Manrope'] uppercase tracking-widest text-[10px] font-bold hover:underline inline-flex items-center gap-1"
-                >
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                  View Details
-                </a>
+              )}
+              <div>
+                <h4 className="font-headline font-bold text-lg text-on-surface">{applicant.name}</h4>
+                <p className="text-xs text-slate-500 font-medium">{applicant.role}</p>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+            <div className="col-span-3 flex flex-wrap gap-2">
+              {applicant.modules.map((m, j) => (
+                <span key={j} className="bg-surface-container px-3 py-1 rounded text-[10px] font-bold text-primary-container">{m}</span>
+              ))}
+            </div>
+            <div className="col-span-2 text-sm font-medium text-on-surface-variant">
+              {applicant.date}
+            </div>
+            <div className="col-span-2">
+              <span className={cn(
+                "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter",
+                applicant.statusVariant === "error" ? "bg-error-container text-error" :
+                applicant.statusVariant === "secondary" ? "bg-secondary-container/30 text-secondary" :
+                "bg-surface-container-high text-on-surface-variant"
+              )}>
+                {applicant.statusVariant === "error" && <span className="w-1.5 h-1.5 rounded-full bg-error"></span>}
+                {applicant.status}
+              </span>
+            </div>
+            <div className="col-span-1 text-right">
+              <Link href="#" className="text-primary font-headline text-[10px] font-bold uppercase tracking-widest hover:underline decoration-2 underline-offset-4">View Details</Link>
+            </div>
+          </motion.div>
+        ))}
+      </section>
 
       {/* Pagination */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <span className="text-sm text-slate-400 font-['Manrope']">
-          Showing <span className="font-bold text-[#161c22]">4</span> of{" "}
-          <span className="font-bold text-[#161c22]">128</span> candidates
-        </span>
-        <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 border border-[#e8eef6] rounded-xl px-4 py-2 text-sm font-bold font-['Manrope'] text-slate-500 hover:border-[#0059bb] hover:text-[#0059bb] transition-colors">
-            <span className="material-symbols-outlined text-[18px]">chevron_left</span>
-            Previous Batch
+      <section className="mt-12 flex justify-between items-center px-6">
+        <p className="text-xs text-slate-500 font-medium">Showing {applicants.length} of 128 candidates in queue</p>
+        <div className="flex gap-4">
+          <button className="flex items-center gap-1 text-on-surface-variant text-xs font-bold uppercase tracking-widest hover:text-primary transition-all">
+            <span className="material-symbols-outlined text-sm">chevron_left</span>
+            Previous
           </button>
-          <button className="flex items-center gap-2 bg-[#0059bb] text-white rounded-xl px-4 py-2 text-sm font-bold font-['Manrope'] hover:opacity-90 transition-opacity">
+          <button className="flex items-center gap-1 text-primary text-xs font-bold uppercase tracking-widest hover:opacity-80 transition-all">
             Next Batch
-            <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+            <span className="material-symbols-outlined text-sm">chevron_right</span>
           </button>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

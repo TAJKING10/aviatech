@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const modules = [
   { id: "M1", name: "M1 Mathematics", sub: "Core Competency Module", checked: true },
@@ -20,150 +22,249 @@ const modules = [
 ];
 
 export default function BookingPage() {
+  const [bookingStep, setBookingStep] = useState(1);
   const [selected, setSelected] = useState<Record<string, boolean>>(
     Object.fromEntries(modules.map((m) => [m.id, m.checked]))
   );
 
   const selectedCount = Object.values(selected).filter(Boolean).length;
 
+  const nextStep = () => setBookingStep((prev) => Math.min(prev + 1, 3));
+  const prevStep = () => setBookingStep((prev) => Math.max(prev - 1, 1));
+
   return (
-    <div className="bg-[#f6f9ff] font-['Inter'] text-[#161c22] antialiased min-h-screen pt-32 pb-24 px-6 md:px-12">
+    <div className="bg-surface font-body text-on-surface antialiased min-h-screen pt-32 pb-24 px-6 md:px-12">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-xl shadow-[0px_40px_80px_rgba(22,28,34,0.08)] overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-xl shadow-2xl overflow-hidden border border-outline-variant/10"
+        >
           {/* Progress Stepper */}
-          <div className="bg-[#eef4fc] px-8 py-10 border-b border-[#c1c6d7]/15">
-            <div className="flex items-center justify-between relative max-w-2xl mx-auto">
-              <div className="absolute top-5 left-0 w-full h-[2px] bg-[#c1c6d7]/30" />
-              <div className="absolute top-5 left-0 w-1/3 h-[2px] bg-[#0059bb]" />
-              {[
-                { num: "1", label: "Select Modules", active: true },
-                { num: "2", label: "Your Details", active: false },
-                { num: "3", label: "Review & Confirm", active: false },
-                { num: "4", label: "Success", active: false },
-              ].map((step) => (
-                <div key={step.num} className="relative z-10 flex flex-col items-center gap-3">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
-                      step.active
-                        ? "bg-[#0059bb] text-white shadow-lg shadow-[#0059bb]/30"
-                        : "bg-[#dde3eb] text-[#414754]"
-                    }`}
-                  >
-                    {step.num}
-                  </div>
-                  <span
-                    className={`text-[10px] font-bold uppercase tracking-widest font-headline ${
-                      step.active ? "text-[#0059bb]" : "text-[#414754]/60"
-                    }`}
-                  >
-                    {step.label}
-                  </span>
-                </div>
-              ))}
+          <div className="bg-surface-container-low px-8 py-10 border-b border-outline-variant/10">
+            <div className="flex justify-center items-center gap-4">
+              <div className="flex items-center gap-3">
+                <span className={cn(
+                  "w-10 h-10 rounded flex items-center justify-center font-bold text-lg transition-colors",
+                  bookingStep >= 1 ? "bg-primary text-white" : "bg-surface-container-highest text-on-surface-variant"
+                )}>
+                  {bookingStep > 1 ? <span className="material-symbols-outlined">check</span> : "1"}
+                </span>
+                <span className={cn(
+                  "font-headline font-bold text-sm tracking-tight",
+                  bookingStep >= 1 ? "text-on-surface" : "text-on-surface-variant"
+                )}>Select Modules</span>
+              </div>
+              <div className="w-16 h-px bg-outline-variant/30"></div>
+              <div className="flex items-center gap-3">
+                <span className={cn(
+                  "w-10 h-10 rounded flex items-center justify-center font-bold text-lg transition-colors",
+                  bookingStep >= 2 ? "bg-primary text-white" : "bg-surface-container-highest text-on-surface-variant"
+                )}>
+                  {bookingStep > 2 ? <span className="material-symbols-outlined">check</span> : "2"}
+                </span>
+                <span className={cn(
+                  "font-headline font-bold text-sm tracking-tight",
+                  bookingStep >= 2 ? "text-on-surface" : "text-on-surface-variant"
+                )}>Your Details</span>
+              </div>
             </div>
           </div>
 
-          {/* Main Form */}
-          <div className="p-8 md:p-12">
-            <div className="mb-10">
-              <h1 className="text-3xl md:text-4xl font-extrabold text-[#001a41] font-headline tracking-tight mb-2">
-                Select Your Modules
-              </h1>
-              <p className="text-[#414754]/70 text-sm max-w-lg leading-relaxed">
-                Customize your aerospace training path by selecting the specific modules required for your certification or consultancy goals.
-              </p>
-            </div>
-
-            {/* Selects */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-              <div className="flex flex-col gap-2">
-                <label className="text-[11px] font-bold uppercase tracking-widest text-[#414754]/80 font-headline">Category</label>
-                <div className="relative">
-                  <select className="w-full bg-[#e8eef6] px-4 py-4 rounded-lg border-none focus:ring-1 focus:ring-[#0059bb] text-[#161c22] font-medium text-sm appearance-none cursor-pointer outline-none">
-                    <option>B1.1 Aeroplanes Turbine</option>
-                    <option>B1.2 Aeroplanes Piston</option>
-                    <option>B2 Avionics</option>
-                    <option>Human Factors</option>
-                    <option>Consulting Services</option>
-                  </select>
-                  <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#414754]/50">expand_more</span>
+          <AnimatePresence mode="wait">
+            {bookingStep === 1 ? (
+              <motion.div 
+                key="step-1"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="p-8 lg:p-12"
+              >
+                <div className="mb-10">
+                  <h1 className="text-3xl font-extrabold text-on-surface font-headline tracking-tighter mb-2">
+                    Select Your Modules
+                  </h1>
+                  <p className="text-on-surface-variant text-sm max-w-lg leading-relaxed">
+                    Customize your aerospace training path by selecting the specific modules required for your certification or consultancy goals.
+                  </p>
                 </div>
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-[11px] font-bold uppercase tracking-widest text-[#414754]/80 font-headline">Training Path</label>
-                <div className="relative">
-                  <select className="w-full bg-[#e8eef6] px-4 py-4 rounded-lg border-none focus:ring-1 focus:ring-[#0059bb] text-[#161c22] font-medium text-sm appearance-none cursor-pointer outline-none">
-                    <option>Training + Examination</option>
-                    <option>Training Only</option>
-                    <option>Examination Only</option>
-                    <option>Advisory Session</option>
-                  </select>
-                  <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#414754]/50">expand_more</span>
-                </div>
-              </div>
-            </div>
 
-            {/* Module List */}
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xs font-bold uppercase tracking-[0.15rem] text-[#0059bb] font-headline">Available Modules</h2>
-                <button
-                  onClick={() => setSelected(Object.fromEntries(modules.map((m) => [m.id, true])))}
-                  className="text-[10px] font-bold uppercase tracking-widest text-[#0059bb] border-b border-[#0059bb]/20 hover:border-[#0059bb] transition-all"
-                >
-                  Select All
-                </button>
-              </div>
-              <div className="border border-[#c1c6d7]/30 rounded-xl overflow-hidden bg-[#eef4fc]/30">
-                <div className="h-[400px] overflow-y-auto p-1" style={{ scrollbarWidth: "thin" }}>
-                  <div className="space-y-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                  <div className="space-y-2">
+                    <label className="block text-[11px] font-bold uppercase tracking-widest text-on-surface-variant font-headline">Category</label>
+                    <div className="relative">
+                      <select className="w-full appearance-none bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                        <option>B1.1 - Aeroplanes Turbine</option>
+                        <option>B1.2 - Aeroplanes Piston</option>
+                        <option>B2 - Avionics</option>
+                      </select>
+                      <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-[11px] font-bold uppercase tracking-widest text-on-surface-variant font-headline">Training Path</label>
+                    <div className="relative">
+                      <select className="w-full appearance-none bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent outline-none">
+                        <option>Training + Examination</option>
+                        <option>Examination Only</option>
+                        <option>Training Only</option>
+                      </select>
+                      <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="font-bold text-xs uppercase tracking-widest text-primary font-headline">Available Modules ({modules.length})</h3>
+                  <button 
+                    onClick={() => setSelected(Object.fromEntries(modules.map(m => [m.id, true])))}
+                    className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors"
+                  >
+                    Select All
+                  </button>
+                </div>
+
+                <div className="border border-outline-variant/20 rounded-xl overflow-hidden mb-10 max-h-[400px] overflow-y-auto bg-surface-container-low/30 scrollbar-hide">
+                  <div className="divide-y divide-outline-variant/10">
                     {modules.map((mod) => (
-                      <label
-                        key={mod.id}
-                        className={`flex items-center gap-4 p-4 rounded-lg cursor-pointer transition-all ${
-                          selected[mod.id]
-                            ? "bg-white shadow-sm border border-[#0059bb]/10"
-                            : "hover:bg-white/60"
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={selected[mod.id] || false}
-                          onChange={(e) => setSelected((prev) => ({ ...prev, [mod.id]: e.target.checked }))}
-                          className="w-5 h-5 rounded border-[#c1c6d7] text-[#0059bb] focus:ring-[#0059bb] cursor-pointer"
+                      <label key={mod.id} className="flex items-center gap-4 p-4 hover:bg-white transition-colors cursor-pointer group">
+                        <input 
+                          className="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary cursor-pointer" 
+                          type="checkbox" 
+                          checked={selected[mod.id]}
+                          onChange={(e) => setSelected(prev => ({ ...prev, [mod.id]: e.target.checked }))}
                         />
                         <div className="flex-1">
-                          <p className="text-sm font-bold text-[#161c22] tracking-tight">{mod.name}</p>
-                          <p className="text-[10px] font-semibold text-[#414754]/50 uppercase tracking-tighter">{mod.sub}</p>
+                          <p className="font-bold text-sm text-on-surface">{mod.name}</p>
+                          <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">{mod.sub}</p>
                         </div>
-                        {selected[mod.id] && (
-                          <span className="material-symbols-outlined text-[#0059bb] text-sm">check_circle</span>
-                        )}
+                        {selected[mod.id] && <span className="material-symbols-outlined text-primary text-sm">check_circle</span>}
                       </label>
                     ))}
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Summary + CTA */}
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-[#e8eef6]">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#414754]/60 font-headline">
-                  Modules Selected
-                </p>
-                <p className="text-3xl font-extrabold text-[#0059bb] font-headline">{selectedCount}</p>
-              </div>
-              <Link
-                href="/booking/details"
-                className="bg-gradient-to-br from-[#0059bb] to-[#0070ea] text-white font-headline font-bold px-10 py-4 rounded-lg shadow-lg hover:opacity-90 transition-all inline-flex items-center gap-2"
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-outline-variant/10">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant font-headline">Modules Selected</p>
+                    <p className="text-3xl font-extrabold text-primary font-headline">{selectedCount}</p>
+                  </div>
+                  <button 
+                    className="bg-primary text-white px-10 py-4 rounded-lg font-bold flex items-center gap-2 hover:bg-primary-container transition-all active:scale-95 shadow-lg"
+                    onClick={nextStep}
+                  >
+                    Continue <span className="material-symbols-outlined">chevron_right</span>
+                  </button>
+                </div>
+              </motion.div>
+            ) : bookingStep === 2 ? (
+              <motion.div 
+                key="step-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="p-8 lg:p-12"
               >
-                Continue to Details
-                <span className="material-symbols-outlined">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
-        </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                  <div className="lg:col-span-2 space-y-8">
+                    <h2 className="font-headline text-3xl font-extrabold text-on-surface tracking-tighter mb-6">Your Details</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {["First Name *", "Surname *", "Professional Email *", "Phone *", "Date of Birth *", "Place of Birth", "Nationality", "Company/Organization"].map((label, i) => (
+                        <div key={i} className="space-y-2">
+                          <label className="block text-[11px] font-bold uppercase tracking-widest text-on-surface-variant font-headline">{label}</label>
+                          <input 
+                            className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none text-sm transition-all focus:bg-white" 
+                            placeholder={label.replace(" *", "")} 
+                            type={label.includes("Email") ? "email" : label.includes("Date") ? "date" : label.includes("Phone") ? "tel" : "text"}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-bold uppercase tracking-widest text-on-surface-variant font-headline">Additional Notes</label>
+                      <textarea className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none resize-none text-sm transition-all focus:bg-white" placeholder="Any additional information..." rows={4}></textarea>
+                    </div>
+                    <div className="flex gap-4 pt-4">
+                      <button 
+                        className="bg-surface-container text-on-surface px-8 py-4 rounded-lg font-bold hover:bg-surface-container-high transition-all"
+                        onClick={prevStep}
+                      >
+                        Back
+                      </button>
+                      <button 
+                        className="primary-gradient text-white px-10 py-4 rounded-lg font-bold flex-1 hover:brightness-110 transition-all active:scale-95 shadow-lg"
+                        onClick={nextStep}
+                      >
+                        Submit Application
+                      </button>
+                    </div>
+                  </div>
+                  <div className="lg:col-span-1">
+                    <div className="bg-surface-container-low rounded-xl p-8 border border-outline-variant/10 sticky top-32">
+                      <h3 className="font-headline font-bold text-lg text-on-surface mb-6 border-b border-outline-variant/10 pb-4">Application Summary</h3>
+                      <div className="space-y-6">
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Category</p>
+                          <p className="font-bold text-sm text-primary">B1.1 - Aeroplanes</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Path</p>
+                          <p className="font-bold text-sm text-primary">Training + Exam</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Selected Modules</p>
+                          <ul className="space-y-2 mt-2">
+                            {modules.filter(m => selected[m.id]).slice(0, 3).map(m => (
+                              <li key={m.id} className="flex items-center gap-2 text-xs text-on-surface font-medium">
+                                <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                {m.name}
+                              </li>
+                            ))}
+                            {selectedCount > 3 && (
+                              <li className="text-[10px] text-on-surface-variant font-bold italic pl-3.5">+ {selectedCount - 3} more modules</li>
+                            )}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="step-3"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-16 text-center"
+              >
+                <div className="w-24 h-24 bg-[#00cba9] text-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
+                  <motion.span 
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", damping: 12, stiffness: 200, delay: 0.2 }}
+                    className="material-symbols-outlined text-5xl font-bold"
+                  >
+                    check
+                  </motion.span>
+                </div>
+                <h2 className="text-4xl font-headline font-extrabold text-on-surface mb-4 tracking-tighter">Application Submitted!</h2>
+                <p className="text-on-surface-variant text-lg max-w-md mx-auto mb-10 leading-relaxed font-body">
+                  Your training module application has been successfully received. Our operations team will review your details and contact you within 24 hours.
+                </p>
+                <div className="bg-surface-container-low rounded-xl p-8 max-w-sm mx-auto mb-10 border border-outline-variant/10">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-4">Reference Number</p>
+                  <p className="text-2xl font-headline font-black text-primary tracking-[0.2em]">AV-842-TX</p>
+                </div>
+                <Link 
+                  href="/"
+                  className="inline-block bg-primary text-white px-10 py-4 rounded-lg font-bold hover:bg-primary-container transition-all active:scale-95 shadow-lg"
+                >
+                  Return to Homepage
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </div>
   );
