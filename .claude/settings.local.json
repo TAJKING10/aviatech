@@ -19,7 +19,17 @@
       "Bash(node -e \"const lr = require\\(''lucide-react''\\); const keys = Object.keys\\(lr\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''file''\\) || k.toLowerCase\\(\\).includes\\(''user''\\)\\); console.log\\(keys.join\\(''\\\\n''\\)\\)\")",
       "Bash(npx -y @_davideast/stitch-mcp proxy --help)",
       "WebFetch(domain:stitch.withgoogle.com)",
-      "Bash(node -e \"const ts = require\\(''./tailwind.config.ts''\\); console.log\\(''tailwind ok''\\)\")"
+      "Bash(node -e \"const ts = require\\(''./tailwind.config.ts''\\); console.log\\(''tailwind ok''\\)\")",
+      "Bash(npx prisma:*)",
+      "Bash(npx tsc:*)",
+      "Bash(docker:*)",
+      "Bash(mysql --version)",
+      "Bash(mysqladmin --version)",
+      "Bash(npx next:*)",
+      "Bash(curl:*)",
+      "mcp__MCP_DOCKER__hosting_listWebsitesV1",
+      "Bash(powershell -Command \":*)",
+      "mcp__MCP_DOCKER__hosting_deployJsApplication"
     ]
   }
 }

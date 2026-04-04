@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -16,6 +16,13 @@ const menuItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  async function handleSignOut() {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/admin/login');
+    router.refresh();
+  }
 
   return (
     <aside className="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-[#f6f9ff] flex flex-col border-r border-slate-200/15 z-50">
@@ -64,7 +71,7 @@ export default function Sidebar() {
             <span className="material-symbols-outlined group-hover:rotate-12 transition-transform">help</span>
             <span className="font-headline uppercase tracking-widest text-[11px] font-bold">Support</span>
           </Link>
-          <button className="flex items-center gap-3 text-slate-500 hover:text-error transition-colors group w-full text-left">
+          <button onClick={handleSignOut} className="flex items-center gap-3 text-slate-500 hover:text-error transition-colors group w-full text-left">
             <span className="material-symbols-outlined group-hover:-translate-x-1 transition-transform">logout</span>
             <span className="font-headline uppercase tracking-widest text-[11px] font-bold">Sign Out</span>
           </button>

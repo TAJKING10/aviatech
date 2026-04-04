@@ -1,58 +1,89 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-const kpis = [
-  { label: "Total Applications", value: "1,284", icon: "description", trend: "+12% vs last month", trendType: "up", border: "border-primary" },
-  { label: "Active Modules", value: "42", icon: "school", trend: "Steady capacity level", trendType: "neutral", border: "border-primary-container" },
-  { label: "Monthly Revenue", value: "$84.2k", icon: "payments", trend: "+5.4% growth", trendType: "up", border: "border-tertiary-container" },
-  { label: "Pending Reviews", value: "18", icon: "assignment_late", trend: "Action required", trendType: "down", border: "border-error" },
-];
+interface DashboardData {
+  totalBookings: number;
+  pendingBookings: number;
+  confirmedBookings: number;
+  totalMessages: number;
+  unreadMessages: number;
+  recentBookings: { id: number; firstName: string; surname: string; email: string; category: string; status: string; createdAt: string }[];
+  recentMessages: { id: number; name: string; email: string; subject: string; status: string; createdAt: string }[];
+}
 
-const applications = [
-  { name: "Sarah Jenkins", email: "s.jenkins@skybound.com", role: "Avionics Technician", date: "Oct 24, 2023", status: "Approved", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDXr1swUXUkqwLDU4NGiGFcD9czwdkXxg8Qzv9GUyGbv3n2Ev7v5MC8SR-HB2Nfg-m5DkdLf4iqshUPFaWph4LqjLV6QOgcQX2Epri-z-1pC20qV7WqJLGZYIn7W7HmXY1wGTOeKafqvdHQRAW5MDHtdt9ayOSxhfCoSS-2_p6HELIfUPdF3FoaOWFP-UvBA0gHZ6xywPYxhYJluA_sJ91mB9e3aqPzZRLi9D7eCVYpex0q9nuXwn6IYNhxkrBo6X9TH2umA4PSQowp" },
-  { name: "David Miller", email: "d.miller@vector.aero", role: "Safety Inspector", date: "Oct 23, 2023", status: "Pending", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYFvLB5XI47NLsA9C0FBalOfqBB826rF8zAtr6pDLACzu5VaTFZ6ipw4MUZv_OIUUDmZyqBHmjYubnuXPPN_dJljEoFs6g8wQRbGMYJrOz9vU5v_315P0NJJzLpmd8kmMXZdYK7loSMuBomE9VkjMTVMITiukfYR84yXCnJ-F-12tXawDwtggzD89KKijxidVMK2IZGNIiq3wLGrClOJ__VUeFp6yg1tKBuhjCluH_6LB3wRC4EJXQnBMq4ufCFqRyobVKNv-qAP1c" },
-  { name: "Elena Rodriguez", email: "elena.rod@orbit.io", role: "Structural Engineer", date: "Oct 22, 2023", status: "Rejected", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFswUlB4LB66rDsfG7y7OuEBy9AtZnM6NVOCFIBqerJuyEL23cdka0mKkN1c7uBA600qP7789vI5jdJzXsoibdvJnFGP8wgp_gw6tS8PldYTJ_pz8UsmybhXQSrA2aa00vVMZ1GHIyzsrZPypHxHQyhPl2tAKwwU9gTe0A5-z4V74NSSapKdLRA9gvY6QCA-9QxKVsLToPHWkoT0oN4-ZWuDuKd1oVylg4qnIIOHufp1mXrOTf8H22OUI6wW4C4lG2rdy8RYR3qUp5" },
-];
-
-const modules = [
+const moduleStats = [
   { label: "Avionics", progress: 85 },
   { label: "Safety", progress: 62 },
   { label: "Engines", progress: 94 },
   { label: "Logistics", progress: 45 },
 ];
 
+function StatusBadge({ status }: { status: string }) {
+  return (
+    <span className={cn(
+      "px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full",
+      status === "confirmed" ? "bg-emerald-50 text-emerald-600" :
+      status === "pending" ? "bg-amber-50 text-amber-600" :
+      "bg-error-container text-error"
+    )}>
+      {status}
+    </span>
+  );
+}
+
 export default function AdminDashboard() {
+  const [data, setData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/admin/dashboard")
+      .then((r) => r.json())
+      .then(setData)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const kpis = data
+    ? [
+        { label: "Total Bookings", value: String(data.totalBookings), icon: "description", trend: `${data.confirmedBookings} confirmed`, trendType: "up", border: "border-primary" },
+        { label: "Pending Review", value: String(data.pendingBookings), icon: "assignment_late", trend: data.pendingBookings > 0 ? "Action required" : "All clear", trendType: data.pendingBookings > 0 ? "down" : "neutral", border: "border-error" },
+        { label: "Total Messages", value: String(data.totalMessages), icon: "mail", trend: `${data.unreadMessages} unread`, trendType: "neutral", border: "border-primary-container" },
+        { label: "Unread Messages", value: String(data.unreadMessages), icon: "mark_email_unread", trend: data.unreadMessages > 0 ? "Needs response" : "All read", trendType: data.unreadMessages > 0 ? "down" : "neutral", border: "border-tertiary-container" },
+      ]
+    : [
+        { label: "Total Bookings", value: "—", icon: "description", trend: "Loading...", trendType: "neutral", border: "border-primary" },
+        { label: "Pending Review", value: "—", icon: "assignment_late", trend: "Loading...", trendType: "neutral", border: "border-error" },
+        { label: "Total Messages", value: "—", icon: "mail", trend: "Loading...", trendType: "neutral", border: "border-primary-container" },
+        { label: "Unread Messages", value: "—", icon: "mark_email_unread", trend: "Loading...", trendType: "neutral", border: "border-tertiary-container" },
+      ];
+
   return (
     <div className="p-12 max-w-[1400px] mx-auto">
-      {/* Hero Header */}
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-end mb-20">
-        <motion.div 
-          className="max-w-2xl"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-        >
+        <motion.div className="max-w-2xl" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <h2 className="font-headline text-5xl font-extrabold text-on-background tracking-tight leading-none mb-6">
-            Operational <br />Efficiency <span className="text-primary">02.</span>
+            Operational <br />Dashboard <span className="text-primary">01.</span>
           </h2>
           <p className="font-body text-slate-500 text-lg leading-relaxed">
-            Precision Aerospace metrics for Q4 performance. Analyzing the intersection of personnel readiness and technical compliance through an editorial lens.
+            Live metrics for bookings and contact messages.
           </p>
         </motion.div>
         <div className="flex gap-3 mb-2">
-          <div className="h-1 w-12 bg-primary"></div>
-          <div className="h-1 w-4 bg-slate-200"></div>
-          <div className="h-1 w-4 bg-slate-200"></div>
+          <div className="h-1 w-12 bg-primary" />
+          <div className="h-1 w-4 bg-slate-200" />
+          <div className="h-1 w-4 bg-slate-200" />
         </div>
       </div>
 
       {/* KPI Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-20">
         {kpis.map((kpi, i) => (
-          <motion.div 
+          <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -79,59 +110,49 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Main Data Modules */}
+      {/* Main Data */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* Recent Applications */}
+        {/* Recent Bookings */}
         <div className="lg:col-span-2">
           <div className="flex justify-between items-center mb-10">
-            <h4 className="font-headline text-2xl font-bold text-on-surface">Recent Applications</h4>
-            <Link href="/admin/applications" className="font-label uppercase tracking-widest text-[10px] font-bold text-primary border-b border-primary pb-1">View All Records</Link>
+            <h4 className="font-headline text-2xl font-bold text-on-surface">Recent Bookings</h4>
+            <Link href="/admin/bookings" className="font-label uppercase tracking-widest text-[10px] font-bold text-primary border-b border-primary pb-1">View All</Link>
           </div>
-          <motion.div 
+          <motion.div
             className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_40px_80px_rgba(0,0,0,0.02)]"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-surface-container-low">
-                  <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Candidate</th>
-                  <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Role</th>
-                  <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Date</th>
-                  <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {applications.map((app, i) => (
-                  <tr key={i} className="hover:bg-surface-container transition-colors group">
-                    <td className="px-8 py-6">
-                      <div className="flex items-center gap-3">
-                        <div className="relative w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
-                          <Image src={app.img} alt={app.name} fill className="object-cover" />
-                        </div>
-                        <div>
-                          <p className="font-bold text-sm text-on-surface">{app.name}</p>
-                          <p className="text-xs text-slate-400">{app.email}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-8 py-6 text-sm font-medium text-slate-600">{app.role}</td>
-                    <td className="px-8 py-6 text-sm text-slate-400">{app.date}</td>
-                    <td className="px-8 py-6">
-                      <span className={cn(
-                        "px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full",
-                        app.status === "Approved" ? "bg-emerald-50 text-emerald-600" :
-                        app.status === "Pending" ? "bg-tertiary-fixed text-tertiary-container" :
-                        "bg-error-container text-error"
-                      )}>
-                        {app.status}
-                      </span>
-                    </td>
+            {loading ? (
+              <div className="p-12 text-center text-slate-400 text-sm">Loading...</div>
+            ) : !data?.recentBookings.length ? (
+              <div className="p-12 text-center text-slate-400 text-sm">No bookings yet.</div>
+            ) : (
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-surface-container-low">
+                    <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Candidate</th>
+                    <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Category</th>
+                    <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Date</th>
+                    <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {data.recentBookings.map((b) => (
+                    <tr key={b.id} className="hover:bg-surface-container transition-colors">
+                      <td className="px-8 py-6">
+                        <p className="font-bold text-sm text-on-surface">{b.firstName} {b.surname}</p>
+                        <p className="text-xs text-slate-400">{b.email}</p>
+                      </td>
+                      <td className="px-8 py-6 text-sm font-medium text-slate-600">{b.category}</td>
+                      <td className="px-8 py-6 text-sm text-slate-400">{new Date(b.createdAt).toLocaleDateString()}</td>
+                      <td className="px-8 py-6"><StatusBadge status={b.status} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </motion.div>
         </div>
 
@@ -141,7 +162,7 @@ export default function AdminDashboard() {
             <h4 className="font-headline text-2xl font-bold text-on-surface">Module Performance</h4>
             <span className="material-symbols-outlined text-slate-300">more_vert</span>
           </div>
-          <motion.div 
+          <motion.div
             className="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_40px_80px_rgba(0,0,0,0.02)] h-[400px] flex flex-col"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -149,10 +170,10 @@ export default function AdminDashboard() {
           >
             <p className="font-body text-xs text-slate-400 mb-8">Completion rates across technical training silos.</p>
             <div className="flex-1 flex items-end gap-6 px-4">
-              {modules.map((m, i) => (
+              {moduleStats.map((m, i) => (
                 <div key={i} className="flex-1 flex flex-col items-center gap-3 h-full">
                   <div className="w-full bg-primary-container/10 rounded-t-sm relative group h-full flex flex-col justify-end overflow-hidden">
-                    <motion.div 
+                    <motion.div
                       className="primary-gradient w-full rounded-t-sm transition-all group-hover:opacity-80"
                       initial={{ height: 0 }}
                       whileInView={{ height: `${m.progress}%` }}
@@ -171,17 +192,61 @@ export default function AdminDashboard() {
               </div>
               <div className="text-right">
                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Active Users</p>
-                <p className="text-lg font-bold text-on-surface">1.2k</p>
+                <p className="text-lg font-bold text-on-surface">{data ? data.totalBookings : "—"}</p>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Secondary Analytics */}
+      {/* Recent Messages */}
+      {data && data.recentMessages.length > 0 && (
+        <section className="mt-20">
+          <div className="flex justify-between items-center mb-8">
+            <h4 className="font-headline text-2xl font-bold text-on-surface">Recent Messages</h4>
+            <Link href="/admin/messages" className="font-label uppercase tracking-widest text-[10px] font-bold text-primary border-b border-primary pb-1">View All</Link>
+          </div>
+          <div className="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_40px_80px_rgba(0,0,0,0.02)]">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="bg-surface-container-low">
+                  <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">From</th>
+                  <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Subject</th>
+                  <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Date</th>
+                  <th className="px-8 py-5 font-label uppercase tracking-widest text-[10px] text-slate-400 font-black">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {data.recentMessages.map((m) => (
+                  <tr key={m.id} className="hover:bg-surface-container transition-colors">
+                    <td className="px-8 py-6">
+                      <p className="font-bold text-sm text-on-surface">{m.name}</p>
+                      <p className="text-xs text-slate-400">{m.email}</p>
+                    </td>
+                    <td className="px-8 py-6 text-sm text-slate-600">{m.subject}</td>
+                    <td className="px-8 py-6 text-sm text-slate-400">{new Date(m.createdAt).toLocaleDateString()}</td>
+                    <td className="px-8 py-6">
+                      <span className={cn(
+                        "px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full",
+                        m.status === "replied" ? "bg-emerald-50 text-emerald-600" :
+                        m.status === "pending" ? "bg-amber-50 text-amber-600" :
+                        "bg-error-container text-error"
+                      )}>
+                        {m.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {/* Compliance section */}
       <section className="mt-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
-          <motion.div 
+          <motion.div
             className="primary-gradient p-12 rounded-xl text-white md:col-span-2 relative overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -190,16 +255,18 @@ export default function AdminDashboard() {
             <div className="relative z-10">
               <span className="px-3 py-1 bg-white/10 glass-effect text-[10px] font-black uppercase tracking-[0.3em] mb-6 inline-block">System Intelligence</span>
               <h3 className="font-headline text-3xl font-extrabold mb-6">Nexus Insights Engine</h3>
-              <p className="font-body text-primary-fixed/80 max-w-lg mb-8 text-white/80">
-                Real-time predictive analytics suggesting a 14% increase in application volume for Avionics roles in the upcoming quarter. Adjust training capacity accordingly.
+              <p className="font-body text-white/80 max-w-lg mb-8">
+                Real-time predictive analytics for training module demand. Adjust capacity based on live booking trends.
               </p>
-              <button className="bg-white text-primary px-8 py-3 rounded-md font-headline uppercase tracking-widest text-[11px] font-bold shadow-xl hover:bg-slate-50 transition-all active:scale-95">Launch Deep Audit</button>
+              <Link href="/admin/bookings" className="inline-block bg-white text-primary px-8 py-3 rounded-md font-headline uppercase tracking-widest text-[11px] font-bold shadow-xl hover:bg-slate-50 transition-all active:scale-95">
+                View Bookings
+              </Link>
             </div>
-            <div className="absolute -right-20 -bottom-20 w-80 h-80 border-[40px] border-white/5 rounded-full"></div>
-            <div className="absolute right-10 top-10 w-20 h-20 border-2 border-white/10 rotate-45"></div>
+            <div className="absolute -right-20 -bottom-20 w-80 h-80 border-[40px] border-white/5 rounded-full" />
+            <div className="absolute right-10 top-10 w-20 h-20 border-2 border-white/10 rotate-45" />
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             className="bg-surface-container p-12 rounded-xl h-full flex flex-col justify-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -209,17 +276,14 @@ export default function AdminDashboard() {
             <p className="font-label uppercase tracking-widest text-[10px] font-black text-slate-400 mb-4">Compliance Status</p>
             <h4 className="font-headline text-xl font-bold mb-6 text-on-surface">FAA/EASA Synchronization</h4>
             <div className="space-y-6">
-              {[
-                { label: "Documentation Accuracy", value: 98 },
-                { label: "Renewal Readiness", value: 82 },
-              ].map((c, i) => (
+              {[{ label: "Documentation Accuracy", value: 98 }, { label: "Renewal Readiness", value: 82 }].map((c, i) => (
                 <div key={i} className="space-y-2">
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-slate-600">{c.label}</span>
                     <span className="font-bold text-primary">{c.value}%</span>
                   </div>
                   <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-                    <motion.div 
+                    <motion.div
                       className="bg-primary h-full"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${c.value}%` }}
