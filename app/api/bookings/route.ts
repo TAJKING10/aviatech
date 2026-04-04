@@ -51,10 +51,10 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    Promise.all([
+    await Promise.all([
       sendBookingConfirmation({ email, firstName, surname, referenceNo, category, trainingPath, modules }),
-      sendBookingNotification({ firstName, surname, email, referenceNo, category }),
-    ]).catch(console.error)
+      sendBookingNotification({ firstName, surname, email, phone, referenceNo, category, trainingPath, modules, dateOfBirth, placeOfBirth, nationality, company, notes }),
+    ])
 
     return NextResponse.json({ success: true, referenceNo: booking.referenceNo })
   } catch (error) {

@@ -41,7 +41,11 @@
       "Bash(pip install:*)",
       "Bash(python -c \"import paramiko; print\\(''ok''\\)\")",
       "Bash(python:*)",
-      "Bash(ls /c/Users/Toufi/AndroidStudioProjects/aviatech/.env*)"
+      "Bash(ls /c/Users/Toufi/AndroidStudioProjects/aviatech/.env*)",
+      "Read(//c/Users/Toufi/.claude/**)",
+      "Bash(vercel plugin:*)",
+      "Bash(vercel plugins:*)",
+      "Bash(nslookup:*)"
     ]
   }
 }
