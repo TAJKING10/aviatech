@@ -15,10 +15,10 @@ export async function POST(request: NextRequest) {
       data: { name, email, subject, message, status: 'unread' },
     })
 
-    await Promise.all([
+    Promise.all([
       sendContactConfirmation({ email, name, subject }),
       sendContactNotification({ name, email, subject, message }),
-    ])
+    ]).catch((err) => console.error('Email error:', err))
 
     return NextResponse.json({ success: true, id: msg.id })
   } catch (error) {
