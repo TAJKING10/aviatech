@@ -29,7 +29,19 @@
       "Bash(curl:*)",
       "mcp__MCP_DOCKER__hosting_listWebsitesV1",
       "Bash(powershell -Command \":*)",
-      "mcp__MCP_DOCKER__hosting_deployJsApplication"
+      "mcp__MCP_DOCKER__hosting_deployJsApplication",
+      "mcp__MCP_DOCKER__list_branches",
+      "Bash(gh auth:*)",
+      "mcp__MCP_DOCKER__push_files",
+      "mcp__MCP_DOCKER__get_me",
+      "Bash(wsl -e ls /mnt/c/Users/Toufi/AndroidStudioProjects/aviatech/aviatech-deploy.zip)",
+      "Bash(sshpass -V)",
+      "Bash(python3 -c \"import paramiko; print\\(''paramiko ok''\\)\")",
+      "Bash(python -c \"import paramiko; print\\(''paramiko ok''\\)\")",
+      "Bash(pip install:*)",
+      "Bash(python -c \"import paramiko; print\\(''ok''\\)\")",
+      "Bash(python:*)",
+      "Bash(ls /c/Users/Toufi/AndroidStudioProjects/aviatech/.env*)"
     ]
   }
 }
