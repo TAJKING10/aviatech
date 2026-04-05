@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import NewsletterForm from "@/components/NewsletterForm";
 
 const services = [
   {
@@ -151,16 +152,7 @@ export default function ServicesPage() {
           >
             <h2 className="text-3xl font-headline font-bold tracking-tight mb-4">Start Your Trajectory</h2>
             <p className="text-on-surface-variant mb-10">Connect with an Aviatech specialist today to discuss your technical roadmap.</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <input 
-                className="flex-grow bg-surface-container border-none rounded-md px-6 py-4 focus:ring-2 focus:ring-primary text-on-surface outline-none" 
-                placeholder="Professional Email Address" 
-                type="email" 
-              />
-              <button className="primary-gradient text-white px-8 py-4 rounded-md font-headline font-bold tracking-tight whitespace-nowrap hover:brightness-110 transition-all active:scale-95">
-                Send Request
-              </button>
-            </div>
+            <NewsletterForm variant="request" />
           </motion.div>
         </section>
       </main>
