@@ -52,10 +52,15 @@ export async function POST(request: NextRequest) {
     })
 
     // Send emails after saving — don't fail the booking if email fails
-    Promise.all([
-      sendBookingConfirmation({ email, firstName, surname, referenceNo, category, trainingPath, modules }),
-      sendBookingNotification({ firstName, surname, email, phone, referenceNo, category, trainingPath, modules, dateOfBirth, placeOfBirth, nationality, company, notes }),
-    ]).catch((err) => console.error('Email error:', err))
+    try {
+      await Promise.all([
+        sendBookingConfirmation({ email, firstName, surname, referenceNo, category, trainingPath, modules }),
+        sendBookingNotification({ firstName, surname, email, phone, referenceNo, category, trainingPath, modules, dateOfBirth, placeOfBirth, nationality, company, notes }),
+      ])
+      console.log('Booking emails sent successfully to:', email)
+    } catch (emailErr) {
+      console.error('Booking email error:', emailErr)
+    }
 
     return NextResponse.json({ success: true, referenceNo: booking.referenceNo })
   } catch (error) {

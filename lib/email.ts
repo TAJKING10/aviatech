@@ -55,6 +55,7 @@ export async function sendBookingConfirmation(booking: {
   const t = getTransporter()
   await t.sendMail({
     from: FROM(),
+    replyTo: 'info@aviatech-consulting.com',
     to: booking.email,
     subject: `Application Received – Ref ${booking.referenceNo} | Aviatech Consulting`,
     html: `
@@ -107,6 +108,7 @@ export async function sendBookingNotification(booking: {
   const t = getTransporter()
   await t.sendMail({
     from: FROM(),
+    replyTo: booking.email,
     to: ADMIN(),
     subject: `New Booking – ${booking.referenceNo} | ${booking.firstName} ${booking.surname}`,
     html: `
