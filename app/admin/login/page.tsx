@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none text-sm transition-all focus:bg-white"
-                placeholder="admin@aviatech.com"
+                placeholder=""
                 required
                 autoComplete="email"
               />
@@ -79,7 +79,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none text-sm transition-all focus:bg-white"
-                placeholder="••••••••"
+                placeholder=""
                 required
                 autoComplete="current-password"
               />
