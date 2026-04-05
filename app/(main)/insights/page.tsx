@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function InsightsPage() {
   return (
@@ -205,12 +206,7 @@ export default function InsightsPage() {
               <p className="text-surface/70 mb-10">
                 Join 5,000+ aerospace leaders receiving our monthly briefing on technology, strategy, and operational excellence.
               </p>
-              <form className="flex flex-col sm:flex-row gap-4">
-                <input className="flex-1 bg-surface/10 border border-surface/20 rounded-lg px-6 py-4 text-sm focus:ring-2 focus:ring-primary transition-all text-surface outline-none" placeholder="Your work email" type="email" />
-                <button className="bg-primary text-on-primary py-4 px-8 rounded-lg font-headline font-bold hover:brightness-110 transition-all active:scale-95 shadow-xl">
-                  Subscribe
-                </button>
-              </form>
+              <NewsletterForm variant="dark" />
               <p className="text-xs text-surface/40 mt-6">No spam. Only high-altitude insights. Unsubscribe at any time.</p>
             </motion.div>
           </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Footer() {
   return (
@@ -32,16 +33,7 @@ export default function Footer() {
         <div className="flex flex-col space-y-4">
           <h5 className="font-bold text-on-surface mb-2 font-headline uppercase text-xs tracking-widest">Connect</h5>
           <p className="text-slate-500 text-sm mb-4">Stay updated with our latest aviation engineering insights.</p>
-          <div className="flex bg-white p-1 rounded-lg border border-outline-variant/20 shadow-sm focus-within:ring-2 focus-within:ring-primary transition-all">
-            <input 
-              className="bg-transparent border-none text-sm px-4 w-full focus:ring-0 outline-none" 
-              placeholder="email@precision.aero" 
-              type="email" 
-            />
-            <button className="primary-gradient text-white px-4 py-2 rounded-md font-bold text-xs uppercase hover:brightness-110 transition-all">
-              Join
-            </button>
-          </div>
+          <NewsletterForm variant="light" />
         </div>
       </div>
 

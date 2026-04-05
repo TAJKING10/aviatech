@@ -38,6 +38,12 @@ model ContactMessage {
   updatedAt DateTime @updatedAt
 }
 
+model Subscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
 model AdminUser {
   id        Int      @id @default(autoincrement())
   email     String   @unique

@@ -152,6 +152,64 @@ export async function sendBookingNotification(booking: {
   })
 }
 
+// ─── Newsletter: Subscriber Confirmation ──────────────────────────────────────
+
+export async function sendSubscriberConfirmation({ email }: { email: string }) {
+  const t = getTransporter()
+  await t.sendMail({
+    from: FROM(),
+    replyTo: 'info@aviatech-consulting.com',
+    to: email,
+    subject: `You're subscribed – Aviatech Consulting Insights`,
+    html: `
+      <div style="${baseStyle}">
+        ${headerHtml}
+        <div style="padding:32px;">
+          <h2 style="color:#003580;margin-top:0;">Welcome to Aviatech Insights</h2>
+          <p style="color:#333;">Thank you for subscribing to the Aviatech Consulting newsletter.</p>
+          <p style="color:#333;">You'll receive our monthly briefing covering the latest in aerospace technology, regulatory compliance, operational strategy, and aviation engineering excellence — delivered directly to your inbox.</p>
+
+          <div style="margin-top:24px;background:#e8f0fe;border-left:4px solid #003580;padding:12px 16px;border-radius:4px;">
+            <p style="margin:0;color:#003580;font-size:13px;">No spam. Only high-altitude insights. You can unsubscribe at any time by replying to this email.</p>
+          </div>
+
+          <p style="color:#333;margin-top:24px;">In the meantime, explore our latest insights and case studies at <a href="https://aviatech-consulting.com/insights" style="color:#003580;">aviatech-consulting.com/insights</a></p>
+          <p style="color:#555;">Best regards,<br/><strong>Aviatech Consulting Team</strong></p>
+        </div>
+        ${footerHtml}
+      </div>
+    `,
+  })
+}
+
+// ─── Newsletter: Admin Notification ───────────────────────────────────────────
+
+export async function sendSubscriberNotification({ email }: { email: string }) {
+  if (!ADMIN()) return
+  const t = getTransporter()
+  await t.sendMail({
+    from: FROM(),
+    to: ADMIN(),
+    subject: `New Subscriber – ${email}`,
+    html: `
+      <div style="${baseStyle}">
+        ${headerHtml}
+        <div style="padding:32px;">
+          <h2 style="color:#003580;margin-top:0;">New Newsletter Subscriber</h2>
+          <table style="border-collapse:collapse;width:100%;">
+            ${row('Email', email)}
+            ${row('Subscribed At', new Date().toUTCString())}
+          </table>
+          <div style="margin-top:24px;">
+            <a href="https://aviatech-consulting.com/admin" style="background:#003580;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;font-size:13px;">View Admin Panel</a>
+          </div>
+        </div>
+        ${footerHtml}
+      </div>
+    `,
+  })
+}
+
 // ─── Contact: Customer Confirmation ───────────────────────────────────────────
 
 export async function sendContactConfirmation(msg: { email: string; name: string; subject: string }) {
