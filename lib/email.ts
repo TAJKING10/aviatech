@@ -156,6 +156,7 @@ export async function sendContactConfirmation(msg: { email: string; name: string
   const t = getTransporter()
   await t.sendMail({
     from: FROM(),
+    replyTo: 'info@aviatech-consulting.com',
     to: msg.email,
     subject: `Message Received – ${msg.subject} | Aviatech Consulting`,
     html: `
@@ -191,6 +192,7 @@ export async function sendContactNotification(msg: {
   const t = getTransporter()
   await t.sendMail({
     from: FROM(),
+    replyTo: msg.email,
     to: ADMIN(),
     subject: `New Inquiry – ${msg.subject} | ${msg.name}`,
     html: `
