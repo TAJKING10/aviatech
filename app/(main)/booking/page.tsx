@@ -1,25 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-const moduleList = [
-  { id: "M1", name: "M1 Mathematics", sub: "Core Competency Module", checked: true },
-  { id: "M2", name: "M2 Physics", sub: "Core Competency Module", checked: false },
-  { id: "M3", name: "M3 Electrical Fundamentals", sub: "Core Competency Module", checked: false },
-  { id: "M4", name: "M4 Electronic Fundamentals", sub: "Core Competency Module", checked: false },
-  { id: "M5", name: "M5 Digital Techniques / Electronic Instrument Systems", sub: "Systems Module", checked: false },
-  { id: "M6", name: "M6 Materials & Hardware", sub: "Systems Module", checked: false },
-  { id: "M7", name: "M7 Maintenance Practices", sub: "Maintenance Module", checked: false },
-  { id: "M8", name: "M8 Basic Aerodynamics", sub: "Aeronautical Module", checked: false },
-  { id: "M9", name: "M9 Human Factors", sub: "Human Factors Module", checked: true },
-  { id: "M10", name: "M10 Aviation Legislation", sub: "Regulatory Module", checked: false },
-  { id: "M11A", name: "M11A Turbine Aeroplane Aerodynamics, Structures & Systems", sub: "B1.1 Specific", checked: true },
-  { id: "M15", name: "M15 Gas Turbine Engine", sub: "Propulsion Module", checked: false },
-  { id: "M17", name: "M17 Propeller", sub: "Propulsion Module", checked: false },
-];
+interface Module {
+  id: number;
+  code: string;
+  name: string;
+  category: string;
+}
 
 const categories = ["B1.1 - Aeroplanes Turbine", "B1.2 - Aeroplanes Piston", "B2 - Avionics"];
 const trainingPaths = ["Training + Examination", "Examination Only", "Training Only"];
@@ -110,9 +101,9 @@ async function downloadPDF(data: {
 
 export default function BookingPage() {
   const [bookingStep, setBookingStep] = useState(1);
-  const [selected, setSelected] = useState<Record<string, boolean>>(
-    Object.fromEntries(moduleList.map((m) => [m.id, m.checked]))
-  );
+  const [moduleList, setModuleList] = useState<Module[]>([]);
+  const [modulesLoading, setModulesLoading] = useState(true);
+  const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [category, setCategory] = useState(categories[0]);
   const [trainingPath, setTrainingPath] = useState(trainingPaths[0]);
   const [form, setForm] = useState<FormData>({
@@ -123,7 +114,19 @@ export default function BookingPage() {
   const [submitError, setSubmitError] = useState("");
   const [referenceNo, setReferenceNo] = useState("AV-000-XX");
 
-  const selectedModules = moduleList.filter((m) => selected[m.id]);
+  useEffect(() => {
+    fetch("/api/modules")
+      .then((r) => r.json())
+      .then((data) => {
+        const mods: Module[] = data.modules ?? [];
+        setModuleList(mods);
+        setSelected(Object.fromEntries(mods.map((m) => [m.code, false])));
+      })
+      .catch(() => {})
+      .finally(() => setModulesLoading(false));
+  }, []);
+
+  const selectedModules = moduleList.filter((m) => selected[m.code]);
   const selectedCount = selectedModules.length;
 
   function updateForm(field: keyof FormData, value: string) {
@@ -261,10 +264,13 @@ export default function BookingPage() {
                 </div>
 
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="font-bold text-xs uppercase tracking-widest text-primary font-headline">Available Modules ({moduleList.length})</h3>
+                  <h3 className="font-bold text-xs uppercase tracking-widest text-primary font-headline">
+                    {modulesLoading ? "Loading Modules..." : `Available Modules (${moduleList.length})`}
+                  </h3>
                   <button
-                    onClick={() => setSelected(Object.fromEntries(moduleList.map((m) => [m.id, true])))}
+                    onClick={() => setSelected(Object.fromEntries(moduleList.map((m) => [m.code, true])))}
                     className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors"
+                    disabled={modulesLoading}
                   >
                     Select All
                   </button>
@@ -272,19 +278,28 @@ export default function BookingPage() {
 
                 <div className="border border-outline-variant/20 rounded-xl overflow-hidden mb-10 max-h-[400px] overflow-y-auto bg-surface-container-low/30 scrollbar-hide">
                   <div className="divide-y divide-outline-variant/10">
-                    {moduleList.map((mod) => (
-                      <label key={mod.id} className="flex items-center gap-4 p-4 hover:bg-white transition-colors cursor-pointer group">
+                    {modulesLoading ? (
+                      <div className="flex items-center justify-center py-12 text-on-surface-variant text-sm gap-2">
+                        <span className="material-symbols-outlined animate-spin text-primary">progress_activity</span>
+                        Loading modules...
+                      </div>
+                    ) : moduleList.length === 0 ? (
+                      <div className="flex items-center justify-center py-12 text-on-surface-variant text-sm">
+                        No modules available.
+                      </div>
+                    ) : moduleList.map((mod) => (
+                      <label key={mod.code} className="flex items-center gap-4 p-4 hover:bg-white transition-colors cursor-pointer group">
                         <input
                           className="w-5 h-5 rounded border-outline-variant/50 text-primary focus:ring-primary cursor-pointer"
                           type="checkbox"
-                          checked={!!selected[mod.id]}
-                          onChange={(e) => setSelected((prev) => ({ ...prev, [mod.id]: e.target.checked }))}
+                          checked={!!selected[mod.code]}
+                          onChange={(e) => setSelected((prev) => ({ ...prev, [mod.code]: e.target.checked }))}
                         />
                         <div className="flex-1">
                           <p className="font-bold text-sm text-on-surface">{mod.name}</p>
-                          <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">{mod.sub}</p>
+                          <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">{mod.category}</p>
                         </div>
-                        {selected[mod.id] && <span className="material-symbols-outlined text-primary text-sm">check_circle</span>}
+                        {selected[mod.code] && <span className="material-symbols-outlined text-primary text-sm">check_circle</span>}
                       </label>
                     ))}
                   </div>
@@ -388,7 +403,7 @@ export default function BookingPage() {
                           <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Selected Modules</p>
                           <ul className="space-y-2 mt-2">
                             {selectedModules.slice(0, 3).map((m) => (
-                              <li key={m.id} className="flex items-center gap-2 text-xs text-on-surface font-medium">
+                              <li key={m.code} className="flex items-center gap-2 text-xs text-on-surface font-medium">
                                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                                 {m.name}
                               </li>

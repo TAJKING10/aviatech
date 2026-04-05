@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 
 const menuItems = [
   { icon: "dashboard", label: "Dashboard", href: "/admin" },
-  { icon: "description", label: "Applications", href: "/admin/applications" },
   { icon: "school", label: "Training Modules", href: "/admin/training" },
   { icon: "group", label: "Bookings", href: "/admin/bookings" },
   { icon: "mail", label: "Messages", href: "/admin/messages" },
