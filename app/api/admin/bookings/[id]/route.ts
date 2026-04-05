@@ -7,10 +7,14 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await params
-  const { status } = await request.json()
+  const body = await request.json()
+  const updateData: Record<string, string> = {}
+  if (body.status) updateData.status = body.status
+  if (body.modules) updateData.modules = JSON.stringify(body.modules)
+
   const booking = await prisma.booking.update({
     where: { id: parseInt(id) },
-    data: { status },
+    data: updateData,
   })
   return NextResponse.json({ success: true, booking })
 }

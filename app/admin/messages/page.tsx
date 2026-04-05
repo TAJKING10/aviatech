@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface Message {
@@ -16,9 +15,9 @@ interface Message {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  unread: "bg-error-container text-error",
-  pending: "bg-tertiary-container/20 text-tertiary",
-  replied: "bg-secondary-container/30 text-secondary",
+  unread: "bg-red-50 text-red-600",
+  pending: "bg-amber-50 text-amber-600",
+  replied: "bg-emerald-50 text-emerald-600",
 };
 
 export default function MessagesPage() {
@@ -30,6 +29,9 @@ export default function MessagesPage() {
   const [loading, setLoading] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [replyText, setReplyText] = useState<Record<number, string>>({});
+  const [replying, setReplying] = useState<number | null>(null);
+  const [replySent, setReplySent] = useState<number | null>(null);
 
   async function fetchMessages(p = page, s = statusFilter) {
     setLoading(true);
@@ -68,9 +70,32 @@ export default function MessagesPage() {
     fetchUnread();
   }
 
+  async function sendReply(msg: Message) {
+    const text = replyText[msg.id]?.trim();
+    if (!text) return;
+    setReplying(msg.id);
+    try {
+      await fetch(`/api/admin/messages/${msg.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ replyText: text }),
+      });
+      setReplySent(msg.id);
+      setReplyText((prev) => ({ ...prev, [msg.id]: "" }));
+      fetchMessages();
+      fetchUnread();
+      setTimeout(() => setReplySent(null), 3000);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setReplying(null);
+    }
+  }
+
   async function deleteMessage(id: number) {
     if (!confirm("Delete this message?")) return;
     await fetch(`/api/admin/messages/${id}`, { method: "DELETE" });
+    if (expanded === id) setExpanded(null);
     fetchMessages();
     fetchUnread();
   }
@@ -84,54 +109,56 @@ export default function MessagesPage() {
     name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
 
   return (
-    <div className="p-10 space-y-12 max-w-[1400px] mx-auto">
+    <div className="p-10 space-y-10 max-w-[1400px] mx-auto">
       {/* Header */}
-      <section className="grid grid-cols-1 md:grid-cols-3 items-end gap-8">
-        <motion.div className="md:col-span-2" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+      <section className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <p className="text-primary font-headline text-xs uppercase tracking-[0.2em] mb-3">Communication Hub</p>
           <h2 className="text-5xl font-headline font-extrabold tracking-tight text-on-surface">Contact Messages</h2>
-          <p className="mt-6 text-on-surface-variant leading-relaxed max-w-xl font-body">
-            Manage all incoming inquiries from the contact form. Mark as replied or archive once handled.
+          <p className="mt-4 text-on-surface-variant leading-relaxed max-w-xl font-body text-sm">
+            Read, reply, and manage all incoming inquiries. Replies are sent directly from this panel.
           </p>
         </motion.div>
-        <div className="flex justify-end">
-          <motion.div
-            className="bg-surface-container-low px-6 py-4 rounded-xl flex items-center space-x-4 border border-outline-variant/10 shadow-sm"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            <div className="bg-primary/10 p-2 rounded-lg">
-              <span className="material-symbols-outlined text-primary">pending_actions</span>
-            </div>
-            <div>
-              <p className="text-2xl font-bold text-on-surface">{unreadCount}</p>
-              <p className="text-[10px] font-headline uppercase tracking-widest text-outline">Unread Messages</p>
-            </div>
-          </motion.div>
-        </div>
+        <motion.div
+          className="bg-surface-container-low px-6 py-4 rounded-xl flex items-center gap-4 border border-outline-variant/10 shadow-sm"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
+          <div className="bg-primary/10 p-2 rounded-lg">
+            <span className="material-symbols-outlined text-primary">pending_actions</span>
+          </div>
+          <div>
+            <p className="text-2xl font-bold text-on-surface">{unreadCount}</p>
+            <p className="text-[10px] font-headline uppercase tracking-widest text-outline">Unread Messages</p>
+          </div>
+        </motion.div>
       </section>
 
       {/* Filters */}
-      <section className="flex flex-col md:flex-row items-center justify-between gap-6 bg-surface-container/50 p-6 rounded-2xl border border-outline-variant/10">
-        <div className="flex items-center space-x-4 overflow-x-auto w-full md:w-auto scrollbar-hide pb-2 md:pb-0">
-          {[{ key: "all", label: "All Messages" }, { key: "unread", label: "Unread" }, { key: "pending", label: "Pending" }, { key: "replied", label: "Replied" }].map(({ key, label }) => (
-            <button
-              key={key}
-              onClick={() => handleFilter(key)}
-              className={cn(
-                "px-5 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-all active:scale-95",
-                statusFilter === key ? "bg-primary text-white shadow-md shadow-primary/20" : "bg-surface-container-highest text-on-surface-variant hover:bg-surface-container-high"
-              )}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </section>
+      <div className="flex items-center gap-3 bg-surface-container-low p-4 rounded-xl flex-wrap">
+        <span className="material-symbols-outlined text-outline text-lg">filter_list</span>
+        {[
+          { key: "all", label: "All" },
+          { key: "unread", label: "Unread" },
+          { key: "pending", label: "Pending" },
+          { key: "replied", label: "Replied" },
+        ].map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => handleFilter(key)}
+            className={cn(
+              "px-4 py-1.5 text-xs font-bold rounded-full transition-colors",
+              statusFilter === key ? "bg-primary text-white" : "bg-white text-on-surface-variant hover:bg-surface-container-high"
+            )}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
 
-      {/* Table */}
-      <motion.section
-        className="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-[0px_20px_40px_rgba(22,28,34,0.03)] border border-outline-variant/10"
+      {/* Messages List */}
+      <motion.div
+        className="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant/10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -140,100 +167,161 @@ export default function MessagesPage() {
         ) : messages.length === 0 ? (
           <div className="p-16 text-center text-slate-400 text-sm">No messages found.</div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-surface-container-high/50">
-                  <th className="px-8 py-5 text-[10px] font-headline uppercase tracking-[0.15em] text-outline">Name</th>
-                  <th className="px-8 py-5 text-[10px] font-headline uppercase tracking-[0.15em] text-outline">Subject</th>
-                  <th className="px-8 py-5 text-[10px] font-headline uppercase tracking-[0.15em] text-outline">Date</th>
-                  <th className="px-8 py-5 text-[10px] font-headline uppercase tracking-[0.15em] text-outline text-center">Status</th>
-                  <th className="px-8 py-5 text-[10px] font-headline uppercase tracking-[0.15em] text-outline text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-surface-container">
-                {messages.map((msg, i) => (
-                  <>
-                    <motion.tr
-                      key={msg.id}
-                      className="hover:bg-surface-container-low/40 transition-colors group cursor-pointer"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.04 }}
-                      onClick={() => setExpanded(expanded === msg.id ? null : msg.id)}
+          <div>
+            {messages.map((msg, i) => (
+              <div key={msg.id} className="border-b border-surface-container last:border-b-0">
+                {/* Row */}
+                <div
+                  className={cn(
+                    "flex items-center gap-4 px-6 py-5 cursor-pointer hover:bg-surface-container-low/50 transition-colors",
+                    expanded === msg.id && "bg-surface-container-low/30"
+                  )}
+                  onClick={() => {
+                    setExpanded(expanded === msg.id ? null : msg.id);
+                    if (msg.status === "unread") updateStatus(msg.id, "pending");
+                  }}
+                >
+                  {/* Avatar */}
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs bg-primary/10 text-primary shrink-0">
+                    {initials(msg.name)}
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <p className={cn("text-sm font-bold text-on-surface", msg.status === "unread" && "font-extrabold")}>{msg.name}</p>
+                      <p className="text-xs text-outline truncate">{msg.email}</p>
+                    </div>
+                    <p className={cn("text-sm text-on-surface-variant truncate mt-0.5", msg.status === "unread" && "text-on-surface font-medium")}>
+                      {msg.subject}
+                    </p>
+                  </div>
+
+                  {/* Date + Status + Actions */}
+                  <div className="flex items-center gap-4 shrink-0">
+                    <div className="text-right hidden md:block">
+                      <p className="text-xs text-on-surface">{new Date(msg.createdAt).toLocaleDateString()}</p>
+                      <p className="text-[10px] text-outline">{new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+                    </div>
+                    <span className={cn("px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider", STATUS_COLORS[msg.status] || "bg-slate-100 text-slate-600")}>
+                      {msg.status}
+                    </span>
+                    <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+                      <button
+                        onClick={() => deleteMessage(msg.id)}
+                        title="Delete"
+                        className="p-1.5 hover:bg-error-container rounded-lg text-error transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-lg">delete</span>
+                      </button>
+                    </div>
+                    <span className="material-symbols-outlined text-outline text-lg">
+                      {expanded === msg.id ? "expand_less" : "expand_more"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Expanded Panel */}
+                <AnimatePresence>
+                  {expanded === msg.id && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="overflow-hidden"
                     >
-                      <td className="px-8 py-6">
-                        <div className="flex items-center space-x-4">
-                          <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs bg-primary/10 text-primary">
-                            {initials(msg.name)}
-                          </div>
-                          <div>
-                            <p className="text-sm font-bold text-on-surface">{msg.name}</p>
-                            <p className="text-xs text-outline font-body">{msg.email}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-8 py-6">
-                        <p className="text-sm font-medium text-on-surface max-w-xs truncate">{msg.subject}</p>
-                      </td>
-                      <td className="px-8 py-6">
-                        <p className="text-xs text-on-surface">{new Date(msg.createdAt).toLocaleDateString()}</p>
-                        <p className="text-[10px] text-outline">{new Date(msg.createdAt).toLocaleTimeString()}</p>
-                      </td>
-                      <td className="px-8 py-6 text-center">
-                        <span className={cn("px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider", STATUS_COLORS[msg.status] || "bg-slate-100 text-slate-600")}>
-                          {msg.status}
-                        </span>
-                      </td>
-                      <td className="px-8 py-6 text-right" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex items-center justify-end space-x-2">
-                          {msg.status !== "replied" && (
-                            <button onClick={() => updateStatus(msg.id, "replied")} title="Mark Replied" className="p-2 hover:bg-primary/10 rounded-lg text-primary transition-colors">
-                              <span className="material-symbols-outlined">reply</span>
-                            </button>
-                          )}
-                          {msg.status === "unread" && (
-                            <button onClick={() => updateStatus(msg.id, "pending")} title="Mark Pending" className="p-2 hover:bg-amber-50 rounded-lg text-amber-600 transition-colors">
-                              <span className="material-symbols-outlined">schedule</span>
-                            </button>
-                          )}
-                          <button onClick={() => deleteMessage(msg.id)} title="Delete" className="p-2 hover:bg-error-container rounded-lg text-error transition-colors">
-                            <span className="material-symbols-outlined">delete</span>
-                          </button>
-                        </div>
-                      </td>
-                    </motion.tr>
-                    {expanded === msg.id && (
-                      <tr key={`expanded-${msg.id}`}>
-                        <td colSpan={5} className="px-8 pb-6 bg-surface-container-low/30">
-                          <div className="bg-white rounded-xl p-6 border border-outline-variant/10 max-w-2xl">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-outline mb-3">Message</p>
+                      <div className="px-6 pb-6 bg-surface-container-low/20 border-t border-outline-variant/10">
+                        <div className="max-w-3xl pt-5 space-y-5">
+
+                          {/* Full message */}
+                          <div className="bg-white rounded-xl p-5 border border-outline-variant/10">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-outline mb-3">Message from {msg.name}</p>
                             <p className="text-sm text-on-surface leading-relaxed whitespace-pre-wrap">{msg.message}</p>
-                            <a
-                              href={`mailto:${msg.email}?subject=Re: ${msg.subject}`}
-                              className="inline-flex items-center gap-2 mt-4 text-primary text-xs font-bold hover:underline"
-                            >
-                              <span className="material-symbols-outlined text-sm">mail</span>
-                              Reply via email
-                            </a>
                           </div>
-                        </td>
-                      </tr>
-                    )}
-                  </>
-                ))}
-              </tbody>
-            </table>
+
+                          {/* Reply box */}
+                          {msg.status !== "replied" ? (
+                            <div className="bg-white rounded-xl p-5 border border-outline-variant/10">
+                              <p className="text-[10px] font-bold uppercase tracking-widest text-outline mb-3">
+                                Reply to {msg.name} &lt;{msg.email}&gt;
+                              </p>
+                              <textarea
+                                rows={5}
+                                className="w-full bg-surface-container-low rounded-lg px-4 py-3 text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary resize-none transition-all"
+                                placeholder={`Type your reply to ${msg.name}...`}
+                                value={replyText[msg.id] || ""}
+                                onChange={(e) => setReplyText((prev) => ({ ...prev, [msg.id]: e.target.value }))}
+                              />
+                              <div className="flex items-center justify-between mt-3">
+                                <p className="text-[10px] text-outline">
+                                  Will be sent from info@aviatech-consulting.com — message marked as replied automatically
+                                </p>
+                                <button
+                                  onClick={() => sendReply(msg)}
+                                  disabled={!replyText[msg.id]?.trim() || replying === msg.id}
+                                  className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:brightness-110 transition-all active:scale-95 disabled:opacity-50"
+                                >
+                                  <span className="material-symbols-outlined text-base">send</span>
+                                  {replying === msg.id ? "Sending..." : "Send Reply"}
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-3 bg-emerald-50 rounded-xl px-5 py-4 border border-emerald-100">
+                              <span className="material-symbols-outlined text-emerald-600">check_circle</span>
+                              <p className="text-sm text-emerald-700 font-bold">This message has been replied to.</p>
+                              <button
+                                onClick={() => updateStatus(msg.id, "pending")}
+                                className="ml-auto text-xs text-emerald-600 hover:underline font-bold"
+                              >
+                                Re-open
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Reply sent confirmation */}
+                          {replySent === msg.id && (
+                            <div className="flex items-center gap-3 bg-emerald-50 rounded-xl px-5 py-3 border border-emerald-100">
+                              <span className="material-symbols-outlined text-emerald-600 text-base">check_circle</span>
+                              <p className="text-sm text-emerald-700 font-bold">Reply sent successfully to {msg.email}!</p>
+                            </div>
+                          )}
+
+                          {/* Quick status actions */}
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-outline">Mark as:</p>
+                            {["unread", "pending", "replied"].filter(s => s !== msg.status).map(s => (
+                              <button
+                                key={s}
+                                onClick={() => updateStatus(msg.id, s)}
+                                className={cn(
+                                  "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-colors border",
+                                  STATUS_COLORS[s] || "bg-slate-100 text-slate-600",
+                                  "hover:opacity-80"
+                                )}
+                              >
+                                {s}
+                              </button>
+                            ))}
+                          </div>
+
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
           </div>
         )}
 
         {/* Pagination */}
         {pages > 1 && (
-          <div className="px-8 py-6 bg-surface-container-low/30 flex items-center justify-between border-t border-surface-container-high">
+          <div className="px-6 py-4 flex items-center justify-between border-t border-surface-container-high bg-surface-container-low/30">
             <p className="text-xs text-outline">
               Showing <span className="font-bold text-on-surface">{(page - 1) * 10 + 1}–{Math.min(page * 10, total)}</span> of <span className="font-bold text-on-surface">{total}</span>
             </p>
-            <div className="flex items-center space-x-2">
+            <div className="flex gap-2">
               <button onClick={() => { const p = page - 1; setPage(p); fetchMessages(p); }} disabled={page === 1} className="p-2 hover:bg-surface-container rounded-md text-outline disabled:opacity-30">
                 <span className="material-symbols-outlined text-sm">chevron_left</span>
               </button>
@@ -248,61 +336,7 @@ export default function MessagesPage() {
             </div>
           </div>
         )}
-      </motion.section>
-
-      {/* Bottom section */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-16 pb-20">
-        <motion.div
-          className="primary-gradient p-1 rounded-2xl shadow-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="bg-white rounded-[15px] p-8 flex flex-col justify-between h-full">
-            <div>
-              <span className="material-symbols-outlined text-primary text-4xl mb-4">auto_awesome</span>
-              <h3 className="text-2xl font-headline font-extrabold text-on-surface tracking-tight">AI Insights: Sentiment Report</h3>
-              <p className="mt-4 text-on-surface-variant text-sm leading-relaxed font-body">
-                Monitor inquiry trends and optimize response cycles. Centralize all client touchpoints into a unified administrative deck.
-              </p>
-            </div>
-            <div className="mt-8 flex items-center justify-between">
-              <div className="flex gap-3">
-                <div className="px-3 py-1 bg-primary/10 rounded-full text-xs text-primary font-bold">{unreadCount} unread</div>
-                <div className="px-3 py-1 bg-emerald-50 rounded-full text-xs text-emerald-600 font-bold">{total} total</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="bg-surface-container-low p-8 rounded-2xl relative overflow-hidden flex flex-col justify-center border border-outline-variant/10 shadow-sm"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="relative z-10">
-            <h3 className="text-2xl font-headline font-extrabold text-on-surface tracking-tight">Message Integrity Protocol</h3>
-            <p className="mt-4 text-on-surface-variant text-sm leading-relaxed font-body">
-              All incoming communications are stored securely in your database. Click any row to read the full message and reply via email.
-            </p>
-            <div className="mt-6 flex space-x-4">
-              <div className="flex items-center space-x-2 text-primary">
-                <span className="material-symbols-outlined text-sm">verified_user</span>
-                <span className="text-[10px] font-headline uppercase tracking-widest font-bold">Secured</span>
-              </div>
-              <div className="flex items-center space-x-2 text-primary">
-                <span className="material-symbols-outlined text-sm">storage</span>
-                <span className="text-[10px] font-headline uppercase tracking-widest font-bold">DB Stored</span>
-              </div>
-            </div>
-          </div>
-          <div className="absolute -right-10 -bottom-10 opacity-5">
-            <span className="material-symbols-outlined text-[200px]">rocket_launch</span>
-          </div>
-        </motion.div>
-      </section>
+      </motion.div>
     </div>
   );
 }

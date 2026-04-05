@@ -11,6 +11,7 @@ const menuItems = [
   { icon: "school", label: "Training Modules", href: "/admin/training" },
   { icon: "group", label: "Bookings", href: "/admin/bookings" },
   { icon: "mail", label: "Messages", href: "/admin/messages" },
+  { icon: "campaign", label: "Subscribers", href: "/admin/subscribers" },
   { icon: "settings", label: "Site Settings", href: "/admin/settings" },
 ];
 

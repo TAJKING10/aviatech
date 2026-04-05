@@ -152,6 +152,41 @@ export async function sendBookingNotification(booking: {
   })
 }
 
+// ─── Admin Reply to Contact Message ───────────────────────────────────────────
+
+export async function sendAdminReply(msg: {
+  toEmail: string
+  toName: string
+  originalSubject: string
+  replyText: string
+}) {
+  const t = getTransporter()
+  await t.sendMail({
+    from: FROM(),
+    replyTo: 'info@aviatech-consulting.com',
+    to: msg.toEmail,
+    subject: `Re: ${msg.originalSubject} | Aviatech Consulting`,
+    html: `
+      <div style="${baseStyle}">
+        ${headerHtml}
+        <div style="padding:32px;">
+          <h2 style="color:#003580;margin-top:0;">Response from Aviatech Consulting</h2>
+          <p style="color:#333;">Dear ${msg.toName},</p>
+          <p style="color:#333;">Thank you for reaching out to us. Here is our response to your inquiry:</p>
+
+          <div style="background:#f9f9f9;border-left:4px solid #003580;padding:16px 20px;border-radius:4px;margin:24px 0;">
+            <p style="margin:0;color:#333;font-size:14px;line-height:1.7;white-space:pre-wrap;">${msg.replyText.replace(/\n/g, '<br/>')}</p>
+          </div>
+
+          <p style="color:#333;">If you have any further questions, please don't hesitate to reply to this email or contact us directly at <a href="mailto:info@aviatech-consulting.com" style="color:#003580;">info@aviatech-consulting.com</a></p>
+          <p style="color:#555;">Best regards,<br/><strong>Aviatech Consulting Team</strong></p>
+        </div>
+        ${footerHtml}
+      </div>
+    `,
+  })
+}
+
 // ─── Newsletter: Subscriber Confirmation ──────────────────────────────────────
 
 export async function sendSubscriberConfirmation({ email }: { email: string }) {
@@ -203,6 +238,29 @@ export async function sendSubscriberNotification({ email }: { email: string }) {
           <div style="margin-top:24px;">
             <a href="https://aviatech-consulting.com/admin" style="background:#003580;color:#fff;padding:10px 20px;text-decoration:none;border-radius:4px;font-size:13px;">View Admin Panel</a>
           </div>
+        </div>
+        ${footerHtml}
+      </div>
+    `,
+  })
+}
+
+// ─── Broadcast to one subscriber ──────────────────────────────────────────────
+
+export async function sendBroadcastToOne({ email, subject, body }: { email: string; subject: string; body: string }) {
+  const t = getTransporter()
+  await t.sendMail({
+    from: FROM(),
+    replyTo: 'info@aviatech-consulting.com',
+    to: email,
+    subject,
+    html: `
+      <div style="${baseStyle}">
+        ${headerHtml}
+        <div style="padding:32px;">
+          <div style="font-size:14px;color:#333;line-height:1.8;white-space:pre-wrap;">${body.replace(/\n/g, '<br/>')}</div>
+          <hr style="border:none;border-top:1px solid #e0e0e0;margin:32px 0;" />
+          <p style="font-size:11px;color:#999;margin:0;">You are receiving this because you subscribed to Aviatech Consulting updates.<br/>To unsubscribe, reply to this email with the subject "Unsubscribe".</p>
         </div>
         ${footerHtml}
       </div>
