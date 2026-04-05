@@ -2,29 +2,56 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://aviatech-consulting.com"),
   title: {
     template: "%s | Aviatech Consulting",
-    default: "Aviatech Consulting - Premier Aviation Consulting Firm",
+    default: "Aviatech Consulting | EASA Aviation Training & Aerospace Consulting",
   },
   description:
-    "Aviatech Consulting delivers strategic excellence in flight operations, safety management, regulatory compliance, and training programs for aviation organizations worldwide.",
+    "Aviatech Consulting provides EASA Part-66 compliant aviation training, regulatory audits, and aerospace consulting services. Book modules M1–M17 for B1.1, B1.2, and B2 certifications.",
   keywords: [
+    "EASA aviation training",
+    "EASA Part-66",
     "aviation consulting",
-    "flight operations",
-    "safety management",
-    "regulatory compliance",
-    "aviation training",
-    "fleet management",
+    "aerospace consulting",
+    "B1.1 training",
+    "B1.2 training",
+    "B2 avionics training",
+    "aircraft maintenance training",
+    "aviation regulatory compliance",
+    "M1 mathematics aviation",
+    "M3 electrical fundamentals",
+    "M11A turbine aeroplane",
+    "M15 gas turbine engine",
+    "aviation safety management",
+    "Aviatech Consulting",
   ],
-  authors: [{ name: "Aviatech Consulting" }],
+  authors: [{ name: "Aviatech Consulting", url: "https://aviatech-consulting.com" }],
+  creator: "Aviatech Consulting",
+  publisher: "Aviatech Consulting",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://aviatech.aero",
+    url: "https://aviatech-consulting.com",
     siteName: "Aviatech Consulting",
-    title: "Aviatech Consulting - Premier Aviation Consulting Firm",
+    title: "Aviatech Consulting | EASA Aviation Training & Aerospace Consulting",
     description:
-      "Strategic aviation consulting solutions for commercial, military, and business aviation organizations.",
+      "EASA Part-66 aviation training, regulatory audits, and aerospace consulting. Modules M1–M17 for B1.1, B1.2, and B2 certifications.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aviatech Consulting | EASA Aviation Training & Aerospace Consulting",
+    description:
+      "EASA Part-66 aviation training and aerospace consulting. Book training modules for B1.1, B1.2, and B2 certifications.",
+    creator: "@aviatech",
+  },
+  alternates: {
+    canonical: "https://aviatech-consulting.com",
   },
 };
 
