@@ -12,6 +12,9 @@ export async function GET() {
     confirmedBookings,
     totalMessages,
     unreadMessages,
+    totalModules,
+    activeModules,
+    totalSubscribers,
     recentBookings,
     recentMessages,
   ] = await Promise.all([
@@ -20,6 +23,9 @@ export async function GET() {
     prisma.booking.count({ where: { status: 'confirmed' } }),
     prisma.contactMessage.count(),
     prisma.contactMessage.count({ where: { status: 'unread' } }),
+    prisma.trainingModule.count(),
+    prisma.trainingModule.count({ where: { active: true } }),
+    prisma.subscriber.count(),
     prisma.booking.findMany({ orderBy: { createdAt: 'desc' }, take: 5 }),
     prisma.contactMessage.findMany({ orderBy: { createdAt: 'desc' }, take: 5 }),
   ])
@@ -30,6 +36,10 @@ export async function GET() {
     confirmedBookings,
     totalMessages,
     unreadMessages,
+    totalModules,
+    activeModules,
+    inactiveModules: totalModules - activeModules,
+    totalSubscribers,
     recentBookings: recentBookings.map(b => ({ ...b, modules: JSON.parse(b.modules) })),
     recentMessages,
   })

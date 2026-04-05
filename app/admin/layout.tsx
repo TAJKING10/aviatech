@@ -66,11 +66,10 @@ export default function AdminLayout({
           {/* Admin Footer */}
           <footer className="p-8 border-t border-slate-200/10 mt-auto">
             <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-slate-400">
-              <span>© 2024 Precision Aerospace Editorial System</span>
+              <span>© {new Date().getFullYear()} Aviatech Consulting — Admin Panel</span>
               <div className="flex gap-8">
-                <Link href="/admin/privacy" className="hover:text-primary transition-colors">Privacy Protocol</Link>
-                <Link href="/admin/logs" className="hover:text-primary transition-colors">Audit Logs</Link>
-                <span className="text-slate-300">System v2.4.1</span>
+                <Link href="/admin/settings" className="hover:text-primary transition-colors">Settings</Link>
+                <Link href="/admin/subscribers" className="hover:text-primary transition-colors">Subscribers</Link>
               </div>
             </div>
           </footer>

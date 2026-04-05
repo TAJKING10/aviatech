@@ -11,16 +11,13 @@ interface DashboardData {
   confirmedBookings: number;
   totalMessages: number;
   unreadMessages: number;
+  totalModules: number;
+  activeModules: number;
+  inactiveModules: number;
+  totalSubscribers: number;
   recentBookings: { id: number; firstName: string; surname: string; email: string; category: string; status: string; createdAt: string }[];
   recentMessages: { id: number; name: string; email: string; subject: string; status: string; createdAt: string }[];
 }
-
-const moduleStats = [
-  { label: "Avionics", progress: 85 },
-  { label: "Safety", progress: 62 },
-  { label: "Engines", progress: 94 },
-  { label: "Logistics", progress: 45 },
-];
 
 function StatusBadge({ status }: { status: string }) {
   return (
@@ -156,45 +153,36 @@ export default function AdminDashboard() {
           </motion.div>
         </div>
 
-        {/* Module Performance */}
+        {/* Training Overview */}
         <div>
           <div className="flex justify-between items-center mb-10">
-            <h4 className="font-headline text-2xl font-bold text-on-surface">Module Performance</h4>
-            <span className="material-symbols-outlined text-slate-300">more_vert</span>
+            <h4 className="font-headline text-2xl font-bold text-on-surface">Training Overview</h4>
+            <Link href="/admin/training" className="font-label uppercase tracking-widest text-[10px] font-bold text-primary border-b border-primary pb-1">Manage</Link>
           </div>
           <motion.div
-            className="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_40px_80px_rgba(0,0,0,0.02)] h-[400px] flex flex-col"
+            className="bg-surface-container-lowest p-8 rounded-xl shadow-[0px_40px_80px_rgba(0,0,0,0.02)] flex flex-col gap-6"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <p className="font-body text-xs text-slate-400 mb-8">Completion rates across technical training silos.</p>
-            <div className="flex-1 flex items-end gap-6 px-4">
-              {moduleStats.map((m, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center gap-3 h-full">
-                  <div className="w-full bg-primary-container/10 rounded-t-sm relative group h-full flex flex-col justify-end overflow-hidden">
-                    <motion.div
-                      className="primary-gradient w-full rounded-t-sm transition-all group-hover:opacity-80"
-                      initial={{ height: 0 }}
-                      whileInView={{ height: `${m.progress}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: i * 0.1 }}
-                    />
-                  </div>
-                  <span className="font-label text-[9px] uppercase tracking-tighter text-slate-500">{m.label}</span>
+            <p className="font-body text-xs text-slate-400">Live training module & subscriber stats from the database.</p>
+
+            {[
+              { label: "Total Modules", value: data?.totalModules ?? "—", icon: "school", color: "text-primary" },
+              { label: "Active (in booking form)", value: data?.activeModules ?? "—", icon: "check_circle", color: "text-emerald-600" },
+              { label: "Inactive (hidden)", value: data?.inactiveModules ?? "—", icon: "visibility_off", color: "text-slate-400" },
+              { label: "Newsletter Subscribers", value: data?.totalSubscribers ?? "—", icon: "campaign", color: "text-primary" },
+              { label: "Total Bookings", value: data?.totalBookings ?? "—", icon: "description", color: "text-primary" },
+              { label: "Confirmed Bookings", value: data?.confirmedBookings ?? "—", icon: "verified", color: "text-emerald-600" },
+            ].map((stat, i) => (
+              <div key={i} className="flex items-center justify-between py-3 border-b border-slate-100 last:border-0">
+                <div className="flex items-center gap-3">
+                  <span className={cn("material-symbols-outlined text-sm", stat.color)}>{stat.icon}</span>
+                  <span className="text-xs text-slate-600 font-medium">{stat.label}</span>
                 </div>
-              ))}
-            </div>
-            <div className="mt-10 pt-6 border-t border-slate-100 flex justify-between items-center">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Total Progress</p>
-                <p className="text-lg font-bold text-on-surface">78.4%</p>
+                <span className={cn("text-lg font-black font-headline", stat.color)}>{stat.value}</span>
               </div>
-              <div className="text-right">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Active Users</p>
-                <p className="text-lg font-bold text-on-surface">{data ? data.totalBookings : "—"}</p>
-              </div>
-            </div>
+            ))}
           </motion.div>
         </div>
       </div>
@@ -253,10 +241,10 @@ export default function AdminDashboard() {
             viewport={{ once: true }}
           >
             <div className="relative z-10">
-              <span className="px-3 py-1 bg-white/10 glass-effect text-[10px] font-black uppercase tracking-[0.3em] mb-6 inline-block">System Intelligence</span>
-              <h3 className="font-headline text-3xl font-extrabold mb-6">Nexus Insights Engine</h3>
+              <span className="px-3 py-1 bg-white/10 glass-effect text-[10px] font-black uppercase tracking-[0.3em] mb-6 inline-block">Operations Hub</span>
+              <h3 className="font-headline text-3xl font-extrabold mb-6">Booking & Training Control</h3>
               <p className="font-body text-white/80 max-w-lg mb-8">
-                Real-time predictive analytics for training module demand. Adjust capacity based on live booking trends.
+                Review pending applications, confirm candidates, and manage training modules — all live from the database.
               </p>
               <Link href="/admin/bookings" className="inline-block bg-white text-primary px-8 py-3 rounded-md font-headline uppercase tracking-widest text-[11px] font-bold shadow-xl hover:bg-slate-50 transition-all active:scale-95">
                 View Bookings
@@ -273,10 +261,19 @@ export default function AdminDashboard() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
           >
-            <p className="font-label uppercase tracking-widest text-[10px] font-black text-slate-400 mb-4">Compliance Status</p>
-            <h4 className="font-headline text-xl font-bold mb-6 text-on-surface">FAA/EASA Synchronization</h4>
+            <p className="font-label uppercase tracking-widest text-[10px] font-black text-slate-400 mb-4">Booking Status</p>
+            <h4 className="font-headline text-xl font-bold mb-6 text-on-surface">Review Pipeline</h4>
             <div className="space-y-6">
-              {[{ label: "Documentation Accuracy", value: 98 }, { label: "Renewal Readiness", value: 82 }].map((c, i) => (
+              {data && [
+                {
+                  label: "Confirmation Rate",
+                  value: data.totalBookings > 0 ? Math.round((data.confirmedBookings / data.totalBookings) * 100) : 0,
+                },
+                {
+                  label: "Messages Read",
+                  value: data.totalMessages > 0 ? Math.round(((data.totalMessages - data.unreadMessages) / data.totalMessages) * 100) : 100,
+                },
+              ].map((c, i) => (
                 <div key={i} className="space-y-2">
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-slate-600">{c.label}</span>
@@ -293,6 +290,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               ))}
+              {!data && <p className="text-xs text-slate-400">Loading...</p>}
             </div>
           </motion.div>
         </div>
