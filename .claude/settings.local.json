@@ -46,7 +46,9 @@
       "Bash(vercel plugin:*)",
       "Bash(vercel plugins:*)",
       "Bash(nslookup:*)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(grep -E \"^./\\([^/]+|[^/]+/[^/]+|[^/]+/[^/]+/[^/]+\\)$\")",
+      "Bash(ls -la app/\\\\\\(main\\\\\\)/)"
     ]
   }
 }
