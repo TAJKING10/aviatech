@@ -42,9 +42,9 @@ export default function Navbar() {
           <Image
             src="/logo.png"
             alt="Aviatech Consulting"
-            width={160}
-            height={48}
-            className="h-10 w-auto object-contain"
+            width={220}
+            height={70}
+            className="h-16 w-auto object-contain"
             style={{ mixBlendMode: "multiply" }}
             priority
           />
