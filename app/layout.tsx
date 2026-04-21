@@ -34,6 +34,11 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
   },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+    shortcut: "/logo.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -42,6 +47,14 @@ export const metadata: Metadata = {
     title: "Aviatech Consulting | EASA Aviation Training & Aerospace Consulting",
     description:
       "EASA Part-66 aviation training, regulatory audits, and aerospace consulting. Modules M1–M17 for B1.1, B1.2, and B2 certifications.",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Aviatech Consulting Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -49,6 +62,7 @@ export const metadata: Metadata = {
     description:
       "EASA Part-66 aviation training and aerospace consulting. Book training modules for B1.1, B1.2, and B2 certifications.",
     creator: "@aviatech",
+    images: ["/logo.png"],
   },
   alternates: {
     canonical: "https://aviatech-consulting.com",

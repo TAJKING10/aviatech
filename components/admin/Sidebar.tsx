@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -27,7 +28,14 @@ export default function Sidebar() {
   return (
     <aside className="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-[#f6f9ff] flex flex-col border-r border-slate-200/15 z-50">
       <div className="px-6 py-8">
-        <h1 className="text-xl font-black tracking-tighter text-[#161c22]">Aviatech</h1>
+        <Image
+          src="/logo.png"
+          alt="Aviatech Consulting"
+          width={130}
+          height={40}
+          className="h-10 w-auto object-contain mb-1"
+          style={{ mixBlendMode: "multiply" }}
+        />
         <p className="font-headline uppercase tracking-widest text-[11px] font-bold text-slate-400 mt-1">Admin Panel</p>
       </div>
 

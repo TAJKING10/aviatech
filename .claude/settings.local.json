@@ -48,7 +48,10 @@
       "Bash(nslookup:*)",
       "Bash(xargs grep:*)",
       "Bash(grep -E \"^./\\([^/]+|[^/]+/[^/]+|[^/]+/[^/]+/[^/]+\\)$\")",
-      "Bash(ls -la app/\\\\\\(main\\\\\\)/)"
+      "Bash(ls -la app/\\\\\\(main\\\\\\)/)",
+      "Bash(find C:UsersToufiAndroidStudioProjectsaviatech -name favicon* -o -name icon*)",
+      "Bash(mkdir \"C:/Users/Toufi/AndroidStudioProjects/aviatech/public\")",
+      "Bash(cp \"C:/Users/Toufi/AndroidStudioProjects/aviatech/Aviia Tech LOGO.png\" \"C:/Users/Toufi/AndroidStudioProjects/aviatech/public/logo.png\")"
     ]
   }
 }

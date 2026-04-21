@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -37,14 +38,16 @@ export default function Navbar() {
       )}
     >
       <div className="flex justify-between items-center max-w-screen-2xl mx-auto">
-        <Link
-          href="/"
-          className={cn(
-            "text-xl font-bold tracking-tighter uppercase font-headline transition-colors",
-            scrolled || pathname !== "/" ? "text-slate-900" : "text-white"
-          )}
-        >
-          Aviatech Consulting
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.png"
+            alt="Aviatech Consulting"
+            width={160}
+            height={48}
+            className="h-10 w-auto object-contain"
+            style={{ mixBlendMode: "multiply" }}
+            priority
+          />
         </Link>
 
         {/* Desktop Nav */}

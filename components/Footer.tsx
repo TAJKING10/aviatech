@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Footer() {
@@ -6,9 +7,14 @@ export default function Footer() {
     <footer className="w-full py-24 px-8 bg-slate-50 border-t border-outline-variant/10">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-screen-2xl mx-auto">
         <div className="col-span-1">
-          <div className="text-lg font-black text-slate-900 uppercase tracking-widest font-headline mb-6">
-            Aviatech Consulting
-          </div>
+          <Image
+            src="/logo.png"
+            alt="Aviatech Consulting"
+            width={180}
+            height={54}
+            className="h-14 w-auto object-contain mb-6"
+            style={{ mixBlendMode: "multiply" }}
+          />
           <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
             Engineering clarity and technology confidence for the global aviation sector. High-performance consultancy for mission-critical operations.
           </p>
