@@ -43,12 +43,6 @@ export default function HomePage() {
           variants={containerVariants}
         >
           <div className="lg:col-span-8">
-            <motion.span 
-              variants={itemVariants}
-              className="inline-block bg-primary-container/20 text-primary-container px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-6 font-headline"
-            >
-              Engineering Excellence
-            </motion.span>
             <motion.h1 
               variants={itemVariants}
               className="text-white font-headline font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight mb-8"

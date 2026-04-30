@@ -13,7 +13,7 @@ interface Module {
 }
 
 const categories = ["B1.1 - Aeroplanes Turbine", "B1.2 - Aeroplanes Piston", "B2 - Avionics"];
-const trainingPaths = ["Training + Examination", "Examination Only", "Training Only"];
+const trainingPaths = ["Examination Only", "Consultation + Examination"];
 
 interface FormData {
   firstName: string;

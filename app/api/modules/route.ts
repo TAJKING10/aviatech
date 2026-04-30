@@ -6,8 +6,14 @@ export const dynamic = 'force-dynamic'
 export async function GET() {
   const modules = await prisma.trainingModule.findMany({
     where: { active: true },
-    orderBy: { code: 'asc' },
     select: { id: true, code: true, name: true, description: true, category: true },
   })
-  return NextResponse.json({ modules })
+
+  const sorted = modules.sort((a, b) => {
+    const numA = parseFloat(a.code.replace(/[^0-9.]/g, ''))
+    const numB = parseFloat(b.code.replace(/[^0-9.]/g, ''))
+    return numA - numB
+  })
+
+  return NextResponse.json({ modules: sorted })
 }

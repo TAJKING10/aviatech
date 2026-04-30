@@ -178,7 +178,7 @@ export default function ContactPage() {
                 {[
                   { icon: "mail", title: "Email Us", details: ["connect@aviatech.com", "support@aviatech.com"] },
                   { icon: "call", title: "Call Our Office", details: ["+1 (555) 890-4422", "Mon - Fri, 9am - 6pm EST"] },
-                  { icon: "location_on", title: "Global Headquarters", details: ["1200 Innovation Way, Suite 400", "Aerospace District, Seattle, WA 98101"] },
+                  { icon: "location_on", title: "Our Office", details: ["Office 208, Plus Mall, South Investors Area", "Fifth Settlement, New Cairo, Cairo, Egypt"] },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -200,24 +200,44 @@ export default function ContactPage() {
                 ))}
               </div>
 
-              {/* Map Placeholder */}
+              {/* Map */}
               <motion.div
-                className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-inner bg-surface-container border border-outline-variant/15"
+                className="relative w-full h-[320px] rounded-xl overflow-hidden shadow-inner border border-outline-variant/15"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                <div
-                  className="absolute inset-0 grayscale opacity-80 mix-blend-multiply bg-center bg-cover"
-                  style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfi0R6gpaWt_VNCUScxI4rmsO4WSgSR5MI79xDshUsBW3tK0a0tQVzChJbpgHaLi2kn4CZpLDfmNrKI2TXFtYNZuPvEWBRLeaZMk_2-MSQfE7LZWXDoI4TZnOz34G_dn5jGh-IGclw6eVZdTzmmFtXor79pzkf8QkjNw1kcp86tJcem3bgwLk1odmS33Qunr8qFYyPDFBHlcKJ6AJfIwYntJlx_5M5RLetlCCsvXv3ljVFVv-MCgHfY2eGgvYVNveZLpew12WAme2Q')" }}
+                <iframe
+                  src="https://maps.google.com/maps?q=Plus+Mall,+Fifth+Settlement,+New+Cairo,+Cairo,+Egypt&output=embed&hl=en&z=16"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Aviatech Office Location"
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-primary text-on-primary p-3 rounded-full shadow-2xl animate-pulse">
-                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>near_me</span>
+                {/* Clickable pin overlay */}
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Plus+Mall,+Fifth+Settlement,+New+Cairo,+Cairo,+Egypt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                >
+                  <div className="pointer-events-auto flex flex-col items-center cursor-pointer group" style={{ marginTop: '-24px' }}>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-primary rounded-full animate-ping opacity-60 scale-150" />
+                      <div className="relative bg-primary text-on-primary p-2.5 rounded-full shadow-2xl group-hover:scale-110 transition-transform duration-200">
+                        <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>location_on</span>
+                      </div>
+                    </div>
+                    <div className="mt-1 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-semibold text-on-surface shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      Open in Google Maps
+                    </div>
                   </div>
-                </div>
+                </a>
                 <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest text-on-surface shadow-sm">
-                  HQ Location
+                  Our Location
                 </div>
               </motion.div>
             </div>
