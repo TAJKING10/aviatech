@@ -70,7 +70,7 @@ export default function HomePage() {
       </section>
 
       {/* Training Booking CTA */}
-      <section className="max-w-6xl mx-auto -mt-20 relative z-20 mb-24 px-4 sm:px-6 lg:px-8">
+      <section className="max-w-6xl mx-auto mt-16 relative z-20 mb-24 px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
