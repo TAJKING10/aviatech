@@ -22,7 +22,7 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="bg-surface font-body text-on-surface selection:bg-primary/20 overflow-x-hidden">
+    <div className="bg-surface font-body text-on-surface selection:bg-primary/20">
       <main className="pt-32">
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-8 mb-32">

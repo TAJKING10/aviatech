@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function MaintenanceCaseStudyPage() {
   return (
-    <div className="bg-surface font-body text-on-surface overflow-x-hidden">
+    <div className="bg-surface font-body text-on-surface">
       <main className="pt-32 pb-24">
 
         {/* Hero */}

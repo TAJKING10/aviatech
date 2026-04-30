@@ -22,7 +22,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="bg-surface font-body text-on-background antialiased overflow-x-hidden">
+    <div className="bg-surface font-body text-on-background antialiased">
       {/* Hero Section */}
       <section className="relative min-h-[870px] flex items-center overflow-hidden px-8">
         <div className="absolute inset-0 z-0">

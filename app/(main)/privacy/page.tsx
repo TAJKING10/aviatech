@@ -43,7 +43,7 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <div className="bg-surface font-body text-on-surface overflow-x-hidden">
+    <div className="bg-surface font-body text-on-surface">
       <main className="pt-32 pb-24">
         <section className="max-w-4xl mx-auto px-8">
           <motion.div

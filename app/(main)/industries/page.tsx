@@ -44,7 +44,7 @@ const industries = [
 
 export default function IndustriesPage() {
   return (
-    <div className="bg-surface font-body text-on-surface overflow-x-hidden">
+    <div className="bg-surface font-body text-on-surface">
       <main className="pt-32 pb-24">
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-8 mb-24">
